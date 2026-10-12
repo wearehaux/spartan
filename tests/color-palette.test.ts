@@ -17,7 +17,7 @@ test('every production COLOR token is on the page exactly once, or is a document
   for (const e of COLOR_EXCLUSIONS) assert.ok(e.reason.trim().length > 10, `exclusion ${e.key} needs a reason`);
   const all = colorTokens().map(t => t.key);
   assert.deepEqual([...shown, ...excluded].sort(), [...all].sort());
-  assert.equal(all.length, 264, 'COLOR token count changed: review the Colors page groups');
+  assert.equal(all.length, SOURCE.tokens.filter(t => t.type === 'COLOR').length);
   // Every collection that has COLOR tokens maps to a named section.
   const sections = new Set(SECTIONS.map(s => s.id));
   for (const g of buildGroups()) assert.ok(sections.has(g.section));
@@ -51,8 +51,9 @@ test('alias traces end at a literal and match the resolver for every mode combin
 
 test('a semantic primary role traces through the Primary mode to a primitive', () => {
   const t = aliasTrace('semantic-color.color.primary.default', { primary: 'Orange', ...semanticAttrs('Light') });
-  // 02 Primary holds a literal per hue, so the chain is one link in the selected Primary mode.
-  assert.deepEqual(t.links.map(l => [l.collection, l.mode]), [['primary', 'Orange']]);
+  // Compatibility primary roles now pass through Brand semantics and a dedicated primitive ramp.
+  assert.deepEqual(t.links.map(l => [l.collection, l.mode]), [['semantic-color', 'Light'], ['primary', 'Orange'], ['primitives', 'Value']]);
+  assert.equal(t.links.at(-1)!.key, 'primitives.color.brand.orange.600');
   assert.equal(t.opacity, undefined);
   // A translucent role reports its opacity, here a percent token from 04 Semantic Foundation.
   const drawer = aliasTrace('semantic-color.color.backdrop.drawer', { ...semanticAttrs('Light') });

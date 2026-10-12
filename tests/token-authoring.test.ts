@@ -4,7 +4,7 @@ import { execFileSync, spawnSync } from 'node:child_process';
 import { mkdtempSync, mkdirSync, readFileSync, writeFileSync, symlinkSync, rmSync, cpSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { resolve } from 'node:path';
-import { renderCSSV2, resolveToken, validateTokensV2, type TokenSourceV2 } from '../lib/figma-tokens';
+import { importFigmaExport, renderCSSV2, resolveToken, validateTokensV2, type TokenSourceV2 } from '../lib/figma-tokens';
 import { diffTokenSources } from '../lib/token-drift';
 
 const repo = resolve('.');
@@ -104,6 +104,15 @@ function workspace(run: (dir: string) => void) {
 const node = (dir: string, script: string, args: string[] = []) => spawnSync(process.execPath, ['--import', 'tsx', resolve(dir, 'scripts', script), ...args], { cwd: dir, encoding: 'utf8' });
 const success = (result: ReturnType<typeof node>) => assert.equal(result.status, 0, result.stdout + result.stderr);
 
+test('candidate formatter can be imported by a stdin migration without running the import CLI', () => workspace(dir => {
+  const result = spawnSync(process.execPath, ['--import','tsx','--input-type=module','-'], {
+    cwd: dir, encoding: 'utf8',
+    input: "import { stringifySource } from './scripts/import-figma-tokens.ts'; console.log(stringifySource({schema:'spartan.tokens.v2',version:'test',collections:[],tokens:[]}));",
+  });
+  success(result);
+  assert.match(result.stdout, /spartan\.tokens\.v2/);
+}));
+
 test('real token commands preserve a deliberate edit and unbound token through two builds without a Figma snapshot', () => workspace(dir => {
   const s = production();
   const edited = s.tokens.find(t => t.key === 'primitives.space.4')!;
@@ -147,9 +156,12 @@ test('token checks catch stale CSS without treating intended authoring differenc
 }));
 
 test('explicit drift reports authored changes without mutating authored source, snapshot or CSS', () => workspace(dir => {
+  // This fixture deliberately starts aligned; production may have accepted code-owned drift.
+  const baseline = importFigmaExport(JSON.parse(readFileSync(resolve(dir, 'tokens/figma/spartan-ds.export.json'), 'utf8')));
+  writeFileSync(resolve(dir, 'tokens/source.json'), JSON.stringify(baseline));
   success(node(dir, 'build-tokens.ts'));
   success(node(dir, 'check-figma-drift.ts'));
-  const s = production();
+  const s = baseline;
   s.tokens.find(t => t.key === 'primitives.space.4')!.values.Value = 17;
   writeFileSync(resolve(dir, 'tokens/source.json'), JSON.stringify(s));
   const paths = ['tokens/source.json', 'tokens/figma/spartan-ds.export.json', 'public/tokens.css'];

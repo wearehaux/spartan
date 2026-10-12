@@ -140,7 +140,7 @@ export const actionStyles = css`
     position: absolute;
     inset: calc(-4px - var(--sp-style-button-border-width));
     box-sizing: border-box;
-    border: 2px solid var(--sp-color-focus-ring-default);
+    border: 2px solid var(--sp-button-focus-color);
     border-radius: var(--sp-style-field-focus-radius);
     pointer-events: none;
   }

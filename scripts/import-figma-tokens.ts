@@ -1,7 +1,7 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { importFigmaExport } from '../lib/figma-tokens';
 import { resolve } from 'node:path';
-import { realpathSync } from 'node:fs';
+import { existsSync, realpathSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 
 const EXPORT = 'tokens/figma/spartan-ds.export.json';
@@ -14,7 +14,7 @@ export function stringifySource(s: ReturnType<typeof importFigmaExport>) {
   return `{\n  "schema": ${JSON.stringify(head.schema)},\n  "version": ${JSON.stringify(head.version)},\n${head.source ? '  "source": ' + JSON.stringify(head.source) + ',\n' : ''}  "collections": [\n${lines(collections)}\n  ],\n  "tokens": [\n${lines(tokens)}\n  ]\n}\n`;
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href) {
+if (process.argv[1] && existsSync(process.argv[1]) && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href) {
   const args = process.argv.slice(2);
   let input = EXPORT, output = OUT;
   if (args[0] && !args[0].startsWith('--')) input = args.shift()!;

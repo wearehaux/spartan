@@ -80,7 +80,7 @@ describe('Foundations / Colors', () => {
     assert.deepEqual([state.scheme, state.contrast, state.hue], ['Dark', 'High', 'Orange']);
     const want = expectedColor(source, 'semantic-color.color.primary.default', { primary: 'Orange', 'semantic-color': 'Dark High Contrast' });
     assert.ok(close(fromHex(state.value), want, 1), `${state.value} vs ${JSON.stringify(want)}`);
-    assert.match(state.alias, /^Alias of color\/primary\//);
+    assert.match(state.alias, /^Alias of color\/brand\//);
     await page.close();
   });
 

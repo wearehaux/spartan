@@ -68,10 +68,10 @@ test('mode dependencies are detected per token, including aliases that cross col
   assert.deepEqual(deps.get('semantic-color.color.surface.default'), ['semantic-color']);
   assert.deepEqual(deps.get('semantic-foundation.border-width.default'), ['semantic-color']);
   // Style, Semantic Color, and Primary can all matter to one token.
-  assert.deepEqual(deps.get('style.style.field.border.hover'), ['primary', 'semantic-color', 'style']);
+  assert.deepEqual(deps.get('style.style.field.border.hover'), ['semantic-color', 'style']);
   assert.deepEqual(deps.get('style.style.button.radius'), ['style']);
   assert.deepEqual(deps.get('style.style.button.secondary.border.default'), ['semantic-color', 'style']);
-  assert.equal(Math.max(...[...deps.values()].map(d => d.length)), 3);
+  assert.equal(Math.max(...[...deps.values()].map(d => d.length)), 2);
 });
 
 // ---- A small cascade simulator, independent of the generator ----
@@ -176,7 +176,7 @@ const everyToken = (s: TokenSourceV2, got: Map<string, string | typeof INVALID>,
   assert.deepEqual(wrong.slice(0, 5), [], `${label}: ${wrong.length} tokens differ from ${JSON.stringify(attrs)}`);
 };
 
-test('generated CSS resolves every token to the Figma-resolved value for all 128 style, hue, color scheme, contrast, and density combinations on one element', () => {
+test('generated CSS resolves every token to the authored value for all 128 style, hue, color scheme, contrast, and density combinations on one element', () => {
   const s = production(), rules = parseCSS(renderCSSV2(s));
   const all = combos(s);
   assert.equal(all.length, 128);
@@ -373,9 +373,12 @@ test('nested style overrides re-resolve style tokens and keep the outer scheme, 
 });
 
 test('the style tokens that depend on three collections resolve with their own mode set on an ancestor', () => {
-  const s = production(), rules = parseCSS(renderCSSV2(s));
-  // style.field.border.hover depends on Style, Semantic Color, and Primary. The style is set far above
-  // the element that changes the hue, and the scheme in between, which the earlier design could not do.
+  const s = production();
+  // Retain three-axis generator coverage with an explicit fixture. Production field feedback
+  // now uses System, so it deliberately no longer depends on Primary.
+  const field = s.tokens.find(t => t.key === 'style.style.field.border.hover')!;
+  for (const mode of ['Helios', 'Ares']) field.values[mode] = { alias: 'semantic-color.color.primary.text' };
+  const rules = parseCSS(renderCSSV2(s));
   for (const style of STYLES) for (const primary of ['Blue', 'Sky']) for (const scheme of ['Light', 'Dark']) {
     const got = computeChain(rules, [{ style, contrast: 'High' }, { 'color-scheme': scheme }, { primary }]);
     const attrs = { style, contrast: 'High', 'color-scheme': scheme, primary };

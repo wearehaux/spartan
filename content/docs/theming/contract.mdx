@@ -1,0 +1,77 @@
+---
+title: Theme ownership
+description: How Brand, System feedback, Density, Style and component anatomy work together.
+---
+
+The five theme settings remain independent. Brand hue selects product accent colors.
+System feedback gives focus and selected controls a predictable blue palette across
+brands. Style owns family geometry and surface treatment; Density owns size metrics
+and useful spacing.
+
+<StorybookEmbed story="foundations-theme-contract--playground" title="Theme contract playground" height={740} />
+
+Use the Storybook toolbar to change Style, Theme, High contrast, Hue and Density.
+Appearance and Size are local field controls. The native field, selection, menu and
+table samples demonstrate shared token recipes. Production component implementation
+is tracked separately.
+
+## Brand and System
+
+Primary retains Blue, Purple, Orange and Sky. Its palette entries alias dedicated
+Brand primitives, so editing a product ramp does not recolor shared blue system
+tokens. Existing `--sp-color-primary-*` names remain compatible aliases into the
+`--sp-color-brand-*` semantic roles.
+
+```css
+.brand-action { background: var(--sp-color-brand-default); }
+.selection { background: var(--sp-selection-background-checked); }
+.keyboard-focus { outline-color: var(--sp-color-system-focus); }
+```
+
+System's focus and selection tones follow color scheme and contrast. The field's
+hover and focus borders also use System. Error remains Danger even when the field
+has a separate System focus ring. Disabled styling takes precedence over an invalid
+border; readonly fields remain focusable.
+
+## Appearance inherits Style
+
+Default uses the full field recipe: Atlas outline, Selene muted fill, Helios elevated
+pill and Ares underline. Outlined overrides the surface and draws a full outline.
+Filled overrides the surface and removes the normal boundary. High contrast restores
+a visible boundary. Radius, focus geometry and elevation continue to follow Style.
+Multiline Helios fields use bounded 16px corners.
+
+Appearance is a local component choice. It is not another global Style mode. The
+production Input and Textarea APIs will adopt these recipes in their component work.
+
+## Density uses named anatomy roles
+
+| Metric | Relaxed | Compact |
+| --- | --- | --- |
+| Base control/field minimum | 40px | 32px |
+| Small control/field minimum | 32px | 28px |
+| One-line table row minimum | 40px | 32px |
+| Table cell vertical padding | 8px | 4px |
+| Form group gap | 16px | 12px |
+| Generic surface content padding | 24px | 16px |
+| Chart legend gap | 12px | 8px |
+| Card horizontal / vertical padding | 16px / 20px | 16px / 20px |
+
+Existing density typography and icon differences are retained. Primitive spacing,
+chart data and series colors stay stable. Multiline content grows; chart tick density
+and legend layout remain responsive decisions.
+
+```text
+field/height/base -> density/control/height/base -> 40 or 32
+field/radius -> style/field/radius -> 8, 12, pill or 0
+table/row/min-height -> density/table/row/min-height
+chart/legend/gap -> density/chart/legend/gap -> space/3 or space/2
+```
+
+Style cannot reference Component tokens, and primitive ramps cannot depend on
+semantic roles. Build and token checks enforce that ownership alongside type,
+unit, mode and cycle validation.
+
+The authored contract contains 685 tokens in the existing seven collections. Existing
+keys and Figma identities are retained. Figma synchronization follows the separate
+importer and component-batch verification workflow.

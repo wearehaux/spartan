@@ -80,4 +80,9 @@ Do not add `CENTRAL_LICENSE_KEY` to either project's environment while it is pub
 
 ## Theme settings
 
+The [shared theme contract](tokens/THEME-CONTRACT.md) defines Brand/System separation,
+family Style recipes, local Appearance, and named Density roles. Review the live
+**Foundations / Theme contract** fixture in Storybook. Production component adoption
+and Figma synchronization retain their separate issue evidence.
+
 Style (Atlas, Selene, Helios, Ares), color scheme (Light, Dark), **high contrast** (on or off), brand hue, and density are five independent settings. High contrast is a boolean that composes with every style and both color schemes, not a theme value. Set them with `applyTheme` from `@spartan/components/theme`, or with the `data-sp-mode-*` attributes. Storybook has a control for each, including a High contrast switch, and they are Storybook globals, so a shared link reproduces them. See `tokens/figma/README.md` for the attributes, the migration from the earlier combined theme values, and how the CSS composes them.
