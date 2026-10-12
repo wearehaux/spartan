@@ -1,4 +1,4 @@
-import { html, nothing } from 'lit';
+import { html, nothing, type PropertyValues } from 'lit';
 import { SpActionBase, type ButtonType, type ButtonVariant } from '../shared/sp-action-base.js';
 import { iconButtonStyles } from './sp-icon-button.styles.js';
 
@@ -11,8 +11,9 @@ export type IconButtonSize = 'xs' | 'sm' | 'base';
  *
  * Size names map to the Figma Icon Button set: `xs` is Extra small (24 px),
  * `sm` is Small (32 px), `base` is Base (40 px) in Relaxed density.
- * Figma defines no hover, pressed, focus, or disabled variants for this set; those
- * states reuse the Button rules and tokens.
+ * Style owns radius, neutral treatment and state colors through the shared action
+ * recipe. Density owns square dimensions and glyph size; System owns focus.
+ * The protected Figma set currently has only default variants and older shadows.
  *
  * @slot - The icon, usually an inline `<svg>` marked `aria-hidden`.
  * @csspart button - The native button element.
@@ -40,14 +41,14 @@ export class SpIconButton extends SpActionBase {
 
   override render() {
     return html`
-      <button part="button" type="button" aria-label=${this.label || nothing} ?disabled=${this.isDisabled} @click=${this.handleClick}>
-        <span class="icon"><slot></slot></span>
+      <button part="button" type="button" aria-label=${(this.label ?? '').trim() || nothing} ?disabled=${this.isDisabled} @click=${this.handleClick}>
+        <span class="icon" aria-hidden="true"><slot></slot></span>
       </button>
     `;
   }
 
-  protected override firstUpdated() {
-    if (!this.label) console.warn('<sp-icon-button> needs a `label` attribute so it has an accessible name.', this);
+  protected override updated(changed: PropertyValues<this>) {
+    if (changed.has('label') && !(this.label ?? '').trim()) console.warn('<sp-icon-button> needs a `label` attribute so it has an accessible name.', this);
   }
 }
 
