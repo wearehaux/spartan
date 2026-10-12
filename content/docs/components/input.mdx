@@ -1,0 +1,120 @@
+---
+title: Input
+description: Native text entry with shared Field styles, density, labels and form validation.
+---
+
+`sp-input` wraps a native input in Lit. It supports Text, Email, Password and Number, with Small/Base sizes and Default/Outlined/Filled appearances. Label, description, error and leading/trailing slots keep composition with the field.
+
+<StorybookEmbed story="components-input--playground" title="Input playground" height={240} />
+
+Design reference: [Input set in Spartan DS](https://www.figma.com/design/PhcMPmdpkpgxH3N83SvpBY/Spartan-DS?node-id=32-105).
+
+## Usage
+
+```ts
+import '@spartan/components/input';
+import '@spartan/components/tokens.css';
+```
+
+```html
+<form>
+  <sp-input label="Work email" type="email" name="email"
+    placeholder="name@example.com" description="Used to reply to your request" required></sp-input>
+  <sp-button type="submit">Save</sp-button>
+</form>
+```
+
+## Properties
+
+| Property | Attribute | Default | Purpose |
+| --- | --- | --- | --- |
+| `type` | `type` | `'text'` | `'text'`, `'email'`, `'password'`, `'number'`. Other values fall back to text. |
+| `size` | `size` | `'base'` | `'sm'` or `'base'`, scaled by Density. |
+| `appearance` | `appearance` | `'default'` | `'default'`, `'outlined'`, `'filled'`. Default follows Style. |
+| `value` | None | `''` | Current string value. Never reflected into markup. |
+| `defaultValue` | `value` | `''` | Initial/reset value. Updating it changes the current value only before editing or assigning `value`. |
+| `name` | `name` | `''` | FormData field name. |
+| `label` | `label` | `''` | Visible, associated label. |
+| `ariaLabel` | `aria-label` | `null` | Accessible name when a visible label is elsewhere. |
+| `labelledBy`, `describedBy` | `aria-labelledby`, `aria-describedby` | `''` | Space-separated external IDs in the host's document or shadow root. |
+| `placeholder` | `placeholder` | `''` | Entry hint, never a replacement for a label. |
+| `description`, `error` | `description`, `error` | `''` | Supporting text and error message. Error participates in custom validity. |
+| `invalid` | `invalid` | `false` | Visual invalid state only. Use `error` or `setCustomValidity` to block submission. |
+| `disabled`, `readOnly`, `required` | `disabled`, `readonly`, `required` | `false` | Native control behavior. |
+| `min`, `max`, `step`, `pattern` | Same | Unset | Native string constraints, where supported by the type. |
+| `minLength`, `maxLength` | `minlength`, `maxlength` | Unset | Native numeric length constraints. |
+| `autocomplete`, `inputMode` | `autocomplete`, `inputmode` | `''` | Native browser entry hints. |
+
+Property changes render asynchronously. Await `updateComplete` before using native validation, selection or focus after changing type, constraints or disabled state. Value assignment synchronizes the native control and FormData immediately once rendered, including native type sanitation. Form reset also synchronizes immediately.
+
+```ts
+const field = document.querySelector('sp-input')!;
+field.value = 'name@example.com';
+field.type = 'email';
+await field.updateComplete;
+field.reportValidity();
+```
+
+## Slots and parts
+
+| Slot | Content |
+| --- | --- |
+| `label` | Visible label, overrides the `label` property. |
+| `description` | Supporting content, overrides the `description` property. |
+| `error` | Error content. Its text becomes custom validity; overrides rendered error fallback. |
+| `start` | Decorative leading glyph, hidden from the accessibility tree. No interactive content. |
+| `end` | Trailing glyph or independently named action. |
+
+Parts: `label`, `field`, `input`, `start`, `end`, `description`, `error`. The `field` part is the styled frame; labels and messages are outside it. Keep end actions independently labelled and manage their disabled state with the owning application. Disabling Input disables editing, not a separate slotted action.
+
+<StorybookEmbed story="components-input--composition" title="Input slots and trailing action" height={320} />
+
+## Sizes and styles
+
+| Density | Small height / type | Base height / type |
+| --- | --- | --- |
+| Relaxed | 32px / 14px, 20px line | 40px / 15px, 22px line |
+| Compact | 28px / 13px, 18px line | 32px / 14px, 20px line |
+
+Heights are minima; taller trailing content may grow the frame. Narrow fields shrink the text area without squeezing the trailing action. Logical spacing and native `dir` support inherited and nested RTL. Direction-sensitive glyph selection stays with the consumer.
+
+Default follows the family recipe: Atlas outlined, Selene muted fill, Helios raised pill, Ares transparent underline. Local Outlined/Filled change surface and border treatment while retaining Style radius and elevation. Hover keeps explicit appearance backgrounds. High contrast restores boundaries. Error keeps Danger while focused; the separate keyboard ring uses System independently of Brand. Disabled styling takes precedence over error; read-only values remain focusable and selectable.
+
+<StorybookEmbed story="components-input--appearances" title="Input appearances" height={320} />
+<StorybookEmbed story="components-input--styles" title="Input styles" height={400} />
+<StorybookEmbed story="components-input--theme-contract" title="Nested Input themes and RTL" height={360} />
+
+Input reuses `--sp-field-*` Component roles. Four additional Small aliases refer to existing Density font size, line height, glyph size and horizontal padding. Three focus aliases reuse System color and existing 2px width / 4px offset. No new palette or Figma identities are introduced. Typography uses the regular primitive weight. Forced-colors focus uses system Highlight.
+
+## Forms, events and validation
+
+`input` is the native composed event, with the host's current value synchronized before consumers receive it. `change` is bridged once as a bubbling, composed event on committed edits. Programmatic value changes and reset do not emit editing events.
+
+The associated form receives the current string value. Disabled controls, including those in a disabled fieldset, are excluded; read-only controls remain submitted. Native constraints and explicit custom errors block submission and focus the inner input. `checkValidity()` / `reportValidity()` expose the inline native message; clear custom errors with `setCustomValidity('')`. An `error` property or slot continues blocking until cleared by its owner.
+
+Available methods: `checkValidity`, `reportValidity`, `setCustomValidity`, `select`, `setSelectionRange`. Read-only getters: `form`, `validity`, `validationMessage`, `willValidate`. Native selection limitations apply to email/number. Form reset restores `defaultValue`; the restoration callback accepts string state. Actual browser history restoration, autofill and password-manager integrations have not been manually verified.
+
+Enter defers outer-form implicit submission until bubbling finishes, so `preventDefault()` and IME composition can cancel it. The first native or Spartan submit button is the default submitter; a disabled default suppresses submission. With no submitter, a single blocking text-entry field can submit. Submitter name/value and native validation are retained.
+
+<StorybookEmbed story="components-input--in-form" title="Input inside a form" height={280} />
+
+## Accessibility
+
+Use a visible label or an explicit accessible name. The native input owns editing, caret, keyboard and selection. Required markers are decorative. Description and error are linked to the input; errors use a polite live region. Keyboard focus has a separate System ring.
+
+External labels and descriptions use element-reference ARIA to cross the shadow boundary where supported. External names also have a text fallback for engines that expose references without resolving a name. External label text updates refresh the fallback. In older engines without element-reference support, use the local label/description/error properties or slots and `aria-label`. Chromium's accessibility tree was inspected; screen-reader software announcements and Safari/Firefox remain manual QA checks.
+
+## Figma handoff
+
+The live set `32:105` on page `12:27` contains 168 variants: four Types, three Appearances, Small/Base and seven States (Default, Hover, Focus, Error, Disabled, Read only, Error focus). `Label#32:13` edits the placeholder/sample text inside the field, not an external accessible label. Code adds separate visible labels and supporting slots for actual forms.
+
+The 320px reference has Base/Small field heights of 40/32px. Its inspected placeholder resolves to 12px despite Density-related bindings. Code intentionally uses the adopted Density typography above. This is a documented code-first difference, not a pixel-identical claim. Figma's previous Done label records the approved style refinement; this implementation makes no Figma edits or renewed all-variant verification claim. The v2 importer and later family reconciliation retain disposable-file, identity, alias and repeat-import gates in HAUX-85.
+
+Storybook's Design panel points to this exact component set. The panel was exercised, but its Figma embed returned HTTP 403 in the verification environment. The reference was inspected through read-only Figma tools; no sharing settings were changed.
+
+## References
+
+- <StorybookLink story="components-input--playground">Input in Storybook</StorybookLink>
+- [shadcn Input anatomy](https://ui.shadcn.com/docs/components/base/input)
+- [MDN: ElementInternals](https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals)
+- [MDN: element-reference labels](https://developer.mozilla.org/en-US/docs/Web/API/Element/ariaLabelledByElements)

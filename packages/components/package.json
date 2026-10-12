@@ -33,6 +33,14 @@
       "types": "./dist/components/icon-button/sp-icon-button.d.ts",
       "default": "./dist/components/icon-button/sp-icon-button.js"
     },
+    "./input": {
+      "types": "./dist/components/input/define.d.ts",
+      "default": "./dist/components/input/define.js"
+    },
+    "./input/class": {
+      "types": "./dist/components/input/sp-input.d.ts",
+      "default": "./dist/components/input/sp-input.js"
+    },
     "./theme": {
       "types": "./dist/theme.d.ts",
       "default": "./dist/theme.js"

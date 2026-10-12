@@ -510,6 +510,9 @@
   --sp-icon-button-icon-size-sm: var(--sp-button-icon-size-sm);
   --sp-icon-button-focus-width: var(--sp-button-focus-width);
   --sp-icon-button-focus-offset: var(--sp-button-focus-offset);
+  --sp-field-icon-size-small: var(--sp-density-control-icon-size-small);
+  --sp-field-focus-width: var(--sp-button-focus-width);
+  --sp-field-focus-offset: var(--sp-button-focus-offset);
 }
 
 :root,
@@ -674,6 +677,7 @@
   --sp-selection-track: var(--sp-color-system-control-track);
   --sp-selection-focus-color: var(--sp-color-system-focus);
   --sp-icon-button-focus-color: var(--sp-button-focus-color);
+  --sp-field-focus-color: var(--sp-color-system-focus);
 }
 
 :root,
@@ -788,6 +792,9 @@
   --sp-icon-button-size-sm: var(--sp-button-height-sm);
   --sp-icon-button-size-base: var(--sp-button-height-base);
   --sp-icon-button-icon-size-base: var(--sp-button-icon-size-base);
+  --sp-field-font-size-small: var(--sp-density-control-font-size-small);
+  --sp-field-line-height-small: var(--sp-density-control-line-height-small);
+  --sp-field-padding-x-small: var(--sp-density-control-padding-x-small);
 }
 
 :root,

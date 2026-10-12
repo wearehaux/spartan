@@ -20,11 +20,14 @@ test('package exports resolve to built JavaScript, types, and the generated toke
 });
 
 test('consumer import registers both elements once and keeps their public properties', async () => {
-  const { SpButton, SpIconButton } = await import('@spartan/components');
+  const { SpButton, SpIconButton, SpInput } = await import('@spartan/components');
   await import('@spartan/components/button');
   await import('@spartan/components/icon-button');
+  await import('@spartan/components/input');
   assert.equal(customElements.get('sp-button'), SpButton);
   assert.equal(customElements.get('sp-icon-button'), SpIconButton);
+  assert.equal(customElements.get('sp-input'), SpInput);
+  assert.equal(SpInput.formAssociated, true);
   assert.equal(SpButton.formAssociated, true);
   assert.deepEqual(Object.keys(SpButton.properties), ['variant', 'type', 'disabled', 'name', 'value', 'size', 'loading']);
   assert.deepEqual(Object.keys(SpIconButton.properties), ['variant', 'type', 'disabled', 'name', 'value', 'size', 'label']);
@@ -33,13 +36,13 @@ test('consumer import registers both elements once and keeps their public proper
 test('component styles only reference variables the token build emits', () => {
   const s = source();
   const emitted = new Set(s.tokens.map(t => tokenCssName(t, s)));
-  for (const file of ['shared/action.styles.ts', 'button/sp-button.styles.ts', 'icon-button/sp-icon-button.styles.ts']) {
+  for (const file of ['shared/action.styles.ts', 'button/sp-button.styles.ts', 'icon-button/sp-icon-button.styles.ts', 'input/sp-input.styles.ts']) {
     for (const name of new Set(read(file).match(/--sp-[a-z0-9-]+/g) ?? [])) assert.ok(emitted.has(name), `${file} uses ${name}, which no token produces`);
   }
 });
 
 test('component styles contain no hard-coded colors, sizes, or radii outside the spinner dimensions and focus ring', () => {
-  for (const file of ['shared/action.styles.ts', 'button/sp-button.styles.ts', 'icon-button/sp-icon-button.styles.ts']) {
+  for (const file of ['shared/action.styles.ts', 'button/sp-button.styles.ts', 'icon-button/sp-icon-button.styles.ts', 'input/sp-input.styles.ts']) {
     const css = read(file).replace(/\/\*[\s\S]*?\*\//g, '');
     assert.doesNotMatch(css, /#[0-9a-f]{3,8}\b|rgba?\(/i, `${file} has a literal color`);
     for (const m of css.matchAll(/(width|height|padding[a-z-]*|border-radius|font-size|line-height|gap|min-width):\s*([^;]+);/g)) {
@@ -55,7 +58,7 @@ test('stories exist for every variant, size, and state in the Figma sets', () =>
   for (const story of ['Variants', 'Sizes', 'Styles', 'Directions', 'WithIcons', 'Disabled', 'Loading', 'Density', 'InForm']) assert.match(button, new RegExp(`export const ${story}\\b`));
   const icon = read('icon-button/sp-icon-button.stories.ts');
   for (const s of ['xs', 'sm', 'base']) assert.match(icon, new RegExp(`'${s}'`));
-  assert.deepEqual(readdirSync(new URL('../packages/components/src/components', import.meta.url)).sort(), ['button', 'icon-button', 'shared']);
+  assert.deepEqual(readdirSync(new URL('../packages/components/src/components', import.meta.url)).sort(), ['button', 'icon-button', 'input', 'shared']);
 });
 
 test('Button takes its shape, fills, and borders from the Style collection and has no shadow or shape API', () => {
