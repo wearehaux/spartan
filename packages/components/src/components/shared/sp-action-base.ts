@@ -62,7 +62,18 @@ export abstract class SpActionBase extends LitElement {
 
   formDisabledCallback(disabled: boolean) {
     this.#formDisabled = disabled;
-    this.requestUpdate();
+    // Reflecting our own disabled attribute can invoke this callback during
+    // Lit's update. Requesting another update synchronously is then swallowed,
+    // leaving the native button stale when the attribute is removed.
+    queueMicrotask(() => this.requestUpdate());
+  }
+
+  protected override async getUpdateComplete(): Promise<boolean> {
+    let complete = await super.getUpdateComplete();
+    // Include a render queued by formDisabledCallback during the first render.
+    // Consumers can safely focus or activate immediately after updateComplete.
+    while (this.isUpdatePending) complete = await super.getUpdateComplete();
+    return complete;
   }
 
   protected handleClick(event: Event) {

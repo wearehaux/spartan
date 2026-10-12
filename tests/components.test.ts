@@ -67,7 +67,7 @@ test('Button takes its shape, fills, and borders from the Style collection and h
   assert.doesNotMatch(button + read('button/define.ts'), /ButtonShape|declare shape|shape:|this\.shape/, 'the obsolete shape API is gone');
   assert.match(action, /border-radius:\s*var\(--sp-style-button-radius\)/);
   assert.match(action, /var\(--sp-style-button-border-width\)/);
-  assert.match(action, /border-radius:\s*var\(--sp-style-field-focus-radius\)/);
+  assert.match(action, /border-radius:\s*var\(--sp-button-focus-radius\)/);
   // Every variant maps fill, foreground, and border for default, hover, and pressed.
   for (const v of ['primary', 'secondary', 'danger', 'ghost', 'dashed', 'danger-subtle', 'warning'])
     for (const part of ['background', 'foreground', 'border'])

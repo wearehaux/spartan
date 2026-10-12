@@ -502,6 +502,9 @@
   --sp-prim-color-brand-sky-950: rgb(0 23 32 / 1);
   --sp-card-padding-x: var(--sp-density-card-padding-x);
   --sp-card-padding-y: var(--sp-density-card-padding-y);
+  --sp-button-icon-size-sm: var(--sp-density-control-icon-size-small);
+  --sp-button-focus-width: var(--sp-prim-border-width-thick);
+  --sp-button-focus-offset: var(--sp-prim-space-1);
 }
 
 :root,
@@ -771,6 +774,11 @@
   --sp-chart-legend-gap: var(--sp-density-chart-legend-gap);
   --sp-chart-tooltip-padding-x: var(--sp-density-tooltip-padding-x);
   --sp-surface-content-padding: var(--sp-density-surface-padding);
+  --sp-button-font-size-sm: var(--sp-density-control-font-size-small);
+  --sp-button-font-size-base: var(--sp-density-control-font-size-base);
+  --sp-button-line-height-sm: var(--sp-density-control-line-height-small);
+  --sp-button-line-height-base: var(--sp-density-control-line-height-base);
+  --sp-button-icon-size-base: var(--sp-density-control-icon-size-base);
 }
 
 :root,
@@ -799,6 +807,7 @@
   --sp-surface-radius: var(--sp-style-surface-radius);
   --sp-surface-shadow-offset-y: var(--sp-style-surface-shadow-offset-y);
   --sp-surface-shadow-blur: var(--sp-style-surface-shadow-blur);
+  --sp-button-focus-radius: var(--sp-style-field-focus-radius);
 }
 
 :root,
