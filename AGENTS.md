@@ -11,39 +11,27 @@ This repository is the Spartan Design System. Its Lit components, Storybook, tok
 - Keep one issue per component. Update its `Dev: ...` and `Figma: ...` labels separately and mirror them in the issue description. A component is Done only when both tracks are Done. Track documentation, plugin, research, and infrastructure as separate issues.
 - Whenever you create a Linear task, update [doc/task-order.html](doc/task-order.html) in the same work session. Add its exact task name, issue ID and direct Linear link, place it after its prerequisites and before dependent tasks, and renumber the rows. Keep this HTML view aligned when dependencies or open-task membership change. Verify the entries against Linear, which remains the source of truth; preserve the existing compact table.
 
-## Branches and releases
+## Code-first delivery
 
-- `main` only receives releases. Open every pull request against `dev`, the default branch; `validate` fails any pull request into `main` that does not come from `dev`.
-- Feature work: branch from `dev`, open a pull request into `dev`, squash merge. `validate` runs only on the release pull request from `dev` into `main`, so run the checks locally first.
-- Release: open a pull request from `dev` into `main` and merge it with **rebase** so `main` keeps linear history without squashing a release into one commit.
-- Vercel builds only `main` (Production) and `dev` (Preview, with a stable branch alias); feature branches and pull requests are not built (`ignoreCommand` in `vercel.json`).
-
-## Branches and releases
-
-- `main` only receives releases. Open every pull request against `dev`, the default branch; `validate` fails any pull request into `main` that does not come from `dev`.
-- Feature work: branch from `dev`, open a pull request into `dev`, squash merge after `validate` passes.
-- Release: open a pull request from `dev` into `main` and merge it with **rebase** so `main` keeps linear history without squashing a release into one commit.
-- Vercel builds only `main` (`ignoreCommand` in `vercel.json`); other branches and pull requests are not built.
+- Follow the agreed sequence: Git token contract, working Lit components finalized in Storybook, then stable component families rebuilt in Figma in batches that fit MCP availability. Use the [implementation plan](doc/code-first-implementation-plan.html) and [theme architecture report](doc/theme-system-report.html). The workflow is agreed; unresolved token choices in the report are proposals, not authorization to remove Primary modes or change existing token contracts.
+- First make token authoring ownership safe. Currently `pnpm tokens:build` runs `tokens:import` from the saved Figma export and regenerates `tokens/source.json` and CSS. Do not hand-edit those generated files or let an older Figma export overwrite new code-owned decisions. Establish the reviewed Git authoring source and update generation/drift checks before restructuring token values or aliases.
+- Use shadcn names, anatomy, states, and APIs as references, then adapt their behavior to Lit. Finalize visuals, density, styles, component composition, and applicable interactions in actual components and Storybook using Spartan tokens.
+- Figma access limits and importer runtime verification gate Figma writes only. They do not block code progress or a verified code release. Apply Development prerequisites to dependent code work; an unfinished Figma track alone is not a code dependency. Keep overall component Done gated on both tracks.
+- Before deferring Figma, record a stable handoff in the component issue: code revision, token diff, properties, states, slots, Storybook captures, remaining gaps, and a resume checkpoint. Keep `Dev:` and `Figma:` labels accurate and use Agent Done as specified above.
+- Preserve Figma pages marked 🟢. Mark updated pages 🟣 only after structural and visual verification. Resume from checkpoints and recheck the target nodes rather than restarting a whole-library audit.
 
 ## Branches and releases
 
-- `main` only receives releases. Open every pull request against `dev`, the default branch; `validate` fails any pull request into `main` that does not come from `dev`.
-- Feature work: branch from `dev`, open a pull request into `dev`, squash merge after `validate` passes.
+- `main` only receives releases. Open every feature pull request against `dev`, the default branch; `validate` rejects pull requests into `main` that do not come from `dev`.
+- Feature work: branch from `dev`, open a pull request into `dev`, and squash merge after the required checks pass. The current `validate` workflow runs on pull requests and pushes to both `dev` and `main`; run the applicable checks locally as well.
 - Release: open a pull request from `dev` into `main` and merge it with **rebase** so `main` keeps linear history without squashing a release into one commit.
-- Vercel builds only `main` (`ignoreCommand` in `vercel.json`); other branches and pull requests are not built.
-
-## Branches and releases
-
-- `main` only receives releases. Open every pull request against `dev`, the default branch; `validate` fails any pull request into `main` that does not come from `dev`.
-- Feature work: branch from `dev`, open a pull request into `dev`, squash merge after `validate` passes.
-- Release: open a pull request from `dev` into `main` and merge it with **rebase** so `main` keeps linear history without squashing a release into one commit.
-- Vercel builds only `main` (`ignoreCommand` in `vercel.json`); other branches and pull requests are not built.
+- Vercel project settings select `main` for Production and `dev` for Preview, skipping feature and pull request branches. `vercel.json` sets the install command; see `README.md` for deployment settings and commands.
 
 ## Components
 
 - In Figma, inspect the existing component and variables first. Reuse library components and token bindings. Preserve instance links, properties, slots, and relevant variants. Create only the component work requested. Follow [the Figma guide](.doc/figma.md).
-- In code, build reusable Lit Web Components with TypeScript. Use Lit `static styles` for component CSS and consume generated `--sp-*` tokens. Keep Storybook as the interactive playground. Verify behavior, keyboard access, and applicable states before marking Development Done. Run `pnpm test`, `pnpm typecheck`, `pnpm test:e2e`, and `pnpm test:stories` before opening a pull request; `validate` in CI runs the e2e suite, so skipping it fails the check.
-- Code-owned tokens feed CSS and the custom Figma plugin. Preview imports, preserve variable IDs and aliases, and verify changes in a disposable Figma file before applying them to the library. Follow [the project guide](.doc/project.md).
+- In code, build reusable Lit Web Components with TypeScript. Use Lit `static styles` for component CSS and consume generated `--sp-*` tokens. Keep Storybook as the interactive playground. Verify behavior, keyboard access, and applicable states before marking Development Done. Run `pnpm test`, `pnpm typecheck`, `pnpm test:e2e`, and `pnpm test:stories` before opening a pull request; the current `validate` workflow includes the e2e suite.
+- The target pipeline has code-owned tokens feeding CSS and the custom Figma plugin; the current importer still requires the ownership transition above. Preview imports, preserve variable IDs and aliases, and verify changes in a disposable Figma file before applying them to the library. This Figma gate does not block code validation. Follow [the project guide](.doc/project.md).
 
 ## Detailed guidance
 

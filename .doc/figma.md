@@ -10,6 +10,7 @@ During this stage, deliver only the requested components and their necessary var
 
 - Do not create or expand component documentation pages, reference or showcase frames, usage sheets, specimen boards, or explanatory canvas annotations unless the user explicitly requests them.
 - Keep the main components and component sets organized and usable directly. A component request does not imply a documentation deliverable.
+- Create the applicable interaction states as real reusable variants, including default, hover, pressed, focus and disabled for interactive controls, plus selected, checked, expanded, loading, error, success or readonly where relevant. Keep item states on nested item components. Do not omit required states merely to reduce variant count; avoid meaningless states on noninteractive primitives.
 - Continue structural and visual verification. Prefer inspecting the components directly; when temporary instances or frames are needed to check themes, resizing, or slot behavior, remove them after verification rather than retaining them as documentation.
 - Do not remove existing documentation or user reference material unless the user asks for that cleanup.
 
@@ -65,9 +66,9 @@ Bind these gaps to `density/space/3`, `density/space/1`, and `density/space/0`, 
 Use a content slot when a component provides a reusable shell around content that changes by use case. Examples include Card content, Modal or Dialog bodies, Sideover or Drawer bodies, and Dropdown menu content.
 
 - Prefer native Figma slots when supported. Give each slot a meaningful name, such as `Content`, `Body`, or `Menu items`.
-- Keep shared structure, such as the shell, header, close control, and actions, outside the content slot. Expose separate slots only where those regions also need flexible composition.
+- Keep the shell and fixed controls outside the content slot. For Dialog, expose Header, Content, and Footer as separate native slots; keep the close control outside all three slots.
 - Allow the slot to contain library component instances and ordinary editable layers. Replace content without detaching the parent component or its nested library instances.
-- Use Auto Layout with Fill container width and Hug contents height where appropriate. Keep padding on the shell or content region, and verify both short and long content, replacement, and resizing.
+- Use Auto Layout with Fill container width and Hug contents height where appropriate. Each section owns its padding; avoid padding the whole shell when independently replaceable sections need their own spacing. Verify both short and long content, replacement, and resizing.
 - Use slots for flexible content composition. Keep fixed controls as components and use instance swap properties for icons.
 - For repeatable collections such as Tabs, use a parent shell with a native slot containing instances of a nested item component, such as `Tab Item`. Let designers add, remove, and reorder items without detaching instances or creating variants for item counts. Apply this pattern to other components when their item count or composition varies.
 - Keep item states, labels, and icon configuration on the item component. Let the parent own the container layout, background, and padding, using Auto Layout for the slot and its items.
@@ -76,6 +77,21 @@ Use a content slot when a component provides a reusable shell around content tha
 - Verify different item counts, long labels, reordering, and resizing while preserving parent and nested component links.
 
 These examples guide future component work; they do not indicate that every listed component already has a slot.
+
+## Section padding, floating controls, and unclipped effects
+
+- Put padding on the section that owns the content. For Dialog, the Header, Content, and Footer are separate native slots with their own token-bound padding. The outer shell owns the background, border, radius, shadow, and overall sizing, with zero layout padding and zero inter-section gap. Do not simulate section padding with one padded outer layout.
+- Group closely related content, such as a title and description or an icon and its copy, in meaningful nested Auto Layout frames. Give those groups appropriate token-bound spacing and padding where the content requires it.
+- In Dialog, keep the close control outside the Header slot as an absolutely positioned child of the shell, anchored to the top right. Use token-bound insets where the API supports them; Figma x/y offsets currently require token-derived numeric values plus right/top constraints, and this exception must be recorded. Reserve sufficient space so long content cannot overlap it, including when Header is hidden. Replacing or hiding Header content must not move or delete the close control.
+- The shared Close Button must support a subtle variant with no background fill. Use this variant for Dialog, preserving a visible focus treatment and the required connected icon. Keep the existing filled appearance available as a separate variant.
+- Do not enable Clip content on shadow-bearing components or ancestors that must show child shadows, focus rings, or floating controls. If a content region needs scrolling or cropping, put clipping on a dedicated inner viewport while leaving the outer shell and shadow path unclipped.
+- Validate section padding, slot replacement, close positioning after resizing, long copy, hidden sections, shadows, and focus rings in applicable themes and style modes.
+
+## Dedicated nested items
+
+- Button Group must contain instances of a dedicated `Button Group Item` component, not instances of the standalone `Button` component.
+- The item owns its labels, icon controls, sizes, states, and group-specific edge geometry. The group owns orientation and the native Items slot, so designers can add, remove, and reorder items without detaching.
+- Reuse Spartan tokens, text styles, and connected icon components inside the dedicated item. Preserve existing group component IDs and supported property values when migrating.
 
 ## Density and free sizes
 
