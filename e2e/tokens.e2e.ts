@@ -23,7 +23,7 @@ before(async () => { ({ server, base } = await startServer()); browser = await l
 after(async () => { await browser.close(); server.close(); });
 
 describe('generated token CSS in Chromium', () => {
-  test('every token resolves to the Figma value for all 128 style, hue, color scheme, contrast, and density combinations', async () => {
+  test('every token resolves to the authored value for all 128 style, hue, color scheme, contrast, and density combinations', async () => {
     const page = await openCanvas(browser, base);
     let checked = 0;
     for (const style of STYLES) for (const primary of HUES) for (const scheme of SCHEMES) for (const contrast of CONTRASTS) for (const density of DENSITIES) {
@@ -113,15 +113,19 @@ describe('generated token CSS in Chromium', () => {
   });
 
   test('the three-collection token re-resolves with its settings spread over three nesting levels', async () => {
-    assert.deepEqual(deps.get('style.style.field.border.hover'), ['primary', 'semantic-color', 'style']);
+    const fixture = structuredClone(source);
+    const field = fixture.tokens.find(t => t.key === 'style.style.field.border.hover')!;
+    for (const mode of ['Helios', 'Ares']) field.values[mode] = { alias: 'semantic-color.color.primary.text' };
+    assert.deepEqual(modeDependencies(fixture).get(field.key), ['primary', 'semantic-color', 'style']);
     const page = await openCanvas(browser, base);
+    await page.addStyleTag({ content: renderCSSV2(fixture) });
     for (const style of STYLES) for (const primary of HUES) for (const scheme of SCHEMES) {
       const got = await page.evaluate(({ style, primary, scheme }) => {
         document.getElementById('storybook-root')!.innerHTML = `<div data-sp-mode-style="${style}" data-sp-mode-contrast="High"><div data-sp-mode-color-scheme="${scheme}"><div data-sp-mode-primary="${primary}"><p id="leaf">x</p></div></div></div>`;
         return getComputedStyle(document.getElementById('leaf')!).getPropertyValue('--sp-style-field-border-hover');
       }, { style, primary, scheme });
       const attrs = { style, contrast: 'High', 'color-scheme': scheme, primary };
-      assert.equal(canon(got), canon(resolvedCss(source, 'style.style.field.border.hover', assignmentFromAttributes(source, attrs))), JSON.stringify(attrs));
+      assert.equal(canon(got), canon(resolvedCss(fixture, 'style.style.field.border.hover', assignmentFromAttributes(fixture, attrs))), JSON.stringify(attrs));
     }
     await page.close();
   });

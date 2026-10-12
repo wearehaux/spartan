@@ -50,6 +50,8 @@ node --import tsx --test --test-name-pattern="aliases" tests/*.test.ts
 
 ## Architecture
 
+Follow [tokens/THEME-CONTRACT.md](tokens/THEME-CONTRACT.md) for the implemented Brand/System separation, family Style recipes, local Appearance and named Density roles. Preserve current density typography/icons and Card anatomy. Build/check enforce ownership rules in `lib/token-ownership.ts`. **Foundations / Theme contract** contains infrastructure fixtures for review, while production component adoption stays on its existing issue.
+
 The token pipeline feeds the Lit components in `packages/components` (`@spartan/components`: `sp-button`, `sp-icon-button`) and their Storybook.
 
 - `tokens/source.json` (`spartan.tokens.v2`) is the canonical Git authoring source, seeded from the verified Figma export without changing its values, aliases, modes, or identities. Edit it through reviewed changes. `public/tokens.css` is generated from it; do not edit CSS by hand. [tokens/README.md](tokens/README.md) covers authoring and validation.

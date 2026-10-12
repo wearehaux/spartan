@@ -288,7 +288,6 @@
   --sp-prim-space-optical-10: 10px;
   --sp-prim-space-optical-6: 6px;
   --sp-prim-space-px: 1px;
-  --sp-hue-color-primary-0: rgb(255 255 255 / 1);
   --sp-color-backdrop-drawer: color-mix(in srgb, var(--sp-prim-color-neutral-1000) var(--sp-opacity-20), transparent);
   --sp-color-file-format-foreground-dark: var(--sp-prim-color-neutral-950);
   --sp-color-file-format-foreground-light: var(--sp-prim-color-neutral-0);
@@ -449,6 +448,60 @@
   --sp-style-shadow-control-ambient: var(--sp-color-style-transparent);
   --sp-style-shadow-control-edge: var(--sp-color-style-transparent);
   --sp-style-shadow-control-raised: var(--sp-color-style-transparent);
+  --sp-prim-color-brand-blue-0: rgb(255 255 255 / 1);
+  --sp-prim-color-brand-purple-0: rgb(255 255 255 / 1);
+  --sp-prim-color-brand-orange-0: rgb(255 255 255 / 1);
+  --sp-prim-color-brand-sky-0: rgb(255 255 255 / 1);
+  --sp-prim-color-brand-blue-100: rgb(228 240 254 / 1);
+  --sp-prim-color-brand-purple-100: rgb(241 235 255 / 1);
+  --sp-prim-color-brand-orange-100: rgb(255 234 222 / 1);
+  --sp-prim-color-brand-sky-100: rgb(220 243 253 / 1);
+  --sp-prim-color-brand-blue-1000: rgb(0 6 18 / 1);
+  --sp-prim-color-brand-purple-1000: rgb(8 2 20 / 1);
+  --sp-prim-color-brand-orange-1000: rgb(15 3 0 / 1);
+  --sp-prim-color-brand-sky-1000: rgb(0 7 12 / 1);
+  --sp-prim-color-brand-blue-200: rgb(206 228 255 / 1);
+  --sp-prim-color-brand-purple-200: rgb(230 218 255 / 1);
+  --sp-prim-color-brand-orange-200: rgb(255 216 195 / 1);
+  --sp-prim-color-brand-sky-200: rgb(187 234 253 / 1);
+  --sp-prim-color-brand-blue-300: rgb(166 206 255 / 1);
+  --sp-prim-color-brand-purple-300: rgb(212 189 255 / 1);
+  --sp-prim-color-brand-orange-300: rgb(255 184 145 / 1);
+  --sp-prim-color-brand-sky-300: rgb(124 217 252 / 1);
+  --sp-prim-color-brand-blue-400: rgb(106 174 255 / 1);
+  --sp-prim-color-brand-purple-400: rgb(187 145 255 / 1);
+  --sp-prim-color-brand-orange-400: rgb(255 132 50 / 1);
+  --sp-prim-color-brand-sky-400: rgb(0 188 237 / 1);
+  --sp-prim-color-brand-blue-50: rgb(244 249 255 / 1);
+  --sp-prim-color-brand-purple-50: rgb(249 247 255 / 1);
+  --sp-prim-color-brand-orange-50: rgb(255 247 242 / 1);
+  --sp-prim-color-brand-sky-50: rgb(240 250 255 / 1);
+  --sp-prim-color-brand-blue-500: rgb(4 133 247 / 1);
+  --sp-prim-color-brand-purple-500: rgb(160 82 255 / 1);
+  --sp-prim-color-brand-orange-500: rgb(209 97 0 / 1);
+  --sp-prim-color-brand-sky-500: rgb(0 148 187 / 1);
+  --sp-prim-color-brand-blue-600: rgb(0 109 206 / 1);
+  --sp-prim-color-brand-purple-600: rgb(137 51 228 / 1);
+  --sp-prim-color-brand-orange-600: rgb(173 80 0 / 1);
+  --sp-prim-color-brand-sky-600: rgb(0 122 155 / 1);
+  --sp-prim-color-brand-blue-700: rgb(0 84 161 / 1);
+  --sp-prim-color-brand-purple-700: rgb(107 31 183 / 1);
+  --sp-prim-color-brand-orange-700: rgb(135 61 0 / 1);
+  --sp-prim-color-brand-sky-700: rgb(0 95 121 / 1);
+  --sp-prim-color-brand-blue-800: rgb(0 58 114 / 1);
+  --sp-prim-color-brand-purple-800: rgb(74 20 129 / 1);
+  --sp-prim-color-brand-orange-800: rgb(95 41 0 / 1);
+  --sp-prim-color-brand-sky-800: rgb(0 65 84 / 1);
+  --sp-prim-color-brand-blue-900: rgb(0 33 70 / 1);
+  --sp-prim-color-brand-purple-900: rgb(44 10 79 / 1);
+  --sp-prim-color-brand-orange-900: rgb(58 22 0 / 1);
+  --sp-prim-color-brand-sky-900: rgb(0 38 51 / 1);
+  --sp-prim-color-brand-blue-950: rgb(0 19 46 / 1);
+  --sp-prim-color-brand-purple-950: rgb(27 5 51 / 1);
+  --sp-prim-color-brand-orange-950: rgb(37 11 0 / 1);
+  --sp-prim-color-brand-sky-950: rgb(0 23 32 / 1);
+  --sp-card-padding-x: var(--sp-density-card-padding-x);
+  --sp-card-padding-y: var(--sp-density-card-padding-y);
 }
 
 :root,
@@ -456,18 +509,19 @@
 [data-sp-mode-primary="Purple"],
 [data-sp-mode-primary="Orange"],
 [data-sp-mode-primary="Sky"] {
-  --sp-hue-color-primary-100: var(--_sp-not-primary-blue, rgb(228 240 254 / 1)) var(--_sp-not-primary-purple, rgb(241 235 255 / 1)) var(--_sp-not-primary-orange, rgb(255 234 222 / 1)) var(--_sp-not-primary-sky, rgb(220 243 253 / 1));
-  --sp-hue-color-primary-1000: var(--_sp-not-primary-blue, rgb(0 6 18 / 1)) var(--_sp-not-primary-purple, rgb(8 2 20 / 1)) var(--_sp-not-primary-orange, rgb(15 3 0 / 1)) var(--_sp-not-primary-sky, rgb(0 7 12 / 1));
-  --sp-hue-color-primary-200: var(--_sp-not-primary-blue, rgb(206 228 255 / 1)) var(--_sp-not-primary-purple, rgb(230 218 255 / 1)) var(--_sp-not-primary-orange, rgb(255 216 195 / 1)) var(--_sp-not-primary-sky, rgb(187 234 253 / 1));
-  --sp-hue-color-primary-300: var(--_sp-not-primary-blue, rgb(166 206 255 / 1)) var(--_sp-not-primary-purple, rgb(212 189 255 / 1)) var(--_sp-not-primary-orange, rgb(255 184 145 / 1)) var(--_sp-not-primary-sky, rgb(124 217 252 / 1));
-  --sp-hue-color-primary-400: var(--_sp-not-primary-blue, rgb(106 174 255 / 1)) var(--_sp-not-primary-purple, rgb(187 145 255 / 1)) var(--_sp-not-primary-orange, rgb(255 132 50 / 1)) var(--_sp-not-primary-sky, rgb(0 188 237 / 1));
-  --sp-hue-color-primary-50: var(--_sp-not-primary-blue, rgb(244 249 255 / 1)) var(--_sp-not-primary-purple, rgb(249 247 255 / 1)) var(--_sp-not-primary-orange, rgb(255 247 242 / 1)) var(--_sp-not-primary-sky, rgb(240 250 255 / 1));
-  --sp-hue-color-primary-500: var(--_sp-not-primary-blue, rgb(4 133 247 / 1)) var(--_sp-not-primary-purple, rgb(160 82 255 / 1)) var(--_sp-not-primary-orange, rgb(209 97 0 / 1)) var(--_sp-not-primary-sky, rgb(0 148 187 / 1));
-  --sp-hue-color-primary-600: var(--_sp-not-primary-blue, rgb(0 109 206 / 1)) var(--_sp-not-primary-purple, rgb(137 51 228 / 1)) var(--_sp-not-primary-orange, rgb(173 80 0 / 1)) var(--_sp-not-primary-sky, rgb(0 122 155 / 1));
-  --sp-hue-color-primary-700: var(--_sp-not-primary-blue, rgb(0 84 161 / 1)) var(--_sp-not-primary-purple, rgb(107 31 183 / 1)) var(--_sp-not-primary-orange, rgb(135 61 0 / 1)) var(--_sp-not-primary-sky, rgb(0 95 121 / 1));
-  --sp-hue-color-primary-800: var(--_sp-not-primary-blue, rgb(0 58 114 / 1)) var(--_sp-not-primary-purple, rgb(74 20 129 / 1)) var(--_sp-not-primary-orange, rgb(95 41 0 / 1)) var(--_sp-not-primary-sky, rgb(0 65 84 / 1));
-  --sp-hue-color-primary-900: var(--_sp-not-primary-blue, rgb(0 33 70 / 1)) var(--_sp-not-primary-purple, rgb(44 10 79 / 1)) var(--_sp-not-primary-orange, rgb(58 22 0 / 1)) var(--_sp-not-primary-sky, rgb(0 38 51 / 1));
-  --sp-hue-color-primary-950: var(--_sp-not-primary-blue, rgb(0 19 46 / 1)) var(--_sp-not-primary-purple, rgb(27 5 51 / 1)) var(--_sp-not-primary-orange, rgb(37 11 0 / 1)) var(--_sp-not-primary-sky, rgb(0 23 32 / 1));
+  --sp-hue-color-primary-0: var(--_sp-not-primary-blue, var(--sp-prim-color-brand-blue-0)) var(--_sp-not-primary-purple, var(--sp-prim-color-brand-purple-0)) var(--_sp-not-primary-orange, var(--sp-prim-color-brand-orange-0)) var(--_sp-not-primary-sky, var(--sp-prim-color-brand-sky-0));
+  --sp-hue-color-primary-100: var(--_sp-not-primary-blue, var(--sp-prim-color-brand-blue-100)) var(--_sp-not-primary-purple, var(--sp-prim-color-brand-purple-100)) var(--_sp-not-primary-orange, var(--sp-prim-color-brand-orange-100)) var(--_sp-not-primary-sky, var(--sp-prim-color-brand-sky-100));
+  --sp-hue-color-primary-1000: var(--_sp-not-primary-blue, var(--sp-prim-color-brand-blue-1000)) var(--_sp-not-primary-purple, var(--sp-prim-color-brand-purple-1000)) var(--_sp-not-primary-orange, var(--sp-prim-color-brand-orange-1000)) var(--_sp-not-primary-sky, var(--sp-prim-color-brand-sky-1000));
+  --sp-hue-color-primary-200: var(--_sp-not-primary-blue, var(--sp-prim-color-brand-blue-200)) var(--_sp-not-primary-purple, var(--sp-prim-color-brand-purple-200)) var(--_sp-not-primary-orange, var(--sp-prim-color-brand-orange-200)) var(--_sp-not-primary-sky, var(--sp-prim-color-brand-sky-200));
+  --sp-hue-color-primary-300: var(--_sp-not-primary-blue, var(--sp-prim-color-brand-blue-300)) var(--_sp-not-primary-purple, var(--sp-prim-color-brand-purple-300)) var(--_sp-not-primary-orange, var(--sp-prim-color-brand-orange-300)) var(--_sp-not-primary-sky, var(--sp-prim-color-brand-sky-300));
+  --sp-hue-color-primary-400: var(--_sp-not-primary-blue, var(--sp-prim-color-brand-blue-400)) var(--_sp-not-primary-purple, var(--sp-prim-color-brand-purple-400)) var(--_sp-not-primary-orange, var(--sp-prim-color-brand-orange-400)) var(--_sp-not-primary-sky, var(--sp-prim-color-brand-sky-400));
+  --sp-hue-color-primary-50: var(--_sp-not-primary-blue, var(--sp-prim-color-brand-blue-50)) var(--_sp-not-primary-purple, var(--sp-prim-color-brand-purple-50)) var(--_sp-not-primary-orange, var(--sp-prim-color-brand-orange-50)) var(--_sp-not-primary-sky, var(--sp-prim-color-brand-sky-50));
+  --sp-hue-color-primary-500: var(--_sp-not-primary-blue, var(--sp-prim-color-brand-blue-500)) var(--_sp-not-primary-purple, var(--sp-prim-color-brand-purple-500)) var(--_sp-not-primary-orange, var(--sp-prim-color-brand-orange-500)) var(--_sp-not-primary-sky, var(--sp-prim-color-brand-sky-500));
+  --sp-hue-color-primary-600: var(--_sp-not-primary-blue, var(--sp-prim-color-brand-blue-600)) var(--_sp-not-primary-purple, var(--sp-prim-color-brand-purple-600)) var(--_sp-not-primary-orange, var(--sp-prim-color-brand-orange-600)) var(--_sp-not-primary-sky, var(--sp-prim-color-brand-sky-600));
+  --sp-hue-color-primary-700: var(--_sp-not-primary-blue, var(--sp-prim-color-brand-blue-700)) var(--_sp-not-primary-purple, var(--sp-prim-color-brand-purple-700)) var(--_sp-not-primary-orange, var(--sp-prim-color-brand-orange-700)) var(--_sp-not-primary-sky, var(--sp-prim-color-brand-sky-700));
+  --sp-hue-color-primary-800: var(--_sp-not-primary-blue, var(--sp-prim-color-brand-blue-800)) var(--_sp-not-primary-purple, var(--sp-prim-color-brand-purple-800)) var(--_sp-not-primary-orange, var(--sp-prim-color-brand-orange-800)) var(--_sp-not-primary-sky, var(--sp-prim-color-brand-sky-800));
+  --sp-hue-color-primary-900: var(--_sp-not-primary-blue, var(--sp-prim-color-brand-blue-900)) var(--_sp-not-primary-purple, var(--sp-prim-color-brand-purple-900)) var(--_sp-not-primary-orange, var(--sp-prim-color-brand-orange-900)) var(--_sp-not-primary-sky, var(--sp-prim-color-brand-sky-900));
+  --sp-hue-color-primary-950: var(--_sp-not-primary-blue, var(--sp-prim-color-brand-blue-950)) var(--_sp-not-primary-purple, var(--sp-prim-color-brand-purple-950)) var(--_sp-not-primary-orange, var(--sp-prim-color-brand-orange-950)) var(--_sp-not-primary-sky, var(--sp-prim-color-brand-sky-950));
 }
 
 :root,
@@ -484,11 +538,11 @@
   --sp-color-border-overlay: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, color-mix(in srgb, var(--sp-prim-color-neutral-950) var(--sp-opacity-border-overlay), transparent))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-prim-color-neutral-800))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-900))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-100)));
   --sp-color-border-strong: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-prim-color-neutral-500))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-prim-color-neutral-600))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-900))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-100)));
   --sp-color-border-subtle: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-prim-color-neutral-100))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-prim-color-neutral-900))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-500))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-500)));
-  --sp-color-control-active: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-prim-color-blue-700))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-prim-color-blue-700))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-prim-color-blue-900))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-prim-color-blue-100)));
-  --sp-color-control-default: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-prim-color-blue-500))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-prim-color-blue-500))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-prim-color-blue-700))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-prim-color-blue-300)));
-  --sp-color-control-foreground: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-prim-color-neutral-0))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-prim-color-neutral-0))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-0))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-1000)));
-  --sp-color-control-hover: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-prim-color-blue-600))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-prim-color-blue-600))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-prim-color-blue-800))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-prim-color-blue-200)));
-  --sp-color-control-track: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-prim-color-neutral-100))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-prim-color-neutral-800))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-300))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-700)));
+  --sp-color-control-active: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-color-system-control-active))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-color-system-control-active))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-color-system-control-active))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-color-system-control-active)));
+  --sp-color-control-default: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-color-system-control-default))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-color-system-control-default))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-color-system-control-default))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-color-system-control-default)));
+  --sp-color-control-foreground: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-color-system-control-foreground))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-color-system-control-foreground))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-color-system-control-foreground))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-color-system-control-foreground)));
+  --sp-color-control-hover: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-color-system-control-hover))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-color-system-control-hover))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-color-system-control-hover))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-color-system-control-hover)));
+  --sp-color-control-track: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-color-system-control-track))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-color-system-control-track))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-color-system-control-track))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-color-system-control-track)));
   --sp-color-danger-active: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-prim-color-danger-800))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-prim-color-danger-800))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-prim-color-danger-950))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-prim-color-danger-100)));
   --sp-color-danger-default: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-prim-color-danger-600))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-prim-color-danger-600))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-prim-color-danger-800))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-prim-color-danger-300)));
   --sp-color-danger-foreground: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-prim-color-neutral-0))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-prim-color-neutral-0))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-0))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-1000)));
@@ -502,6 +556,7 @@
   --sp-color-dashed-border: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, color-mix(in srgb, var(--sp-prim-color-neutral-1000) var(--sp-opacity-6), transparent))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, color-mix(in srgb, var(--sp-prim-color-neutral-0) var(--sp-opacity-6), transparent))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, color-mix(in srgb, var(--sp-prim-color-neutral-1000) var(--sp-opacity-6), transparent))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, color-mix(in srgb, var(--sp-prim-color-neutral-0) var(--sp-opacity-6), transparent)));
   --sp-color-dashed-default: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, color-mix(in srgb, var(--sp-prim-color-neutral-1000) var(--sp-opacity-2), transparent))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, color-mix(in srgb, var(--sp-prim-color-neutral-0) var(--sp-opacity-2), transparent))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, color-mix(in srgb, var(--sp-prim-color-neutral-1000) var(--sp-opacity-2), transparent))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, color-mix(in srgb, var(--sp-prim-color-neutral-0) var(--sp-opacity-2), transparent)));
   --sp-color-dashed-hover: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, color-mix(in srgb, var(--sp-prim-color-neutral-1000) var(--sp-opacity-6), transparent))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, color-mix(in srgb, var(--sp-prim-color-neutral-0) var(--sp-opacity-6), transparent))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, color-mix(in srgb, var(--sp-prim-color-neutral-1000) var(--sp-opacity-6), transparent))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, color-mix(in srgb, var(--sp-prim-color-neutral-0) var(--sp-opacity-6), transparent)));
+  --sp-color-focus-ring-default: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-color-system-focus))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-color-system-focus))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-color-system-focus))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-color-system-focus)));
   --sp-color-foreground-default: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-prim-color-neutral-900))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-prim-color-neutral-50))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-1000))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-0)));
   --sp-color-foreground-disabled: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-prim-color-neutral-500))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-prim-color-neutral-600))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-700))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-300)));
   --sp-color-foreground-inverse: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-prim-color-neutral-50))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-prim-color-neutral-1000))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-0))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-1000)));
@@ -510,7 +565,7 @@
   --sp-color-information-foreground: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-prim-color-neutral-0))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-prim-color-neutral-0))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-0))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-1000)));
   --sp-color-information-surface: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-prim-color-information-100))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-prim-color-information-950))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-prim-color-information-100))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-prim-color-information-900)));
   --sp-color-information-text: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-prim-color-information-700))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-prim-color-information-300))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-prim-color-information-800))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-prim-color-information-200)));
-  --sp-color-primary-foreground: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-prim-color-neutral-0))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-prim-color-neutral-0))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-0))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-1000)));
+  --sp-color-primary-foreground: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-color-brand-foreground))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-color-brand-foreground))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-color-brand-foreground))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-color-brand-foreground)));
   --sp-color-secondary-active: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-prim-color-neutral-200))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-prim-color-neutral-700))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-200))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-700)));
   --sp-color-secondary-default: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-prim-color-neutral-0))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-prim-color-neutral-900))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-0))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-900)));
   --sp-color-secondary-foreground: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-prim-color-neutral-900))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-prim-color-neutral-50))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-1000))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-0)));
@@ -585,6 +640,31 @@
   --sp-style-button-warning-foreground-hover: var(--sp-color-warning-foreground);
   --sp-style-button-warning-foreground-pressed: var(--sp-color-warning-foreground);
   --sp-style-field-border-error: var(--sp-color-danger-default);
+  --sp-style-field-border-focus: var(--sp-color-focus-ring-default);
+  --sp-color-brand-foreground: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-prim-color-neutral-0))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-prim-color-neutral-0))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-0))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-1000)));
+  --sp-color-system-control-active: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-prim-color-blue-700))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-prim-color-blue-700))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-prim-color-blue-900))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-prim-color-blue-100)));
+  --sp-color-system-control-default: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-prim-color-blue-500))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-prim-color-blue-500))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-prim-color-blue-700))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-prim-color-blue-300)));
+  --sp-color-system-control-foreground: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-prim-color-neutral-0))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-prim-color-neutral-0))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-0))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-1000)));
+  --sp-color-system-control-hover: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-prim-color-blue-600))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-prim-color-blue-600))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-prim-color-blue-800))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-prim-color-blue-200)));
+  --sp-color-system-control-track: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-prim-color-neutral-100))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-prim-color-neutral-800))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-300))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-prim-color-neutral-700)));
+  --sp-color-system-focus: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-prim-color-blue-600))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-prim-color-blue-400))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-prim-color-blue-700))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-prim-color-blue-300)));
+  --sp-color-system-text: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-prim-color-blue-700))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-prim-color-blue-300))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-prim-color-blue-800))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-prim-color-blue-200)));
+  --sp-contrast-field-filled-width: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-prim-space-0))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-prim-space-0))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-contrast-border-width-default))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-contrast-border-width-default)));
+  --sp-style-field-outlined-background: var(--sp-color-surface-default);
+  --sp-style-field-outlined-border-default: var(--sp-color-border-default);
+  --sp-style-field-outlined-side-width: var(--sp-border-width-default);
+  --sp-style-field-filled-background: var(--sp-color-surface-muted);
+  --sp-style-field-filled-border-default: var(--sp-color-style-field-soft-border);
+  --sp-style-field-filled-side-width: var(--sp-contrast-field-filled-width);
+  --sp-button-focus-color: var(--sp-color-system-focus);
+  --sp-field-border-focus: var(--sp-style-field-border-focus);
+  --sp-field-border-error: var(--sp-style-field-border-error);
+  --sp-selection-background-checked: var(--sp-color-system-control-default);
+  --sp-selection-background-hover: var(--sp-color-system-control-hover);
+  --sp-selection-background-active: var(--sp-color-system-control-active);
+  --sp-selection-foreground-checked: var(--sp-color-system-control-foreground);
+  --sp-selection-track: var(--sp-color-system-control-track);
+  --sp-selection-focus-color: var(--sp-color-system-focus);
 }
 
 :root,
@@ -596,18 +676,21 @@
 [data-sp-mode-color-scheme="Dark"],
 [data-sp-mode-contrast="Normal"],
 [data-sp-mode-contrast="High"] {
-  --sp-color-focus-ring-default: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-hue-color-primary-600))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-hue-color-primary-400))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-hue-color-primary-700))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-hue-color-primary-300)));
-  --sp-color-primary-active: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-hue-color-primary-800))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-hue-color-primary-800))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-hue-color-primary-950))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-hue-color-primary-100)));
-  --sp-color-primary-default: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-hue-color-primary-600))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-hue-color-primary-600))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-hue-color-primary-800))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-hue-color-primary-300)));
-  --sp-color-primary-hover: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-hue-color-primary-700))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-hue-color-primary-700))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-hue-color-primary-900))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-hue-color-primary-200)));
-  --sp-color-primary-surface: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-hue-color-primary-100))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-hue-color-primary-950))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-hue-color-primary-100))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-hue-color-primary-900)));
-  --sp-color-primary-text: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-hue-color-primary-700))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-hue-color-primary-300))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-hue-color-primary-800))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-hue-color-primary-200)));
+  --sp-color-primary-active: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-color-brand-active))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-color-brand-active))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-color-brand-active))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-color-brand-active)));
+  --sp-color-primary-default: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-color-brand-default))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-color-brand-default))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-color-brand-default))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-color-brand-default)));
+  --sp-color-primary-hover: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-color-brand-hover))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-color-brand-hover))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-color-brand-hover))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-color-brand-hover)));
+  --sp-color-primary-surface: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-color-brand-surface))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-color-brand-surface))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-color-brand-surface))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-color-brand-surface)));
+  --sp-color-primary-text: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-color-brand-text))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-color-brand-text))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-color-brand-text))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-color-brand-text)));
   --sp-color-surface-selected: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-hue-color-primary-100))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-hue-color-primary-800))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-hue-color-primary-100))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-hue-color-primary-900)));
   --sp-color-style-primary-tonal-hover: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-hue-color-primary-200))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-hue-color-primary-900))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-hue-color-primary-200))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-hue-color-primary-900)));
   --sp-style-button-primary-background-default: var(--sp-color-primary-default);
   --sp-style-button-primary-background-hover: var(--sp-color-primary-hover);
   --sp-style-button-primary-background-pressed: var(--sp-color-primary-active);
-  --sp-style-field-border-focus: var(--sp-color-focus-ring-default);
+  --sp-color-brand-active: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-hue-color-primary-800))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-hue-color-primary-800))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-hue-color-primary-950))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-hue-color-primary-100)));
+  --sp-color-brand-default: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-hue-color-primary-600))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-hue-color-primary-600))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-hue-color-primary-800))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-hue-color-primary-300)));
+  --sp-color-brand-hover: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-hue-color-primary-700))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-hue-color-primary-700))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-hue-color-primary-900))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-hue-color-primary-200)));
+  --sp-color-brand-surface: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-hue-color-primary-100))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-hue-color-primary-950))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-hue-color-primary-100))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-hue-color-primary-900)));
+  --sp-color-brand-text: var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-normal, var(--sp-hue-color-primary-700))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-normal, var(--sp-hue-color-primary-300))) var(--_sp-not-color-scheme-light, var(--_sp-not-contrast-high, var(--sp-hue-color-primary-800))) var(--_sp-not-color-scheme-dark, var(--_sp-not-contrast-high, var(--sp-hue-color-primary-200)));
 }
 
 :root,
@@ -666,6 +749,28 @@
   --sp-density-sidebar-project-height: var(--_sp-not-density-relaxed, var(--sp-prim-space-9)) var(--_sp-not-density-compact, var(--sp-prim-space-8));
   --sp-density-select-tag-height: var(--_sp-not-density-relaxed, var(--sp-density-space-6)) var(--_sp-not-density-compact, var(--sp-density-space-5));
   --sp-density-select-padding-y-base: var(--_sp-not-density-relaxed, var(--sp-density-space-2)) var(--_sp-not-density-compact, var(--sp-density-space-1));
+  --sp-density-table-row-min-height: var(--_sp-not-density-relaxed, var(--sp-density-control-height-base)) var(--_sp-not-density-compact, var(--sp-density-control-height-base));
+  --sp-density-table-cell-padding-y: var(--_sp-not-density-relaxed, var(--sp-prim-space-2)) var(--_sp-not-density-compact, var(--sp-prim-space-1));
+  --sp-density-menu-item-min-height: var(--_sp-not-density-relaxed, var(--sp-density-control-height-small)) var(--_sp-not-density-compact, var(--sp-density-control-height-small));
+  --sp-density-menu-item-padding-y: var(--_sp-not-density-relaxed, var(--sp-density-control-padding-y)) var(--_sp-not-density-compact, var(--sp-density-control-padding-y));
+  --sp-density-form-group-gap: var(--_sp-not-density-relaxed, var(--sp-prim-space-4)) var(--_sp-not-density-compact, var(--sp-prim-space-3));
+  --sp-density-chart-legend-gap: var(--_sp-not-density-relaxed, var(--sp-prim-space-3)) var(--_sp-not-density-compact, var(--sp-prim-space-2));
+  --sp-field-height-small: var(--sp-density-control-height-small);
+  --sp-field-padding-y: var(--sp-density-control-padding-y);
+  --sp-field-gap: var(--sp-density-control-gap);
+  --sp-field-font-size: var(--sp-density-control-font-size-base);
+  --sp-field-line-height: var(--sp-density-control-line-height-base);
+  --sp-field-icon-size: var(--sp-density-control-icon-size-base);
+  --sp-table-row-min-height: var(--sp-density-table-row-min-height);
+  --sp-table-cell-padding-y: var(--sp-density-table-cell-padding-y);
+  --sp-table-cell-padding-x: var(--sp-density-control-padding-x-base);
+  --sp-menu-item-min-height: var(--sp-density-menu-item-min-height);
+  --sp-menu-item-padding-y: var(--sp-density-menu-item-padding-y);
+  --sp-menu-item-gap: var(--sp-density-control-gap);
+  --sp-form-group-gap: var(--sp-density-form-group-gap);
+  --sp-chart-legend-gap: var(--sp-density-chart-legend-gap);
+  --sp-chart-tooltip-padding-x: var(--sp-density-tooltip-padding-x);
+  --sp-surface-content-padding: var(--sp-density-surface-padding);
 }
 
 :root,
@@ -677,6 +782,23 @@
   --sp-style-field-focus-radius: var(--_sp-not-style-atlas, var(--sp-prim-radius-lg)) var(--_sp-not-style-selene, var(--sp-prim-radius-xl)) var(--_sp-not-style-helios, var(--sp-radius-pill)) var(--_sp-not-style-ares, var(--sp-prim-radius-sm));
   --sp-style-field-radius: var(--_sp-not-style-atlas, var(--sp-radius-control)) var(--_sp-not-style-selene, var(--sp-prim-radius-lg)) var(--_sp-not-style-helios, var(--sp-radius-pill)) var(--_sp-not-style-ares, var(--sp-prim-radius-none));
   --sp-style-surface-radius: var(--_sp-not-style-atlas, var(--sp-radius-surface)) var(--_sp-not-style-selene, var(--sp-radius-surface)) var(--_sp-not-style-helios, var(--sp-prim-radius-xl)) var(--_sp-not-style-ares, var(--sp-prim-radius-none));
+  --sp-style-field-multiline-radius: var(--_sp-not-style-atlas, var(--sp-radius-control)) var(--_sp-not-style-selene, var(--sp-prim-radius-lg)) var(--_sp-not-style-helios, var(--sp-prim-radius-xl)) var(--_sp-not-style-ares, var(--sp-prim-radius-none));
+  --sp-style-field-shadow-offset-y: var(--_sp-not-style-atlas, var(--sp-prim-space-0)) var(--_sp-not-style-selene, var(--sp-prim-space-0)) var(--_sp-not-style-helios, var(--sp-prim-space-0-5)) var(--_sp-not-style-ares, var(--sp-prim-space-0));
+  --sp-style-field-shadow-blur: var(--_sp-not-style-atlas, var(--sp-prim-space-0)) var(--_sp-not-style-selene, var(--sp-prim-space-0)) var(--_sp-not-style-helios, var(--sp-prim-space-1)) var(--_sp-not-style-ares, var(--sp-prim-space-0));
+  --sp-style-surface-shadow-offset-y: var(--_sp-not-style-atlas, var(--sp-prim-space-0)) var(--_sp-not-style-selene, var(--sp-prim-space-0)) var(--_sp-not-style-helios, var(--sp-prim-space-1)) var(--_sp-not-style-ares, var(--sp-prim-space-0));
+  --sp-style-surface-shadow-blur: var(--_sp-not-style-atlas, var(--sp-prim-space-0)) var(--_sp-not-style-selene, var(--sp-prim-space-0)) var(--_sp-not-style-helios, var(--sp-prim-space-4)) var(--_sp-not-style-ares, var(--sp-prim-space-0));
+  --sp-style-selection-radius: var(--_sp-not-style-atlas, var(--sp-prim-radius-sm)) var(--_sp-not-style-selene, var(--sp-prim-radius-md)) var(--_sp-not-style-helios, var(--sp-prim-radius-lg)) var(--_sp-not-style-ares, var(--sp-prim-radius-none));
+  --sp-field-radius: var(--sp-style-field-radius);
+  --sp-field-multiline-radius: var(--sp-style-field-multiline-radius);
+  --sp-field-focus-radius: var(--sp-style-field-focus-radius);
+  --sp-field-shadow-offset-y: var(--sp-style-field-shadow-offset-y);
+  --sp-field-shadow-blur: var(--sp-style-field-shadow-blur);
+  --sp-selection-radius: var(--sp-style-selection-radius);
+  --sp-table-radius: var(--sp-style-surface-radius);
+  --sp-menu-radius: var(--sp-style-surface-radius);
+  --sp-surface-radius: var(--sp-style-surface-radius);
+  --sp-surface-shadow-offset-y: var(--sp-style-surface-shadow-offset-y);
+  --sp-surface-shadow-blur: var(--sp-style-surface-shadow-blur);
 }
 
 :root,
@@ -696,23 +818,24 @@
   --sp-style-field-background-hover: var(--_sp-not-style-atlas, var(--sp-color-secondary-hover)) var(--_sp-not-style-selene, var(--sp-color-secondary-active)) var(--_sp-not-style-helios, var(--sp-color-surface-elevated)) var(--_sp-not-style-ares, var(--sp-color-surface-muted));
   --sp-style-field-border-width: var(--_sp-not-style-atlas, var(--sp-border-width-default)) var(--_sp-not-style-selene, var(--sp-border-width-default)) var(--_sp-not-style-helios, var(--sp-border-width-emphasis)) var(--_sp-not-style-ares, var(--sp-border-width-emphasis));
   --sp-style-field-border-default: var(--_sp-not-style-atlas, var(--sp-color-border-default)) var(--_sp-not-style-selene, var(--sp-color-style-field-soft-border)) var(--_sp-not-style-helios, var(--sp-color-border-strong)) var(--_sp-not-style-ares, var(--sp-color-border-strong));
+  --sp-style-field-border-hover: var(--_sp-not-style-atlas, var(--sp-color-border-strong)) var(--_sp-not-style-selene, var(--sp-color-style-field-soft-border)) var(--_sp-not-style-helios, var(--sp-color-system-text)) var(--_sp-not-style-ares, var(--sp-color-system-text));
   --sp-style-field-shadow: var(--_sp-not-style-atlas, var(--sp-color-style-transparent)) var(--_sp-not-style-selene, var(--sp-color-style-transparent)) var(--_sp-not-style-helios, var(--sp-color-shadow-overlay-contact)) var(--_sp-not-style-ares, var(--sp-color-style-transparent));
   --sp-style-field-side-width: var(--_sp-not-style-atlas, var(--sp-border-width-default)) var(--_sp-not-style-selene, var(--sp-border-width-default)) var(--_sp-not-style-helios, var(--sp-border-width-emphasis)) var(--_sp-not-style-ares, var(--sp-prim-space-0));
   --sp-style-field-side-width-error: var(--_sp-not-style-atlas, var(--sp-border-width-emphasis)) var(--_sp-not-style-selene, var(--sp-border-width-emphasis)) var(--_sp-not-style-helios, var(--sp-border-width-emphasis)) var(--_sp-not-style-ares, var(--sp-prim-space-0));
-}
-
-:root,
-[data-sp-mode-primary="Blue"],
-[data-sp-mode-primary="Purple"],
-[data-sp-mode-primary="Orange"],
-[data-sp-mode-primary="Sky"],
-[data-sp-mode-color-scheme="Light"],
-[data-sp-mode-color-scheme="Dark"],
-[data-sp-mode-contrast="Normal"],
-[data-sp-mode-contrast="High"],
-[data-sp-mode-style="Atlas"],
-[data-sp-mode-style="Selene"],
-[data-sp-mode-style="Helios"],
-[data-sp-mode-style="Ares"] {
-  --sp-style-field-border-hover: var(--_sp-not-style-atlas, var(--sp-color-border-strong)) var(--_sp-not-style-selene, var(--sp-color-style-field-soft-border)) var(--_sp-not-style-helios, var(--sp-color-primary-text)) var(--_sp-not-style-ares, var(--sp-color-primary-text));
+  --sp-style-surface-background: var(--_sp-not-style-atlas, var(--sp-color-surface-default)) var(--_sp-not-style-selene, var(--sp-color-surface-muted)) var(--_sp-not-style-helios, var(--sp-color-surface-elevated)) var(--_sp-not-style-ares, var(--sp-color-surface-default));
+  --sp-style-surface-border: var(--_sp-not-style-atlas, var(--sp-color-border-default)) var(--_sp-not-style-selene, var(--sp-color-border-default)) var(--_sp-not-style-helios, var(--sp-color-border-default)) var(--_sp-not-style-ares, var(--sp-color-border-strong));
+  --sp-style-surface-border-width: var(--_sp-not-style-atlas, var(--sp-border-width-default)) var(--_sp-not-style-selene, var(--sp-border-width-default)) var(--_sp-not-style-helios, var(--sp-border-width-default)) var(--_sp-not-style-ares, var(--sp-border-width-emphasis));
+  --sp-style-surface-shadow: var(--_sp-not-style-atlas, var(--sp-color-style-transparent)) var(--_sp-not-style-selene, var(--sp-color-style-transparent)) var(--_sp-not-style-helios, var(--sp-color-shadow-overlay-contact)) var(--_sp-not-style-ares, var(--sp-color-style-transparent));
+  --sp-field-background-default: var(--sp-style-field-background-default);
+  --sp-field-background-hover: var(--sp-style-field-background-hover);
+  --sp-field-border-default: var(--sp-style-field-border-default);
+  --sp-field-border-hover: var(--sp-style-field-border-hover);
+  --sp-field-border-width: var(--sp-style-field-border-width);
+  --sp-field-side-width: var(--sp-style-field-side-width);
+  --sp-field-shadow: var(--sp-style-field-shadow);
+  --sp-surface-background: var(--sp-style-surface-background);
+  --sp-surface-border: var(--sp-style-surface-border);
+  --sp-surface-border-width: var(--sp-style-surface-border-width);
+  --sp-surface-shadow: var(--sp-style-surface-shadow);
+  --sp-field-side-width-error: var(--sp-style-field-side-width-error);
 }

@@ -1,5 +1,10 @@
 # Figma variable snapshot
 
+The Git-authored theme contract now has 685 definitions; this unchanged Figma snapshot
+still has 547. [THEME-CONTRACT.md](../THEME-CONTRACT.md) and the migration JSON identify
+the 138 new definitions and accepted alias/value changes for a later verified import.
+Current code coverage does not imply that the library or v1 plugin has been updated.
+
 `spartan-ds.export.json` is a verified read-only export of every local variable in the
 [Spartan DS](https://www.figma.com/design/PhcMPmdpkpgxH3N83SvpBY/Spartan-DS) file:
 seven collections, 547 variables, with Figma's own variable IDs and keys, every mode, and

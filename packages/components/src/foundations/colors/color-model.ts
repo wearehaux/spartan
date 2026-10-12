@@ -1,4 +1,4 @@
-// The data behind Foundations / Colors. It reads the generated production token source
+// The data behind Foundations / Colors. It reads the Git-authored production token source
 // (tokens/source.json) and nothing else: token names, CSS variable names, grouping, and alias
 // relationships come from it. Resolved colors are never stored here; the Storybook page reads them
 // from the live CSS variables, so the swatches follow whatever the generated CSS produces.
@@ -41,6 +41,7 @@ const segments = (t: TokenV2) => t.name.split('/');
 // segments of the name.
 const groupSegment = (t: TokenV2): string => {
   const s = segments(t);
+  if (t.collection === 'primitives' && s[1] === 'brand') return s.slice(1, 3).join('/');
   if (t.collection === 'primary') return 'primary';
   if (t.collection === 'style') return s.slice(1, s[1] === 'button' ? 3 : s.length > 3 ? 3 : 2).join('/');
   if (t.collection === 'component') return s[0];

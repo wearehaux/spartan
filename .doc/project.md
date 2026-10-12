@@ -57,6 +57,8 @@ Maintain the Linear project documents for setup, architecture, variables, plugin
 
 ## Token sync
 
+The shared theme architecture is implemented in [THEME-CONTRACT.md](../tokens/THEME-CONTRACT.md), with exact additions and alias changes in `tokens/theme-contract-migration.json`. Retain the five-setting API and seven collections. Dedicated Brand primitives feed Primary; semantic System roles own selection and focus. Component family aliases consume the agreed Style and Density roles. Appearance is a local treatment override with per-property state/contrast precedence. Current typography/icon density differences and approved Card padding are preserved. Review **Foundations / Theme contract** in Storybook; its native fields, selection, table and menu are infrastructure fixtures, not production-component completion evidence.
+
 `tokens/source.json` (`spartan.tokens.v2`) is the canonical Git authoring source, seeded from the verified Figma snapshot with all existing values, aliases, modes, and identities preserved. Edit it through reviewed changes. `public/tokens.css` is generated and must not be edited by hand. `pnpm tokens:build` reads only the authored source; `pnpm tokens:check` validates the contract and verifies CSS generation without consulting Figma.
 
 Keep `tokens/figma/spartan-ds.export.json` as read-only migration provenance and a comparison snapshot. `pnpm tokens:drift [export-path]` compares the authored source with the saved or supplied export without writing either file. It reports additions, removals, renames, value, mode, and identity differences and exits 1 for drift. Drift does not block code CI or release.
