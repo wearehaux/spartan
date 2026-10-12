@@ -138,7 +138,7 @@ export class SbColorPalette extends LitElement {
       ${this.heading
         ? html`<header>
             <p class="modes">Primary <b>${this.primary}</b> · Semantic Color <b>${this.semanticColor}</b> · Style <b>${this.styleMode}</b> (Style follows the toolbar)</p>
-            ${total ? html`<p class="m">${total} COLOR tokens shown${COLOR_EXCLUSIONS.length ? `, ${COLOR_EXCLUSIONS.length} excluded` : ', none excluded'}. Source: ${SOURCE.source.figmaFileName}, exported ${SOURCE.source.exportedAt.slice(0, 10)}.</p>` : nothing}
+            ${total ? html`<p class="m">${total} COLOR tokens shown${COLOR_EXCLUSIONS.length ? `, ${COLOR_EXCLUSIONS.length} excluded` : ', none excluded'}. Source: Git-authored tokens/source.json, version ${SOURCE.version}.${SOURCE.source ? html` Initial import: ${SOURCE.source.figmaFileName}, ${SOURCE.source.exportedAt.slice(0, 10)}.` : nothing}</p>` : nothing}
             ${total ? html`<input type="search" aria-label="Filter colors by token or CSS variable name" placeholder="Filter by token or variable name" .value=${this.query} @input=${(e: Event) => (this.query = (e.target as HTMLInputElement).value)} />` : nothing}
           </header>`
         : nothing}

@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import type { Browser } from 'playwright-core';
 import type { Server } from 'node:http';
-import { assignmentFromAttributes, modeDependencies, resolvedCss, tokenCssName, type TokenSourceV2 } from '../lib/figma-tokens';
+import { assignmentFromAttributes, modeDependencies, renderCSSV2, resolvedCss, tokenCssName, type TokenSourceV2 } from '../lib/figma-tokens';
 import { canon, launch, openCanvas, startServer } from './harness';
 
 const source: TokenSourceV2 = JSON.parse(readFileSync('tokens/source.json', 'utf8'));
@@ -39,7 +39,7 @@ describe('generated token CSS in Chromium', () => {
       assert.deepEqual(wrong.slice(0, 3), [], `${JSON.stringify(attrs)}: ${wrong.length} wrong`);
       checked += source.tokens.length;
     }
-    assert.equal(checked, 547 * 128);
+    assert.equal(checked, source.tokens.length * 128);
     await page.close();
   });
 
@@ -51,6 +51,19 @@ describe('generated token CSS in Chromium', () => {
       return Object.fromEntries(names.map(name => [name, cs.getPropertyValue(name)]));
     }, Object.keys(expected));
     assert.deepEqual(Object.entries(expected).filter(([name, value]) => canon(actual[name]) !== value).slice(0, 3), []);
+    await page.close();
+  });
+
+  test('new code-only collections inherit and override density aliases without Figma identities', async () => {
+    const authored = structuredClone(source);
+    delete authored.source;
+    authored.collections.push({ key: 'code-control', name: 'Code Control', cssPrefix: 'code', modes: [{ name: 'Default' }] });
+    authored.tokens.push({ key: 'code-control.height', name: 'height', collection: 'code-control', type: 'FLOAT', unit: 'px', values: { Default: { alias: 'component.button.height.base' } } });
+    const page = await browser.newPage();
+    await page.setContent('<div data-sp-mode-density="Compact"><p id="compact">Compact</p><div data-sp-mode-density="Relaxed"><p id="relaxed">Relaxed</p></div></div>');
+    await page.addStyleTag({ content: renderCSSV2(authored) });
+    const values = await page.evaluate(() => ['compact', 'relaxed'].map(id => getComputedStyle(document.getElementById(id)!).getPropertyValue('--sp-code-height').trim()));
+    assert.deepEqual(values, ['32px', '40px']);
     await page.close();
   });
 

@@ -1,7 +1,7 @@
 name: validate
 
 on:
-  # Runs only for releases into main. Pull requests into dev are not gated by it.
+  # Validate code changes into dev and releases into main.
   pull_request:
     branches: [main, dev]
   push:
@@ -43,7 +43,8 @@ jobs:
       # fallback icon and the Icons panel tests skip themselves.
       - run: pnpm install --frozen-lockfile
 
-      - name: Tokens are current
+      # Figma drift is a separate reconciliation command, not a code CI gate.
+      - name: Authored tokens are valid and generated CSS is current
         run: pnpm tokens:check
 
       - name: Typecheck

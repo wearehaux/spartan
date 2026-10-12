@@ -3,9 +3,11 @@
 `spartan-ds.export.json` is a verified read-only export of every local variable in the
 [Spartan DS](https://www.figma.com/design/PhcMPmdpkpgxH3N83SvpBY/Spartan-DS) file:
 seven collections, 547 variables, with Figma's own variable IDs and keys, every mode, and
-aliases by variable ID. It is the input to `pnpm tokens:import`, which writes
-`tokens/source.json` (`spartan.tokens.v2`), and `pnpm tokens:build`, which writes
-`public/tokens.css`.
+aliases by variable ID. It is read-only migration provenance and a comparison snapshot.
+`tokens/source.json` (`spartan.tokens.v2`) is now the canonical Git authoring source, seeded
+from this export without changing its values, aliases, modes, or identities. Builds generate
+`public/tokens.css` from that authored source without reading Figma. See [the token authoring
+guide](../README.md) for the command contract and review process.
 
 | Figma collection | Modes | Code key | CSS prefix |
 | --- | --- | --- | --- |
@@ -19,7 +21,9 @@ aliases by variable ID. It is the input to `pnpm tokens:import`, which writes
 
 A variable named `button/height/base` in 05 Component becomes the token key
 `component.button.height.base` and the property `--sp-button-height-base`. The key
-follows the name; the Figma ID and key stored beside it are the stable identity.
+follows the name; preserve the Figma ID and key stored beside it as its existing library
+identity. New code-authored entries can omit Figma bindings, and new modes can omit `figmaId`.
+Never invent IDs or keys to make an entry look synchronized.
 
 ## Modes in CSS
 
@@ -171,15 +175,28 @@ Find what changed first, then fetch only that.
    tokens/figma/spartan-ds.export.json` verifies every line against its hash, merges partial
    outputs into the collections they name, replaces a collection whose output has a full header,
    adds new collections, and keeps everything else and the snapshot's order.
-5. `pnpm tokens:check /tmp/new-export.json` reports added, removed, renamed, and changed
-   variables and mode changes against this snapshot, and fails if anything differs.
-6. To accept the change, replace `spartan-ds.export.json`, map any new collection in
-   `COLLECTION_RULES` and any new FLOAT family in `PX_FAMILIES` (`lib/figma-tokens.ts`), run
-   `pnpm tokens:build` and `pnpm test`, and commit the generated files together.
+5. `pnpm tokens:drift /tmp/new-export.json` compares the export with the authored source and
+   reports additions, removals, renames, values, modes, and identities. It writes nothing and
+   exits 1 when differences exist. A code-authored addition can be expected drift until its
+   later Figma handoff; a difference is not permission to replace Git decisions.
+6. `pnpm tokens:import /tmp/new-export.json --out /tmp/figma-review-candidate.json` converts
+   the export to a separate v2 review candidate. The output must not exist; the canonical
+   `tokens/source.json` path is always refused. Map a new exported collection in
+   `COLLECTION_RULES` or FLOAT family in `PX_FAMILIES` (`lib/figma-tokens.ts`) only when required
+   for the export conversion. Code-authored entries supply their units directly.
+7. Review the candidate and drift report, then manually merge only accepted changes into
+   `tokens/source.json`. Preserve code-authored additions and existing aliases and identities.
+   Refresh `spartan-ds.export.json` only as an explicitly reviewed snapshot update, never as
+   a way to reset the authoring source. Run `pnpm tokens:build`, `pnpm tokens:check`, and the
+   applicable tests, then commit the authored source and generated CSS together.
 
-The 07 Style refresh (2026-10-09) followed these steps: the manifest showed 5 added Semantic Color
-variables and the new collection, and nothing else had changed, so only 86 variables were fetched.
+The 07 Style refresh (2026-10-09) used the manifest and partial export assembly: it showed 5
+added Semantic Color variables and the new collection, and nothing else had changed, so only
+86 variables were fetched. That export is now the preserved migration baseline.
 
-`pnpm tokens:check` with no argument only verifies that `source.json` and `tokens.css`
-match the committed snapshot. The fixture used by the plugin tests lives in
-`tokens/fixtures/lab.json` and is unrelated to this pipeline.
+`pnpm tokens:drift` with no argument compares the authored source with the committed snapshot.
+`pnpm tokens:check` validates the authored source and checks that `public/tokens.css` is current;
+it does not compare Figma, so intentional drift does not gate code CI. The plugin still accepts
+v1 and uses `tokens/fixtures/lab.json`; its production v2 upgrade is tracked in
+[HAUX-85](https://linear.app/wearehaux/issue/HAUX-85). This source ownership transition does not
+claim production token import or real Figma runtime verification.
