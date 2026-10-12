@@ -11,9 +11,9 @@ export const buttonStyles = [
       --_height: var(--sp-button-height-base);
       --_outer: var(--sp-button-outer-padding-x-base);
       --_label: var(--sp-button-label-padding-x-base);
-      --_icon: var(--sp-density-control-icon-size-base);
-      --_font: var(--sp-density-control-font-size-base);
-      --_line: var(--sp-density-control-line-height-base);
+      --_icon: var(--sp-button-icon-size-base);
+      --_font: var(--sp-button-font-size-base);
+      --_line: var(--sp-button-line-height-base);
 
       height: var(--_height);
       padding-block: 0;
@@ -26,9 +26,9 @@ export const buttonStyles = [
       --_height: var(--sp-button-height-sm);
       --_outer: var(--sp-button-outer-padding-x-sm);
       --_label: var(--sp-button-label-padding-x-sm);
-      --_icon: var(--sp-density-control-icon-size-small);
-      --_font: var(--sp-density-control-font-size-small);
-      --_line: var(--sp-density-control-line-height-small);
+      --_icon: var(--sp-button-icon-size-sm);
+      --_font: var(--sp-button-font-size-sm);
+      --_line: var(--sp-button-line-height-sm);
     }
 
     /* A label wider than its container truncates instead of overflowing the button. */

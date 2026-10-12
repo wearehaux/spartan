@@ -696,6 +696,15 @@
     {"key":"component.surface.shadow","name":"surface/shadow","collection":"component","type":"COLOR","values":{"Value":{"alias":"style.style.surface.shadow"}}},
     {"key":"component.surface.shadow-offset-y","name":"surface/shadow-offset-y","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"style.style.surface.shadow-offset-y"}}},
     {"key":"component.surface.shadow-blur","name":"surface/shadow-blur","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"style.style.surface.shadow-blur"}}},
-    {"key":"component.field.side-width-error","name":"field/side-width-error","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"style.style.field.side-width-error"}}}
+    {"key":"component.field.side-width-error","name":"field/side-width-error","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"style.style.field.side-width-error"}}},
+    {"key":"component.button.font-size.sm","name":"button/font-size/sm","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"density.density.control.font-size.small"}}},
+    {"key":"component.button.font-size.base","name":"button/font-size/base","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"density.density.control.font-size.base"}}},
+    {"key":"component.button.line-height.sm","name":"button/line-height/sm","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"density.density.control.line-height.small"}}},
+    {"key":"component.button.line-height.base","name":"button/line-height/base","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"density.density.control.line-height.base"}}},
+    {"key":"component.button.icon-size.sm","name":"button/icon-size/sm","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"density.density.control.icon-size.small"}}},
+    {"key":"component.button.icon-size.base","name":"button/icon-size/base","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"density.density.control.icon-size.base"}}},
+    {"key":"component.button.focus-radius","name":"button/focus-radius","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"style.style.field.focus-radius"}}},
+    {"key":"component.button.focus-width","name":"button/focus-width","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"primitives.border-width.thick"}}},
+    {"key":"component.button.focus-offset","name":"button/focus-offset","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"primitives.space.1"}}}
   ]
 }

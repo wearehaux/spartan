@@ -133,16 +133,26 @@ export const actionStyles = css`
     color: var(--_color-active);
   }
 
-  /* Figma draws the ring in its own frame 4px outside the border edge (the inset is measured
-     from the padding edge, hence the border width) with a 2px stroke inside it, and gives it the Style collection's focus radius, which differs from the button radius. */
+  button:focus-visible {
+    outline: none;
+  }
+
+  /* Figma's focus frame sits outside the border edge. Component aliases retain
+     the approved 4px offset, 2px stroke and Style-owned radius. */
   button:focus-visible::after {
     content: '';
     position: absolute;
-    inset: calc(-4px - var(--sp-style-button-border-width));
+    inset: calc(-1 * (var(--sp-button-focus-offset) + var(--sp-style-button-border-width)));
     box-sizing: border-box;
-    border: 2px solid var(--sp-button-focus-color);
-    border-radius: var(--sp-style-field-focus-radius);
+    border: var(--sp-button-focus-width) solid var(--sp-button-focus-color);
+    border-radius: var(--sp-button-focus-radius);
     pointer-events: none;
+  }
+
+  @media (forced-colors: active) {
+    button:focus-visible::after {
+      border-color: Highlight;
+    }
   }
 
   /* Disabled is one surface for every variant and style, with no border, as in Figma. The

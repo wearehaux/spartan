@@ -50,7 +50,7 @@ export class SpButton extends SpActionBase {
 
   override render() {
     return html`
-      <button part="button" type="button" ?disabled=${this.isDisabled} aria-busy=${this.loading ? 'true' : nothing} @click=${this.handleClick}>
+      <button part="button" type="button" ?disabled=${this.isDisabled} aria-busy=${this.loading ? 'true' : nothing} aria-disabled=${this.loading ? 'true' : nothing} @click=${this.handleClick}>
         <span class="icon"><slot name="start" @slotchange=${this.#iconChange}></slot></span>
         <span class="label"><slot></slot></span>
         <span class="icon"><slot name="end" @slotchange=${this.#iconChange}></slot></span>

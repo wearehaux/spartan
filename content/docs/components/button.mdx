@@ -92,7 +92,7 @@ The six Figma states map to behavior, not to properties.
 | Default | No state applied. |
 | Hover | `:hover`, on devices that support hover. |
 | Pressed | `:active`. |
-| Focus | `:focus-visible`: a 2px ring drawn 4px outside the border edge in `--sp-color-focus-ring-default`, with the style's focus radius. |
+| Focus | `:focus-visible`: a 2px ring drawn 4px outside the border edge through `--sp-button-focus-*` aliases. System owns its color, Style owns its radius. In forced colors it uses the system Highlight color. |
 | Disabled | `disabled`, or an ancestor `<fieldset disabled>`. |
 | Loading | `loading`. |
 
@@ -108,6 +108,18 @@ Layout follows the inherited `dir` attribute. `start` is the leading side in bot
 ## Density
 
 Heights are 40px (Base) and 32px (Small) in Relaxed, and 32px and 28px in Compact. Wrap content in `data-sp-mode-density="Compact"` to switch. See [Density](/docs/foundations/density).
+
+Button consumes `--sp-button-font-size-{sm,base}`, `--sp-button-line-height-{sm,base}`, and `--sp-button-icon-size-{sm,base}` aliases to the Density roles. Base labels are 15px/22px in Relaxed and 14px/20px in Compact; Small is 14px/20px and 13px/18px. The approved Figma Base sample currently resolves 16px/24px despite its density bindings. The adopted code contract preserves the density values; this intentional difference does not authorize editing the protected Figma page.
+
+## Theme contract
+
+Primary actions use the selected product Brand. Focus uses the independent System role, so changing Purple to Orange does not recolor the keyboard indicator. Style owns radius, neutral treatment and state recipes. Button has no local field Appearance property; its `variant` selects action emphasis. See [Theme ownership](/docs/theming/contract).
+
+<StorybookEmbed story="components-button--theme-contract" title="Nested Button theme contract" height={360} />
+
+The focus geometry aliases are `--sp-button-focus-width` (2px), `--sp-button-focus-offset` (4px), and `--sp-button-focus-radius` (Style's field focus radius). `--sp-button-focus-color` aliases semantic System focus. Local token overrides are available for product integrations; keep a visible indicator and verify the affected sizes and contrast.
+
+The loading wave retains the approved 16px frame across sizes and densities. Its bar geometry and timing remain local to Button until a reusable Loading component is delivered. Loading preserves the label and layout, sets `aria-busy` and `aria-disabled`, remains focusable and blocks pointer, keyboard and form activation. The wave stops under reduced motion.
 
 ## Forms
 
@@ -126,12 +138,12 @@ Heights are 40px (Base) and 32px (Small) in Relaxed, and 32px and 28px in Compac
 - The shadow root contains a native `<button>`. Focus is delegated to it, so Tab focuses the control and Enter or Space activates it.
 - The focus ring uses `:focus-visible`, so it shows for keyboard focus and not for most pointer clicks.
 - A `disabled` button is removed from the tab order and does not fire `click`.
-- A `loading` button sets `aria-busy="true"`, stays focusable, and swallows activation. The spinner is `aria-hidden`.
+- A `loading` button sets `aria-busy="true"` and `aria-disabled="true"`, stays focusable, and swallows activation. The spinner is `aria-hidden`.
 - The accessible name is the slotted label. Mark slotted icon SVGs `aria-hidden="true"` so they are not read twice.
 - Color pairs come from semantic tokens, so `data-sp-mode-contrast="High"` applies without extra work. Contrast ratios were not measured for this page.
 
 ## Links
 
-- <StorybookLink story="components-button--playground">Button in Storybook</StorybookLink> (controls and the Theme, Hue, and Density toolbar)
+- <StorybookLink story="components-button--playground">Button in Storybook</StorybookLink> (controls plus Style, scheme, contrast, direction, Brand and Density toolbar settings)
 - [Button set in Figma](https://www.figma.com/design/PhcMPmdpkpgxH3N83SvpBY/Spartan-DS?node-id=21-27)
 - Token bindings: [`tokens/figma/bindings.md`](https://github.com/iroshandezilva/spartan/blob/dev/tokens/figma/bindings.md)

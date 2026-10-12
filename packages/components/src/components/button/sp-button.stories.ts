@@ -186,6 +186,32 @@ export const LongLabel: Story = {
   render: ({ label, variant }) => html`<div style="max-width:220px"><sp-button variant=${variant}>${label}</sp-button></div>`,
 };
 
+// Product Brand changes action fills. System focus remains independent. Every
+// local setting inherits the other axes and can be overridden deeper in the tree.
+export const ThemeContract: Story = {
+  render: () => html`
+    <section data-sp-mode-style="Helios" data-sp-mode-primary="Purple" data-sp-mode-density="Compact" data-sp-mode-color-scheme="Dark" data-sp-mode-contrast="High" dir="rtl"
+      style="display:grid;gap:var(--sp-form-group-gap);padding:var(--sp-surface-content-padding);background:var(--sp-color-surface-default);color:var(--sp-color-foreground-default)">
+      <p style="margin:0">Helios · Purple Brand · Compact · Dark · High contrast · RTL. Tab to inspect System focus.</p>
+      <div style=${row}>
+        <sp-button>${iconNode(ADD, 'start')}Continue${iconNode(NEXT, 'end')}</sp-button>
+        <sp-button variant="secondary" size="sm">Secondary</sp-button>
+        <sp-button loading>Saving changes</sp-button>
+        <sp-button disabled>Unavailable</sp-button>
+      </div>
+      <section data-sp-mode-style="Ares" data-sp-mode-primary="Sky" data-sp-mode-density="Relaxed" dir="ltr"
+        style="display:grid;gap:var(--sp-form-group-gap);padding:var(--sp-surface-content-padding);border:var(--sp-surface-border-width) solid var(--sp-surface-border)">
+        <p style="margin:0">Nested Ares · Sky Brand · Relaxed · LTR. Dark and High contrast inherit.</p>
+        <div style=${row}>
+          <sp-button>${iconNode(ADD, 'start')}Continue${iconNode(NEXT, 'end')}</sp-button>
+          <sp-button variant="danger">Delete</sp-button>
+          <div style="max-inline-size:180px"><sp-button>${iconNode(ADD, 'start')}Export every selected record</sp-button></div>
+        </div>
+      </section>
+    </section>
+  `,
+};
+
 export const InForm: Story = {
   render: () => html`
     <form

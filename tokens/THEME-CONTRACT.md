@@ -125,7 +125,16 @@ They use the existing `--sp-` naming algorithm. Examples: `--sp-color-system-foc
 
 ## Migration and Figma handoff
 
-The baseline is dev commit `e769e7d` with 547 tokens. This contract has 685 tokens,
+HAUX-113 adds nine unbound Component aliases to the merged HAUX-152 contract,
+bringing the current total to 694. `button/{font-size,line-height,icon-size}/{sm,base}`
+aliases the existing Small/Base Density metrics. `button/focus-radius` aliases
+Style's field focus radius, `button/focus-width` aliases the 2px thick border
+primitive and `button/focus-offset` aliases the 4px space primitive. These additions
+do not alter any existing definition, value or identity. The shared action focus
+recipe consumes them for Button and Icon Button. The HAUX-152 JSON below remains
+the historical migration snapshot; the nine follow-up aliases are recorded here.
+
+The HAUX-152 baseline is dev commit `e769e7d` with 547 tokens. That migration delivered 685 tokens,
 adding 138 unbound definitions. No existing key, collection, mode or binding identity
 is removed or renamed. Twenty-six existing definitions change their alias structure.
 Across all 128 setting combinations, only three existing tokens change resolved
