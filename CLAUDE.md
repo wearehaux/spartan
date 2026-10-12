@@ -6,6 +6,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 AGENTS.md is the project source of truth. Read the linked guide for the task: [.doc/project.md](.doc/project.md) for code, tokens, plugin, and Linear tracking; [.doc/figma.md](.doc/figma.md) for any Figma work.
 
+## Delivery policy
+
+Follow [AGENTS.md](AGENTS.md#code-first-delivery) and the [code-first implementation plan](doc/code-first-implementation-plan.html): a safe Git token contract, working Lit components finalized in Storybook, then stable Figma family batches. The [theme report](doc/theme-system-report.html) contains open design decisions as well as recommendations; do not treat those recommendations as approved token migrations.
+
+Figma MCP limits and importer runtime checks gate Figma writes only. Continue code work and verified code releases when their Development prerequisites pass, while recording Figma as pending. Use one component issue with independent Development/Figma tracks, Agent Done evidence, and a stable revision/token/property/state/slot/capture handoff. Overall component Done still requires both tracks. Preserve 🟢 pages and use 🟣 only after Figma structural and visual verification.
+
 ## Repository state
 
 - All code lives at the repository root, with its own `package.json` and `packages/components`. The old React monorepo (`apps/`, the old `packages/`, old root config) shows as deletions or replaced files in `git status`. Keep those deletions and never restore the old project.
@@ -45,6 +51,7 @@ node --import tsx --test --test-name-pattern="aliases" tests/*.test.ts
 The token pipeline feeds the Lit components in `packages/components` (`@spartan/components`: `sp-button`, `sp-icon-button`) and their Storybook.
 
 - `tokens/figma/spartan-ds.export.json` is a verified read-only snapshot of all 547 variables in the Spartan DS Figma file (seven collections, including 07 Style). `tokens/figma/README.md` explains the collections, mode attributes, and how to refresh and diff it. `tokens/source.json` (`spartan.tokens.v2`) and `public/tokens.css` are generated from it; do not edit them by hand.
+- This is the current pipeline, not the agreed future authoring direction. The first implementation task must establish a reviewed Git authoring source and change generation/drift checks before token restructuring. `tokens:build` currently re-imports the saved Figma snapshot and can overwrite edits to generated `source.json`; never use it to silently replace new code-owned decisions with an older export.
 - `lib/figma-tokens.ts` is the v2 contract: import, validation, cross-collection alias resolution, mode-aware CSS (`data-sp-mode-<collection>` attributes), and drift diff. It fails explicitly on unresolved aliases, type or unit mismatches, cycles, and unsupported values.
 - `lib/token-contract.ts` is the v1 contract. It still drives the custom Figma plugin and its fixture `tokens/fixtures/lab.json`, and rejects cross-collection aliases. Changes there affect the plugin and its tests.
 - `plugin/code.ts` is the custom Figma plugin (no MCP). It validates input with the v1 contract, previews a diff, then applies it, persisting a token-key to Figma-ID map in root plugin data (`spartan-token-map-v1`). It cannot import the production v2 source yet. Import `plugin/manifest.json` into Figma; it has no network access.
