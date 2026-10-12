@@ -1,5 +1,5 @@
-// Production token pipeline: a verified export of the Spartan DS Figma variables
-// becomes `spartan.tokens.v2` (tokens/source.json), then mode-aware CSS.
+// Production token pipeline: Git-authored `spartan.tokens.v2` (tokens/source.json)
+// becomes mode-aware CSS. Figma imports are separate review candidates.
 // Unlike v1 (lib/token-contract.ts, kept for the plugin and its fixture), v2 allows
 // aliases across collections and resolves them per mode.
 
@@ -15,7 +15,7 @@ export type TokenV2 = {
   collection: string;
   type: TokenType;
   unit?: Unit;
-  figma: { id: string; key: string; codeSyntax?: string };
+  figma?: { id: string; key: string; codeSyntax?: string };
   values: Record<string, ValueV2>;
 };
 /** One independent control that a collection's combined Figma modes are split into at the code boundary. */
@@ -24,8 +24,8 @@ export type CollectionV2 = {
   key: string;
   name: string;
   cssPrefix: string;
-  figma: { id: string; key: string };
-  modes: { name: string; figmaId: string }[];
+  figma?: { id: string; key: string };
+  modes: { name: string; figmaId?: string }[];
   /** Independent attributes the modes are exposed as. Each mode is one combination of axis values. */
   axes?: CollectionAxis[];
   /** For each mode name, its value on every axis. */
@@ -34,7 +34,8 @@ export type CollectionV2 = {
 export type TokenSourceV2 = {
   schema: 'spartan.tokens.v2';
   version: string;
-  source: { figmaFileKey: string; figmaFileName: string; exportedAt: string };
+  /** Optional provenance of the initial import, not the current authoring authority. */
+  source?: { figmaFileKey: string; figmaFileName: string; exportedAt: string };
   collections: CollectionV2[];
   tokens: TokenV2[];
 };
@@ -96,6 +97,7 @@ function literalUnit(name: string): Unit | undefined {
 }
 
 const slug = (s: string) => s.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9_-]/g, '');
+const toggleValueKey = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 const round6 = (n: number) => +n.toFixed(6);
 const isObj = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
 export const isRef = (v: unknown): v is Ref => isObj(v) && typeof v.alias === 'string';
@@ -211,11 +213,11 @@ function validateAxes(collections: CollectionV2[]) {
   const names = new Set(collections.map(c => c.key));
   for (const c of collections) {
     if (!c.axes) { if (c.modeAxes) throw new Error(`Collection ${c.key} has modeAxes without axes.`); continue; }
-    if (!c.modeAxes) throw new Error(`Collection ${c.key} has axes without modeAxes.`);
+    if (!Array.isArray(c.axes) || !c.axes.length || !isObj(c.modeAxes)) throw new Error(`Collection ${c.key} has invalid axes or modeAxes.`);
     for (const a of c.axes) {
       if (!/^[a-z][a-z0-9-]*$/.test(a.key) || names.has(a.key)) throw new Error(`Axis key "${a.key}" of ${c.key} must be a unique slug and differ from every collection key.`);
       names.add(a.key);
-      if (!a.values.length || new Set(a.values).size !== a.values.length || a.values.some(v => !/^[a-zA-Z][a-zA-Z0-9 -]*$/.test(v))) throw new Error(`Axis ${a.key} of ${c.key} needs unique values.`);
+      if (!Array.isArray(a.values) || !a.values.length || new Set(a.values).size !== a.values.length || a.values.some(v => typeof v !== 'string' || !/^[a-zA-Z][a-zA-Z0-9 -]*$/.test(v))) throw new Error(`Axis ${a.key} of ${c.key} needs unique values.`);
     }
     const combos = new Set<string>();
     for (const m of c.modes) {
@@ -257,28 +259,62 @@ export function assignmentFromAttributes(input: TokenSourceV2, attrs: Record<str
 export function validateTokensV2(input: unknown): TokenSourceV2 {
   const s = input as TokenSourceV2;
   if (!s || s.schema !== 'spartan.tokens.v2' || !Array.isArray(s.collections) || !Array.isArray(s.tokens) || typeof s.version !== 'string' || !s.version.trim()) throw new Error('Expected a spartan.tokens.v2 file with a version, collections, and tokens.');
+  const nonempty = (v: unknown): v is string => typeof v === 'string' && !!v.trim();
+  if (s.source !== undefined && (!isObj(s.source) || ![s.source.figmaFileKey, s.source.figmaFileName, s.source.exportedAt].every(nonempty))) throw new Error('Invalid Figma source provenance. Omit it for code-only authoring.');
+  const binding = (v: unknown, where: string) => {
+    if (!isObj(v) || !nonempty(v.id) || !nonempty(v.key) || (v.codeSyntax !== undefined && typeof v.codeSyntax !== 'string')) throw new Error(`Invalid Figma binding on ${where}. Omit it until an identity exists.`);
+  };
   const collections = new Map<string, CollectionV2>();
+  const collectionNames = new Set<string>(), collectionIds = new Set<string>(), collectionKeys = new Set<string>();
   for (const c of s.collections) {
-    if (!/^[a-z][a-z0-9-]*$/.test(c.key) || collections.has(c.key)) throw new Error(`Collection keys must be unique slugs: ${c.key}`);
-    if (!c.modes.length || new Set(c.modes.map(m => m.name)).size !== c.modes.length || c.modes.some(m => !/^[a-zA-Z][a-zA-Z0-9 -]*$/.test(m.name))) throw new Error(`Collection ${c.key} needs unique mode names.`);
+    if (!c || typeof c.key !== 'string' || !/^[a-z][a-z0-9-]*$/.test(c.key) || collections.has(c.key)) throw new Error(`Collection keys must be unique slugs: ${c?.key}`);
+    if (!nonempty(c.name) || collectionNames.has(c.name)) throw new Error(`Collection names must be non-empty and unique: ${c.key}.`);
+    collectionNames.add(c.name);
+    if (typeof c.cssPrefix !== 'string' || (c.cssPrefix !== '' && !/^[a-z][a-z0-9-]*$/.test(c.cssPrefix))) throw new Error(`Invalid CSS prefix on collection ${c.key}.`);
+    if (!Array.isArray(c.modes) || !c.modes.length || new Set(c.modes.map(m => m?.name)).size !== c.modes.length || c.modes.some(m => !m || typeof m.name !== 'string' || !/^[a-zA-Z][a-zA-Z0-9 -]*$/.test(m.name))) throw new Error(`Collection ${c.key} needs unique mode names.`);
+    if (c.figma !== undefined) {
+      binding(c.figma, c.key);
+      if (collectionIds.has(c.figma.id) || collectionKeys.has(c.figma.key)) throw new Error(`Duplicate Figma collection identity on ${c.key}.`);
+      collectionIds.add(c.figma.id); collectionKeys.add(c.figma.key);
+    }
+    const modeIds = new Set<string>();
+    for (const m of c.modes) if (m.figmaId !== undefined) {
+      if (!nonempty(m.figmaId) || modeIds.has(m.figmaId)) throw new Error(`Invalid or duplicate Figma mode identity on ${c.key}/${m.name}.`);
+      modeIds.add(m.figmaId);
+    }
     collections.set(c.key, c);
   }
   validateAxes([...collections.values()]);
+  const toggleNames = new Set<string>();
+  for (const c of collections.values()) for (const axis of c.axes ?? [{ key: c.key, values: c.modes.map(m => m.name) }]) {
+    for (const value of axis.values) {
+      const name = `--_sp-not-${axis.key}-${toggleValueKey(value)}`;
+      if (toggleNames.has(name)) throw new Error(`Mode values collide in CSS toggle name ${name}.`);
+      toggleNames.add(name);
+    }
+  }
   const byKey = new Map<string, TokenV2>();
   const cssNames = new Map<string, string>();
-  const figmaIds = new Set<string>();
+  const figmaIds = new Set<string>(), figmaKeys = new Set<string>(), tokenNames = new Set<string>();
   for (const t of s.tokens) {
+    if (!t || typeof t.key !== 'string') throw new Error('Invalid token definition.');
     const c = collections.get(t.collection);
     if (!c) throw new Error(`Unknown collection for ${t.key}.`);
     if (!/^[a-z][a-z0-9._-]*$/.test(t.key) || byKey.has(t.key)) throw new Error(`Token keys must be unique: ${t.key}`);
-    if (figmaIds.has(t.figma.id)) throw new Error(`Duplicate Figma id ${t.figma.id} on ${t.key}.`);
-    figmaIds.add(t.figma.id);
+    if (!t.key.startsWith(`${t.collection}.`) || !t.key.slice(t.collection.length + 1)) throw new Error(`Token key ${t.key} must start with its collection key ${t.collection}.`);
+    if (!nonempty(t.name) || tokenNames.has(`${t.collection}:${t.name}`)) throw new Error(`Invalid or duplicate token name on ${t.key}.`);
+    tokenNames.add(`${t.collection}:${t.name}`);
+    if (t.figma !== undefined) {
+      binding(t.figma, t.key);
+      if (figmaIds.has(t.figma.id) || figmaKeys.has(t.figma.key)) throw new Error(`Duplicate Figma identity on ${t.key}.`);
+      figmaIds.add(t.figma.id); figmaKeys.add(t.figma.key);
+    }
     const css = tokenCssName(t, s);
     if (cssNames.has(css)) throw new Error(`CSS name collision: ${t.key} and ${cssNames.get(css)} both produce ${css}.`);
     cssNames.set(css, t.key);
     if (!['COLOR', 'FLOAT', 'STRING', 'BOOLEAN'].includes(t.type)) throw new Error(`Unsupported type ${t.type} on ${t.key}.`);
     if (t.unit !== undefined && (t.type !== 'FLOAT' || !['px', 'percent'].includes(t.unit))) throw new Error(`Unsupported unit on ${t.key}.`);
-    if (Object.keys(t.values).length !== c.modes.length || c.modes.some(m => !(m.name in t.values))) throw new Error(`Values must cover exactly the modes of ${t.collection}: ${t.key}`);
+    if (!isObj(t.values) || Object.keys(t.values).length !== c.modes.length || c.modes.some(m => !Object.hasOwn(t.values, m.name))) throw new Error(`Values must cover exactly the modes of ${t.collection}: ${t.key}`);
     byKey.set(t.key, t);
   }
   const target = (from: TokenV2, mode: string, r: Ref) => {
@@ -296,11 +332,11 @@ export function validateTokensV2(input: unknown): TokenSourceV2 {
       if (t.type !== 'COLOR') throw new Error(`Alpha color on a non-color token ${where}.`);
       const { color, opacity } = v.alpha;
       if (isRef(color)) { if (target(t, mode, color).type !== 'COLOR') throw new Error(`Alpha color of ${where} must reference a COLOR token.`); }
-      else if (!isRgba(color)) throw new Error(`Invalid alpha color in ${where}.`);
+      else if (!isRgba(color) || [color.r, color.g, color.b, color.a].some(n => !Number.isFinite(n) || n < 0 || n > 1)) throw new Error(`Invalid alpha color in ${where}.`);
       if (isRef(opacity)) { const o = target(t, mode, opacity); if (o.type !== 'FLOAT' || o.unit !== 'percent') throw new Error(`Alpha opacity of ${where} must reference a percent token, got ${o.key}.`); }
-      else if (typeof opacity !== 'number' || opacity < 0 || opacity > 100) throw new Error(`Alpha opacity of ${where} must be 0 to 100.`);
+      else if (typeof opacity !== 'number' || !Number.isFinite(opacity) || opacity < 0 || opacity > 100) throw new Error(`Alpha opacity of ${where} must be 0 to 100.`);
     } else if (t.type === 'COLOR') {
-      if (!isRgba(v) || [v.r, v.g, v.b, v.a].some(n => n < 0 || n > 1)) throw new Error(`Invalid COLOR value ${where}.`);
+      if (!isRgba(v) || [v.r, v.g, v.b, v.a].some(n => !Number.isFinite(n) || n < 0 || n > 1)) throw new Error(`Invalid COLOR value ${where}.`);
     } else if (t.type === 'FLOAT') {
       if (typeof v !== 'number' || !Number.isFinite(v)) throw new Error(`Invalid FLOAT value ${where}.`);
       if (t.unit === 'percent' && (v < 0 || v > 100)) throw new Error(`Percent value out of range at ${where}.`);
@@ -420,7 +456,7 @@ export function modeDependencies(input: unknown): Map<string, string[]> {
 // Every axis of a collection: its declared axes, or a single axis for its modes.
 const axesOf = (c: CollectionV2): CollectionAxis[] => c.axes ?? [{ key: c.key, values: c.modes.map(m => m.name) }];
 const axisValuesOf = (c: CollectionV2, mode: string): Record<string, string> => (c.axes ? c.modeAxes![mode] : { [c.key]: mode });
-const toggleName = (axis: string, value: string) => `--_sp-not-${axis}-${value.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+const toggleName = (axis: string, value: string) => `--_sp-not-${axis}-${toggleValueKey(value)}`;
 
 /**
  * Generates the CSS custom properties for every token.

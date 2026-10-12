@@ -10,7 +10,7 @@
     "start": "next start --hostname 127.0.0.1 --port 4310",
     "typecheck": "pnpm components:build && tsc --noEmit && tsc -p plugin/tsconfig.json && pnpm --filter @spartan/components typecheck",
     "test": "pnpm components:build && node --import tsx --test tests/*.test.ts",
-    "tokens:build": "pnpm tokens:import && node --import tsx scripts/build-tokens.ts",
+    "tokens:build": "node --import tsx scripts/build-tokens.ts",
     "plugin:build": "node scripts/build-plugin.mjs",
     "components:build": "pnpm --filter @spartan/components build",
     "storybook": "pnpm --filter @spartan/components storybook",
@@ -18,6 +18,7 @@
     "test:stories": "pnpm --filter @spartan/components test:stories",
     "tokens:import": "node --import tsx scripts/import-figma-tokens.ts",
     "tokens:check": "node --import tsx scripts/check-tokens.ts",
+    "tokens:drift": "node --import tsx scripts/check-figma-drift.ts",
     "test:e2e": "pnpm storybook:build && node --import tsx --test e2e/*.e2e.ts",
     "tokens:manifest": "node --import tsx scripts/diff-figma-manifest.ts"
   },

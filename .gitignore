@@ -36,3 +36,6 @@ public/storybook/
 # Local work-order view and audit captures
 doc/task-order.html
 doc/audits/*.json
+
+# Generated Figma migration candidate; never a build input
+tokens/figma/import-candidate.json

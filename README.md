@@ -23,14 +23,19 @@ pnpm dev
 - `pnpm docs:storybook`: build Storybook and copy it to `public/storybook`, where the docs site serves and embeds it at `/storybook`
 - `pnpm docs:build`: `docs:storybook` plus `pnpm build`, the production build of the docs site
 - `pnpm components:build`: build `packages/components` (`@spartan/components`)
-- `pnpm tokens:build`: Figma export to `tokens/source.json` to `public/tokens.css`; `pnpm tokens:check` fails when they are stale
+- `pnpm tokens:build`: generate `public/tokens.css` from Git-authored `tokens/source.json`; it never imports Figma
+- `pnpm tokens:check`: validate the authored source and fail when generated CSS is stale
+- `pnpm tokens:drift [export-path]`: compare the authored source with the saved or supplied Figma export without writing files; differences exit 1
+- `pnpm tokens:import [export-path] [--out candidate-path]`: create a review candidate, defaulting to `tokens/figma/import-candidate.json`; refuses existing output files and the canonical source path
 - `pnpm test:e2e`: builds Storybook and runs real-keyboard Chromium tests
 - `pnpm test`: builds the component package, then runs token, plugin, package-consumer, and historical local tracker checks
 - `pnpm build`: token output, plugin bundle, component package, and the Next.js docs build
 - `pnpm typecheck`: TypeScript checks
 - `pnpm plugin:build`: rebuild the Figma development plugin
 
-Import `plugin/manifest.json` into Figma. Read the [Linear plugin guide](https://linear.app/wearehaux/document/custom-figma-plugin-634833fa2f31) before use. Production tokens come from a verified export of the Spartan DS variables (`tokens/figma/README.md`); the plugin and its tests still use the isolated fixture in `tokens/fixtures/lab.json`. Real Figma runtime validation of the plugin is still pending. The first Lit components (`sp-button` and `sp-icon-button`) and Storybook live in `packages/components`; Figma parity is tracked in their Linear issues.
+`tokens/source.json` (`spartan.tokens.v2`) is the canonical Git authoring source, seeded from the verified Spartan DS export with its values, aliases, modes, and identities preserved. Edit it through reviewed changes and regenerate CSS, which is never edited by hand. Read [the token authoring guide](tokens/README.md) and [the Figma snapshot guide](tokens/figma/README.md) for ownership, validation, and deliberate reconciliation.
+
+Import `plugin/manifest.json` into Figma. Read the [Linear plugin guide](https://linear.app/wearehaux/document/custom-figma-plugin-634833fa2f31) before use. The plugin and its tests still use the isolated v1 fixture in `tokens/fixtures/lab.json`; it cannot apply the production v2 source yet. Its production upgrade is tracked in [HAUX-85](https://linear.app/wearehaux/issue/HAUX-85), and real Figma runtime validation remains pending. The first Lit components (`sp-button` and `sp-icon-button`) and Storybook live in `packages/components`; Figma parity is tracked in their Linear issues.
 
 This directory preserves the previous workspace's pending deletions and does not restore the earlier React implementation.
 
@@ -44,7 +49,7 @@ Buttons take icons in the `start` (left) and `end` (right) slots, and any `<svg>
 
 ## Branches
 
-`dev` is the default branch and the target for every pull request. `main` only receives releases from `dev`; see `AGENTS.md`. Both are protected by rulesets and take pull requests only. Only `main` requires the `validate` check, so it runs on the release pull request from `dev` and not on pull requests into `dev`. Run `pnpm typecheck`, `pnpm test`, and `pnpm test:e2e` locally before opening a pull request into `dev`.
+`dev` is the default branch and the target for feature pull requests. `main` only receives release pull requests from `dev`; see `AGENTS.md`. Both are protected by rulesets and take pull requests only. The `validate` workflow runs on pull requests and pushes to both branches. Run `pnpm tokens:check`, `pnpm typecheck`, `pnpm test`, `pnpm test:e2e`, and `pnpm test:stories` locally before opening a pull request into `dev`. Figma drift is a separate reconciliation check and does not gate code CI.
 
 ## Documentation site
 

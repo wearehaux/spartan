@@ -2,10 +2,10 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
 import { createRequire } from 'node:module';
-import { importFigmaExport, renderCSSV2, tokenCssName, type FigmaExport } from '../lib/figma-tokens';
+import { validateTokensV2, renderCSSV2, tokenCssName } from '../lib/figma-tokens';
 
 const require = createRequire(import.meta.url);
-const source = () => importFigmaExport(JSON.parse(readFileSync('tokens/figma/spartan-ds.export.json', 'utf8')) as FigmaExport);
+const source = () => validateTokensV2(JSON.parse(readFileSync('tokens/source.json', 'utf8')));
 const read = (p: string) => readFileSync(new URL(`../packages/components/src/components/${p}`, import.meta.url), 'utf8');
 
 test('package exports resolve to built JavaScript, types, and the generated token CSS', () => {

@@ -3,10 +3,11 @@ title: Foundations
 description: How the Spartan design tokens are organized and generated.
 ---
 
-Spartan tokens come from the Spartan DS Figma variables. A verified export of all 547 variables is committed in the repository, and a build step turns it into one stylesheet, `tokens.css`. Nothing in that file is edited by hand.
+Spartan tokens are authored in Git in `tokens/source.json`. The initial source preserves the 547 variables, values, aliases, modes, and identities from a verified Spartan DS Figma export. A build generates one stylesheet, `tokens.css`, from the authored source. The stylesheet is never edited by hand, and a build does not re-import Figma.
 
 ```text
-Figma variables export  ->  tokens/source.json  ->  public/tokens.css
+Git-authored tokens/source.json  ->  public/tokens.css
+Figma export  ->  separate review candidate  ->  reviewed edits to the authored source
 ```
 
 ## Seven collections
@@ -40,8 +41,10 @@ Components and your own styles should use semantic and component tokens, not pri
 ## Regenerate
 
 ```sh
-pnpm tokens:build   # export -> source.json -> public/tokens.css
-pnpm tokens:check   # fails if either generated file is stale
+pnpm tokens:build   # authored source.json -> public/tokens.css
+pnpm tokens:check   # validates the source and fails if generated CSS is stale
 ```
+
+Figma reconciliation is explicit: `pnpm tokens:drift [export-path]` reports differences without changing files, and `pnpm tokens:import [export-path] [--out candidate-path]` writes a separate review candidate. Review and manually merge accepted changes into the authored source, then regenerate CSS. These commands preserve code ownership; Figma differences do not block code validation.
 
 The pages that follow show live values. They read the current CSS variables, so toggle Light and Dark in the header to see them change.

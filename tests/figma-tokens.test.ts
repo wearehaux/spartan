@@ -2,7 +2,6 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { assignmentFromAttributes, diffExports, hasDrift, importFigmaExport, modeDependencies, renderCSSV2, resolveToken, resolvedCss, validateTokensV2, type FigmaExport, type Rgba, type TokenSourceV2 } from '../lib/figma-tokens';
-import { stringifySource } from '../scripts/import-figma-tokens';
 
 const snapshot = (): FigmaExport => JSON.parse(readFileSync('tokens/figma/spartan-ds.export.json', 'utf8'));
 const production = (): TokenSourceV2 => JSON.parse(readFileSync('tokens/source.json', 'utf8'));
@@ -24,10 +23,8 @@ test('the Figma snapshot holds the seven collections, modes, and variable counts
   assert.equal(new Set(ex.collections.flatMap(c => c.variables.map(v => v.key))).size, 547);
 });
 
-test('committed source.json and tokens.css match the snapshot (drift gate)', () => {
-  const source = importFigmaExport(snapshot());
-  assert.equal(readFileSync('tokens/source.json', 'utf8'), stringifySource(source));
-  assert.equal(readFileSync('public/tokens.css', 'utf8'), renderCSSV2(source));
+test('committed CSS is generated from the Git-authored source', () => {
+  assert.equal(readFileSync('public/tokens.css', 'utf8'), renderCSSV2(production()));
 });
 
 test('cross-collection alias chains resolve to the values read from Figma in both density modes', () => {
@@ -359,10 +356,10 @@ test('the style selector is its own attribute, Atlas is the default, and generat
   for (const mode of STYLES) assert.match(css, new RegExp(`\\[data-sp-mode-style="${mode}"\\]`));
   assert.match(css, /--sp-style-button-radius: var\(--_sp-not-style-atlas, var\(--sp-radius-control\)\) var\(--_sp-not-style-selene, var\(--sp-prim-radius-lg\)\) var\(--_sp-not-style-helios, var\(--sp-radius-pill\)\)/);
   // The names Figma already gives the 07 Style variables are the names the code generates.
-  const named = s.tokens.filter(t => t.figma.codeSyntax?.startsWith('var(--sp-'));
+  const named = s.tokens.filter(t => t.figma?.codeSyntax?.startsWith('var(--sp-'));
   assert.equal(named.length, 86, '81 style variables and 5 color/style helpers');
   assert.ok(named.every(t => t.collection === 'style' || t.key.startsWith('semantic-color.color.style.')));
-  for (const t of named) assert.equal(`var(${cssVar(s, t.key)})`, t.figma.codeSyntax, t.key);
+  for (const t of named) assert.equal(`var(${cssVar(s, t.key)})`, t.figma?.codeSyntax, t.key);
 });
 
 test('nested style overrides re-resolve style tokens and keep the outer scheme, contrast, hue, and density', () => {
