@@ -125,8 +125,17 @@ They use the existing `--sp-` naming algorithm. Examples: `--sp-color-system-foc
 
 ## Migration and Figma handoff
 
+HAUX-90 adds ten unbound Icon Button aliases after HAUX-113, bringing the current
+total to 704. `icon-button/size/{xs,sm,base}` reuses the existing Button height
+aliases. `icon-button/icon-size/{xs,sm,base}` reuses Button's glyph aliases, with
+Extra small reusing Small. `icon-button/focus-{color,radius,width,offset}` reuses
+the shared Button roles. Icon Button consumes these local aliases through the
+shared action recipe, so products can adjust its anatomy without changing Button.
+All existing token definitions, values and identities remain unchanged. Style
+colors are reused directly; there is no duplicate Icon Button state palette.
+
 HAUX-113 adds nine unbound Component aliases to the merged HAUX-152 contract,
-bringing the current total to 694. `button/{font-size,line-height,icon-size}/{sm,base}`
+bringing that revision's total to 694. `button/{font-size,line-height,icon-size}/{sm,base}`
 aliases the existing Small/Base Density metrics. `button/focus-radius` aliases
 Style's field focus radius, `button/focus-width` aliases the 2px thick border
 primitive and `button/focus-offset` aliases the 4px space primitive. These additions

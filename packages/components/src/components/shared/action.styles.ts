@@ -17,6 +17,10 @@ export const actionStyles = css`
   }
 
   button {
+    --_focus-color: var(--sp-button-focus-color);
+    --_focus-radius: var(--sp-button-focus-radius);
+    --_focus-width: var(--sp-button-focus-width);
+    --_focus-offset: var(--sp-button-focus-offset);
     --_fill: var(--sp-style-button-primary-background-default);
     --_fill-hover: var(--sp-style-button-primary-background-hover);
     --_fill-active: var(--sp-style-button-primary-background-pressed);
@@ -142,10 +146,10 @@ export const actionStyles = css`
   button:focus-visible::after {
     content: '';
     position: absolute;
-    inset: calc(-1 * (var(--sp-button-focus-offset) + var(--sp-style-button-border-width)));
+    inset: calc(-1 * (var(--_focus-offset) + var(--sp-style-button-border-width)));
     box-sizing: border-box;
-    border: var(--sp-button-focus-width) solid var(--sp-button-focus-color);
-    border-radius: var(--sp-button-focus-radius);
+    border: var(--_focus-width) solid var(--_focus-color);
+    border-radius: var(--_focus-radius);
     pointer-events: none;
   }
 

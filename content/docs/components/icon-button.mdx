@@ -13,6 +13,7 @@ Design reference: [Icon Button set in Spartan DS](https://www.figma.com/design/P
 
 ```ts
 import '@spartan/components/icon-button';
+import '@spartan/components/tokens.css';
 ```
 
 ```html
@@ -24,6 +25,8 @@ import '@spartan/components/icon-button';
 ## Sizes
 
 `xs` is Extra small (24px), `sm` is Small (32px), and `base` is Base (40px) in Relaxed density.
+
+Compact keeps Extra small at 24px, changes Small to 28px and Base to 32px. Glyphs are 16px for Extra small/Small, and 20px/18px for Base in Relaxed/Compact. The frame stays square and centered when the glyph is replaced. Arrange toolbars with wrapping or scrolling when the controls cannot fit; do not squeeze targets below their chosen size.
 
 <StorybookEmbed story="components-icon-button--sizes" title="Sizes" height={140} />
 
@@ -47,15 +50,62 @@ import '@spartan/components/icon-button';
 
 ## States
 
-Figma defines no hover, pressed, focus, or disabled variants for this set, so those states reuse the Button rules and tokens.
+Default, hover, pressed, focus and disabled use the shared [Button](/docs/components/button) Style recipe. The component has no loading or selected/toggle property; a persistent on/off control belongs to its own component. Disabled actions leave the tab order and suppress pointer, keyboard and form activation. `updateComplete` includes form-associated disabled updates, so code can safely focus immediately after re-enabling.
 
 <StorybookEmbed story="components-icon-button--disabled" title="Disabled variants" height={140} />
 
+## Theme contract
+
+Style owns the radius (Atlas 8px, Selene 12px, Helios pill, Ares square), neutral treatment and state recipes. Actions have no shadow. Brand owns Primary fills; System owns the keyboard focus indicator independently. Density supplies the size and glyph metrics. Icon Button has no local field Appearance or Shape property; `variant` selects action emphasis.
+
+<StorybookEmbed story="components-icon-button--styles" title="Icon Button styles" height={280} />
+<StorybookEmbed story="components-icon-button--theme-contract" title="Nested Icon Button theme contract" height={360} />
+
+Component aliases reuse shared roles rather than duplicating values:
+
+| Alias | Source |
+| --- | --- |
+| `--sp-icon-button-size-{xs,sm,base}` | Button height aliases to Density tiers. |
+| `--sp-icon-button-icon-size-{xs,sm,base}` | Button glyph aliases to Density; Extra small reuses Small. |
+| `--sp-icon-button-focus-{color,radius,width,offset}` | Shared Button focus roles: System color, Style radius, 2px stroke and 4px offset. |
+
+Local alias overrides apply to Icon Button only. Keep its square target, visible focus and contrast when adapting a product. In forced-colors mode focus uses the user's Highlight color.
+
+## Direction and composition
+
+Native `dir` inherits through the shadow root and supports nested overrides. The icon stays centered in both directions. The component does not mirror artwork; the consumer owns direction-sensitive glyph selection. Default slot content is decorative, hidden from the accessibility tree and must not contain interactive elements. The required `label` owns the action name independently of icon swaps.
+
+<StorybookEmbed story="components-icon-button--directions" title="LTR and RTL icon artwork" height={200} />
+
+## Forms
+
+```html
+<form>
+  <input name="title" aria-label="Title" required />
+  <sp-icon-button label="Save" type="submit" name="intent" value="save">
+    <!-- Decorative save glyph -->
+  </sp-icon-button>
+</form>
+```
+
+`type="submit"` respects native form validation and includes the control's name/value. `type="reset"` restores the form's fields. The read-only `form` getter returns the associated form or `null`.
+
+<StorybookEmbed story="components-icon-button--in-form" title="Icon actions inside a form" height={180} />
+
 ## Accessibility
 
-- `label` becomes `aria-label` on the native button. If it is empty, the component logs a console warning after first render.
+- `label` is trimmed and becomes `aria-label` on the native button. A missing or whitespace-only label, including one that becomes blank after an update, logs a warning and leaves no empty `aria-label`. Supply an action name; the glyph cannot provide it.
 - Keyboard behavior is that of a native button: Tab to focus, Enter or Space to activate.
 - Use a label that describes the action, such as "Add item", not the icon, such as "Plus".
+- Extra small's 24px target meets the minimum geometry used here; prefer a larger density/size when touch use needs it. Keep spacing between controls.
+
+## Figma handoff
+
+The protected Icon Button 🟢 master `326:63` currently has 15 default variants, five variants by Extra small/Small/Base, with a connected Icon swap. It has no hover, pressed, focus, disabled or loading variants. Its description still mentions Large, which is absent. Primary/Secondary retain old shadows; corners bind generic `radius/control`, and Secondary has a border-width binding without stroke paint.
+
+The set reports Extra small as its default Size. Code retains its established `base` default; set `size="xs"` explicitly when placing the Extra small control.
+
+Code follows the adopted Style recipe and zero shadows. Sizes and centered glyph metrics are preserved from the reference, while style-controlled radius, neutral treatment and interaction states are deliberate code-first differences. Figma remains **Needs verification** for the later bounded family pass, including swap/resizing and all-mode visual checks. No protected-page edits or pixel-identical completion is claimed. The v2 importer requires its separate disposable-file verification before library token application.
 
 ## Links
 

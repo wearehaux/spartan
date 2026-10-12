@@ -84,7 +84,9 @@ export abstract class SpActionBase extends LitElement {
     }
     const form = this.#internals.form;
     if (!form) return;
-    if (this.type === 'reset') form.reset();
+    // Form-associated controls named/id'd reset or requestSubmit can shadow
+    // instance methods. Invoke the native methods without named-property lookup.
+    if (this.type === 'reset') HTMLFormElement.prototype.reset.call(form);
     else if (this.type === 'submit') this.#submit(form);
   }
 
@@ -100,7 +102,7 @@ export abstract class SpActionBase extends LitElement {
     }
     form.append(proxy);
     try {
-      form.requestSubmit(proxy);
+      HTMLFormElement.prototype.requestSubmit.call(form, proxy);
     } finally {
       proxy.remove();
     }

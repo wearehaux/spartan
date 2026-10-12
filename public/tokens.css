@@ -505,6 +505,11 @@
   --sp-button-icon-size-sm: var(--sp-density-control-icon-size-small);
   --sp-button-focus-width: var(--sp-prim-border-width-thick);
   --sp-button-focus-offset: var(--sp-prim-space-1);
+  --sp-icon-button-size-xs: var(--sp-button-height-xs);
+  --sp-icon-button-icon-size-xs: var(--sp-button-icon-size-sm);
+  --sp-icon-button-icon-size-sm: var(--sp-button-icon-size-sm);
+  --sp-icon-button-focus-width: var(--sp-button-focus-width);
+  --sp-icon-button-focus-offset: var(--sp-button-focus-offset);
 }
 
 :root,
@@ -668,6 +673,7 @@
   --sp-selection-foreground-checked: var(--sp-color-system-control-foreground);
   --sp-selection-track: var(--sp-color-system-control-track);
   --sp-selection-focus-color: var(--sp-color-system-focus);
+  --sp-icon-button-focus-color: var(--sp-button-focus-color);
 }
 
 :root,
@@ -779,6 +785,9 @@
   --sp-button-line-height-sm: var(--sp-density-control-line-height-small);
   --sp-button-line-height-base: var(--sp-density-control-line-height-base);
   --sp-button-icon-size-base: var(--sp-density-control-icon-size-base);
+  --sp-icon-button-size-sm: var(--sp-button-height-sm);
+  --sp-icon-button-size-base: var(--sp-button-height-base);
+  --sp-icon-button-icon-size-base: var(--sp-button-icon-size-base);
 }
 
 :root,
@@ -808,6 +817,7 @@
   --sp-surface-shadow-offset-y: var(--sp-style-surface-shadow-offset-y);
   --sp-surface-shadow-blur: var(--sp-style-surface-shadow-blur);
   --sp-button-focus-radius: var(--sp-style-field-focus-radius);
+  --sp-icon-button-focus-radius: var(--sp-button-focus-radius);
 }
 
 :root,

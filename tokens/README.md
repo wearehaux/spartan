@@ -1,9 +1,10 @@
 # Token authoring
 
 The shared theme responsibilities, family recipes and Figma mapping are in
-[THEME-CONTRACT.md](THEME-CONTRACT.md). The current contract has 694 definitions;
+[THEME-CONTRACT.md](THEME-CONTRACT.md). The current contract has 704 definitions;
 the HAUX-152 migration record lists its 138 additions and accepted alias changes,
-and the contract records the nine additive Button aliases from HAUX-113.
+and the contract records nine additive Button aliases from HAUX-113 and ten
+Icon Button aliases from HAUX-90.
 
 `tokens/source.json` is the canonical Git-authored `spartan.tokens.v2` contract. It was
 seeded from the verified Spartan DS Figma export, preserving all 547 token values,
