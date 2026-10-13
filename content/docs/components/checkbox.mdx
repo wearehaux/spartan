@@ -1,0 +1,116 @@
+---
+title: Checkbox
+description: Native selection, mixed state and form validation with System colors, Style radii and accessible labels.
+---
+
+`sp-checkbox` uses a native checkbox for pointer and Space activation. Spartan owns its Lit API, form association, slots and appearance. System colors own selection and keyboard focus independently of Brand. There is no React, Radix or Base UI runtime dependency.
+
+<StorybookEmbed story="components-checkbox--playground" title="Checkbox playground" height={250} />
+
+Design reference: [Checkbox master in Spartan DS](https://www.figma.com/design/PhcMPmdpkpgxH3N83SvpBY/Spartan-DS?node-id=35-75).
+
+## Usage
+
+```ts
+import '@spartan/components/checkbox';
+import '@spartan/components/tokens.css';
+```
+
+```html
+<form>
+  <sp-checkbox label="Accept terms" description="Read the terms first"
+    name="terms" value="accepted" required></sp-checkbox>
+  <button type="submit">Continue</button>
+  <button type="reset">Reset</button>
+</form>
+```
+
+Every checkbox needs a visible label, a label slot, an associated external label or an explicit `aria-label`. Use a native fieldset and legend for related choices. Explain the required asterisk once in the form. Keep submit enabled so native validation can explain missing choices.
+
+## Properties and methods
+
+| Property | Attribute | Default | Meaning |
+| --- | --- | --- | --- |
+| `checked` | Property only | `false` | Current boolean state; user changes and property writes do not change the reset default. |
+| `defaultChecked` | `checked` | `false` | Initial/reset state, following the attribute until the current state is dirty. |
+| `indeterminate` | `indeterminate` | `false` | Mixed visual and accessible state; user activation and reset clear it. |
+| `name` | `name` | Empty | Form key. Unnamed controls contribute no entry. |
+| `value` | `value` | `on` | Submission string, reflected like a native checkbox value. |
+| `disabled` | `disabled` | `false` | Blocks interaction and validation, excludes the form value. Disabled fieldsets also apply. |
+| `required` | `required` | `false` | Native validity requires checked, regardless of mixed appearance. |
+| `label`, `description`, `error` | Same names | Empty | Accessible label, helper text and validation message. Nonempty error also sets custom validity. |
+| `invalid` | `invalid` | `false` | Visual/ARIA invalid state; use error or custom validity to block submission. |
+| `ariaLabel` | `aria-label` | None | Name for a control without visible label. |
+| `labelledBy` | `labelled-by` | Empty | Space-separated external label element IDs. |
+| `describedBy` | `described-by` | Empty | External description IDs, combined with local messages where element-reference ARIA is supported. |
+
+`form`, `validity`, `validationMessage`, `willValidate`, `checkValidity()`, `reportValidity()` and `setCustomValidity(message)` expose form/validation behavior. `focus()` delegates to the native input; `click()` uses native activation and honors disabled/canceled clicks. Await `updateComplete` after changing reactive properties before invoking native methods or reading layout.
+
+```ts
+const checkbox = document.querySelector('sp-checkbox')!;
+checkbox.checked = true;
+checkbox.indeterminate = false;
+await checkbox.updateComplete;
+checkbox.setCustomValidity('');
+```
+
+Current property changes emit no editing events. Listen to bubbling, composed `input` and `change` for user interaction, then read `checked` and `indeterminate` on the host. Native `input` is preserved and native non-composed `change` is bridged once. Enter does not toggle the checkbox; Space does.
+
+## Mixed state and forms
+
+```ts
+parent.checked = children.every(child => child.checked);
+parent.indeterminate = children.some(child => child.checked) && !parent.checked;
+```
+
+Mixed is a presentation of a boolean checkbox, not a third submission value. A mixed unchecked control is omitted; mixed checked still submits `value`. Required validity follows checked. Activation clears mixed and toggles the underlying boolean. Set the parent boolean to false when representing a partially selected group, so activating mixed selects all.
+
+Reset restores `defaultChecked` and clears mixed. State restoration uses the component's saved boolean pair. The callback is covered by automated tests; real browser-history and autofill restoration require manual QA. There is no artificial checkbox group component: derive parent state in the owning form/table and compose native fieldsets and labels.
+
+<StorybookEmbed story="components-checkbox--group" title="Checkbox group and mixed parent" height={330} />
+<StorybookEmbed story="components-checkbox--table" title="Table selection example" height={330} />
+
+## Slots and parts
+
+| Slot | Purpose |
+| --- | --- |
+| `label` | Rich visible label. Nested links retain native link behavior. |
+| `description` | Supporting text associated with the input. |
+| `error` | Validation text associated with the input and rendered in a polite live region. |
+
+Parts are `row`, `target`, `input`, `control`, `indicator`, `label`, `description` and `error`. The decorative indicator is owned by the checkbox so checked/mixed meaning remains synchronized. Check and minus glyphs are the unchanged 16px SVGs from the inspected Figma Central Icons instances; CSS masks apply the semantic foreground without changing their geometry.
+
+External `label for` uses the form-associated host ID. `labelled-by`/`described-by` resolve IDs in the host's own document or shadow root, and names update when external label text changes. Chromium element-reference ARIA is tested; engines without that support should use local description/error properties or slots and an explicit name. Actual screen-reader announcements remain a manual check.
+
+## Theme, states and density
+
+| Setting | Checkbox behavior |
+| --- | --- |
+| Style | Selection radius: Atlas 4px, Selene 8px, Helios 12px, Ares 0. Unselected background uses the Field Style surface. |
+| Density | Label text 15px/22px Relaxed, 14px/20px Compact; gap 8px/6px. |
+| Fixed anatomy | Selection indicator 20px, glyph 16px, interaction target 44px in both densities. |
+| Scheme/contrast | Semantic surfaces/borders and System selection/focus resolve independently; high contrast retains visible boundaries. |
+| Brand hue | Does not recolor checked/mixed or focus. |
+| Selected hover/pressed | System hover/active colors. Unselected interaction retains semantic neutral boundaries. |
+| Invalid | Danger boundary remains during hover/press/focus; focus stays a separate System ring. |
+| Disabled | Disabled surface/foreground take precedence, while checked/mixed glyph remains visible. |
+
+There is no extra Size or Appearance selector. Style supplies the applicable selection treatment. Density adjusts text and layout without shrinking the target or replacing selection meaning. Logical layout inherits RTL and supports nested theme overrides. Forced colors uses Canvas/CanvasText, Highlight/HighlightText and GrayText, retaining marks and focus. State changes introduce no animation, so reduced motion needs no additional transition recipe.
+
+HAUX-88 adds 12 unbound Component definitions, bringing the authored contract from 711 to 723: size, target-size, mark-size, gap, font-size, line-height, radius, border-width and four focus roles. Only target-size introduces a value, 44px; the others alias existing Selection, Field, Button, Density or primitive roles. No existing definition/value/identity/mode changes. Generated CSS is committed with the authored source. The historical HAUX-152 migration JSON remains its own snapshot.
+
+<StorybookEmbed story="components-checkbox--theme-contract" title="Checkbox theme inheritance" height={400} />
+
+## Figma handoff
+
+The live master `35:75` on page `12:21` has 18 variants: Unchecked/Checked/Mixed across Default, Hover, Focus, Error, Disabled and Pressed. It uses a 24px box, 4px primitive radius, 16px nested Central Icons marks and older semantic control/focus bindings. The code contract preserves the existing 20px Selection metric and adopts Style radii plus System roles. The 44px target is implementation anatomy outside the Figma box. Label/message slots, native form behavior and geometry/binding differences require a stable code-to-Figma reconciliation, not a new Figma Done claim.
+
+The exact master reference is configured in Storybook `parameters.design` with `type: 'figma'`. Figma remains Needs verification; no Figma writes are performed in this task. Later work must preserve master identities, variants, instance links and nested icon swaps, then verify bindings/states/themes/resizing/content. HAUX-85 separately gates production v2 imports with preview, identity/alias preservation, disposable-file and repeat-import checks.
+
+Controls and Docs were exercised in the actual Storybook browser. The Design panel opened the correct master embed, then returned HTTP 403 in this session. Sharing was unchanged. Embed access and actual screen-reader/Safari/Firefox/history-restoration checks remain separate from passing Chromium component tests.
+
+## References
+
+- <StorybookLink story="components-checkbox--playground">Checkbox in Storybook</StorybookLink>
+- [shadcn Checkbox](https://ui.shadcn.com/docs/components/base/checkbox)
+- [MDN native checkbox](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input/checkbox)

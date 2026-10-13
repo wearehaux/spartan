@@ -722,6 +722,18 @@
     {"key":"component.field.padding-x.small","name":"field/padding-x/small","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"density.density.control.padding-x.small"}}},
     {"key":"component.field.focus-color","name":"field/focus-color","collection":"component","type":"COLOR","values":{"Value":{"alias":"semantic-color.color.system.focus"}}},
     {"key":"component.field.focus-width","name":"field/focus-width","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"component.button.focus-width"}}},
-    {"key":"component.field.focus-offset","name":"field/focus-offset","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"component.button.focus-offset"}}}
+    {"key":"component.field.focus-offset","name":"field/focus-offset","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"component.button.focus-offset"}}},
+    {"key":"component.checkbox.size","name":"checkbox/size","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"component.selection.box.default"}}},
+    {"key":"component.checkbox.target-size","name":"checkbox/target-size","collection":"component","type":"FLOAT","unit":"px","values":{"Value":44}},
+    {"key":"component.checkbox.mark-size","name":"checkbox/mark-size","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"primitives.space.4"}}},
+    {"key":"component.checkbox.gap","name":"checkbox/gap","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"density.density.control.gap"}}},
+    {"key":"component.checkbox.font-size","name":"checkbox/font-size","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"density.density.control.font-size.base"}}},
+    {"key":"component.checkbox.line-height","name":"checkbox/line-height","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"density.density.control.line-height.base"}}},
+    {"key":"component.checkbox.radius","name":"checkbox/radius","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"component.selection.radius"}}},
+    {"key":"component.checkbox.border-width","name":"checkbox/border-width","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"semantic-foundation.border-width.default"}}},
+    {"key":"component.checkbox.focus-color","name":"checkbox/focus-color","collection":"component","type":"COLOR","values":{"Value":{"alias":"component.selection.focus-color"}}},
+    {"key":"component.checkbox.focus-width","name":"checkbox/focus-width","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"component.button.focus-width"}}},
+    {"key":"component.checkbox.focus-offset","name":"checkbox/focus-offset","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"component.button.focus-offset"}}},
+    {"key":"component.checkbox.focus-radius","name":"checkbox/focus-radius","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"component.field.focus-radius"}}}
   ]
 }

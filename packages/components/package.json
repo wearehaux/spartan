@@ -54,13 +54,21 @@
     "./textarea/class": {
       "types": "./dist/components/textarea/sp-textarea.d.ts",
       "default": "./dist/components/textarea/sp-textarea.js"
+    },
+    "./checkbox": {
+      "types": "./dist/components/checkbox/define.d.ts",
+      "default": "./dist/components/checkbox/define.js"
+    },
+    "./checkbox/class": {
+      "types": "./dist/components/checkbox/sp-checkbox.d.ts",
+      "default": "./dist/components/checkbox/sp-checkbox.js"
     }
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "rm -rf dist && tsc -p tsconfig.build.json && cp ../../public/tokens.css dist/tokens.css",
+    "build": "rm -rf dist && tsc -p tsconfig.build.json && cp ../../public/tokens.css dist/tokens.css && mkdir -p dist/components/checkbox/assets && cp src/components/checkbox/assets/*.svg dist/components/checkbox/assets/",
     "typecheck": "pnpm icons:generate && tsc --noEmit",
     "storybook": "pnpm icons:generate && storybook dev --port ${PORT:-6006} --host 127.0.0.1 --no-open",
     "build-storybook": "pnpm icons:generate && storybook build --output-dir storybook-static",

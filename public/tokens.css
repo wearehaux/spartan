@@ -513,6 +513,11 @@
   --sp-field-icon-size-small: var(--sp-density-control-icon-size-small);
   --sp-field-focus-width: var(--sp-button-focus-width);
   --sp-field-focus-offset: var(--sp-button-focus-offset);
+  --sp-checkbox-size: var(--sp-selection-box-default);
+  --sp-checkbox-target-size: 44px;
+  --sp-checkbox-mark-size: var(--sp-prim-space-4);
+  --sp-checkbox-focus-width: var(--sp-button-focus-width);
+  --sp-checkbox-focus-offset: var(--sp-button-focus-offset);
 }
 
 :root,
@@ -678,6 +683,8 @@
   --sp-selection-focus-color: var(--sp-color-system-focus);
   --sp-icon-button-focus-color: var(--sp-button-focus-color);
   --sp-field-focus-color: var(--sp-color-system-focus);
+  --sp-checkbox-border-width: var(--sp-border-width-default);
+  --sp-checkbox-focus-color: var(--sp-selection-focus-color);
 }
 
 :root,
@@ -795,6 +802,9 @@
   --sp-field-font-size-small: var(--sp-density-control-font-size-small);
   --sp-field-line-height-small: var(--sp-density-control-line-height-small);
   --sp-field-padding-x-small: var(--sp-density-control-padding-x-small);
+  --sp-checkbox-gap: var(--sp-density-control-gap);
+  --sp-checkbox-font-size: var(--sp-density-control-font-size-base);
+  --sp-checkbox-line-height: var(--sp-density-control-line-height-base);
 }
 
 :root,
@@ -825,6 +835,8 @@
   --sp-surface-shadow-blur: var(--sp-style-surface-shadow-blur);
   --sp-button-focus-radius: var(--sp-style-field-focus-radius);
   --sp-icon-button-focus-radius: var(--sp-button-focus-radius);
+  --sp-checkbox-radius: var(--sp-selection-radius);
+  --sp-checkbox-focus-radius: var(--sp-field-focus-radius);
 }
 
 :root,
