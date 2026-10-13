@@ -46,7 +46,15 @@
       "default": "./dist/theme.js"
     },
     "./tokens.css": "./dist/tokens.css",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./textarea": {
+      "types": "./dist/components/textarea/define.d.ts",
+      "default": "./dist/components/textarea/define.js"
+    },
+    "./textarea/class": {
+      "types": "./dist/components/textarea/sp-textarea.d.ts",
+      "default": "./dist/components/textarea/sp-textarea.js"
+    }
   },
   "files": [
     "dist"
