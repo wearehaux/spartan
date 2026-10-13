@@ -715,6 +715,13 @@
     {"key":"component.icon-button.focus-color","name":"icon-button/focus-color","collection":"component","type":"COLOR","values":{"Value":{"alias":"component.button.focus-color"}}},
     {"key":"component.icon-button.focus-radius","name":"icon-button/focus-radius","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"component.button.focus-radius"}}},
     {"key":"component.icon-button.focus-width","name":"icon-button/focus-width","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"component.button.focus-width"}}},
-    {"key":"component.icon-button.focus-offset","name":"icon-button/focus-offset","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"component.button.focus-offset"}}}
+    {"key":"component.icon-button.focus-offset","name":"icon-button/focus-offset","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"component.button.focus-offset"}}},
+    {"key":"component.field.font-size.small","name":"field/font-size/small","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"density.density.control.font-size.small"}}},
+    {"key":"component.field.line-height.small","name":"field/line-height/small","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"density.density.control.line-height.small"}}},
+    {"key":"component.field.icon-size.small","name":"field/icon-size/small","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"density.density.control.icon-size.small"}}},
+    {"key":"component.field.padding-x.small","name":"field/padding-x/small","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"density.density.control.padding-x.small"}}},
+    {"key":"component.field.focus-color","name":"field/focus-color","collection":"component","type":"COLOR","values":{"Value":{"alias":"semantic-color.color.system.focus"}}},
+    {"key":"component.field.focus-width","name":"field/focus-width","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"component.button.focus-width"}}},
+    {"key":"component.field.focus-offset","name":"field/focus-offset","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"component.button.focus-offset"}}}
   ]
 }

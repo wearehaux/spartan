@@ -1,6 +1,6 @@
 # Figma variable snapshot
 
-The Git-authored theme contract now has 704 definitions; this unchanged Figma snapshot
+The Git-authored theme contract now has 711 definitions; this unchanged Figma snapshot
 still has 547. [THEME-CONTRACT.md](../THEME-CONTRACT.md) and the migration JSON identify
 the 138 HAUX-152 definitions and accepted alias/value changes plus nine additive
 HAUX-113 Button aliases and ten HAUX-90 Icon Button aliases for a later verified import.

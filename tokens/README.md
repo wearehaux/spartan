@@ -1,7 +1,7 @@
 # Token authoring
 
 The shared theme responsibilities, family recipes and Figma mapping are in
-[THEME-CONTRACT.md](THEME-CONTRACT.md). The current contract has 704 definitions;
+[THEME-CONTRACT.md](THEME-CONTRACT.md). The current contract has 711 definitions;
 the HAUX-152 migration record lists its 138 additions and accepted alias changes,
 and the contract records nine additive Button aliases from HAUX-113 and ten
 Icon Button aliases from HAUX-90.

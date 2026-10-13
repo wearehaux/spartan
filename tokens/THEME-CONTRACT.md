@@ -125,6 +125,15 @@ They use the existing `--sp-` naming algorithm. Examples: `--sp-color-system-foc
 
 ## Migration and Figma handoff
 
+HAUX-91 adds seven unbound Field aliases, bringing the current source to 711.
+`field/{font-size,line-height,icon-size,padding-x}/small` reuses existing Small
+Density roles. `field/focus-color` references Semantic System focus, while
+`field/focus-width` and `field/focus-offset` reuse the existing Button roles.
+Input consumes the shared family recipe without changing any existing definition,
+resolved value, identity or mode. The typography weight reuses the regular primitive.
+The HAUX-152 JSON remains its historical migration snapshot.
+
+
 HAUX-90 adds ten unbound Icon Button aliases after HAUX-113, bringing the current
 total to 704. `icon-button/size/{xs,sm,base}` reuses the existing Button height
 aliases. `icon-button/icon-size/{xs,sm,base}` reuses Button's glyph aliases, with

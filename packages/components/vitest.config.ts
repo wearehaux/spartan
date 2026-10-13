@@ -12,6 +12,9 @@ const dirname =
 
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
+  // Pre-bundle new Lit directives so a cold browser test run does not reload
+  // the test modules midway through Vitest's suite collection.
+  optimizeDeps: { include: ['lit/directives/if-defined.js', 'lit/directives/live.js'] },
   test: {
     projects: [
       {
