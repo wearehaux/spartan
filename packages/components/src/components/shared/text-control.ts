@@ -1,4 +1,5 @@
 import { LitElement, html, nothing, type TemplateResult, type PropertyValues } from 'lit';
+import { accessibleLabelText } from './accessible-label.js';
 
 export type TextControlSize = 'sm' | 'base';
 export type TextControlAppearance = 'default' | 'outlined' | 'filled';
@@ -116,7 +117,7 @@ export abstract class TextControl extends LitElement {
     if ('ariaLabelledByElements' in (input as object)) input.ariaLabelledByElements = labels;
     // Some engines expose cross-root element references but do not expose the
     // associated light-DOM label in the accessibility tree. Keep a text fallback.
-    const name = labels.length ? labels.map(el => this.#labelText(el)).join(' ') : this.ariaLabel?.trim();
+    const name = labels.length ? labels.map(accessibleLabelText).join(' ') : this.ariaLabel?.trim();
     if (name) input.setAttribute('aria-label', name); else input.removeAttribute('aria-label');
     this.#labelObserver ??= new MutationObserver(() => this.syncA11y());
     this.#labelObserver.disconnect();
@@ -129,15 +130,6 @@ export abstract class TextControl extends LitElement {
       if (local.length) input.setAttribute('aria-describedby', local.map(el => el.id).join(' '));
       else input.removeAttribute('aria-describedby');
     }
-  }
-  #labelText(label: Element): string {
-    const explicit = label.getAttribute('aria-label'); if (explicit?.trim()) return explicit.trim();
-    const walk = document.createTreeWalker(label, NodeFilter.SHOW_TEXT, { acceptNode: node => {
-      const hidden = node.parentElement?.closest('[aria-hidden="true"],[hidden]');
-      return hidden && hidden !== label && label.contains(hidden) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
-    } });
-    const parts: string[] = []; while (walk.nextNode()) parts.push(walk.currentNode.textContent ?? '');
-    return parts.join(' ').replace(/\s+/g, ' ').trim();
   }
   protected sync() {
     const input = this.control; if (!input) return;

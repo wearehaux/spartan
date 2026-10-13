@@ -125,8 +125,17 @@ They use the existing `--sp-` naming algorithm. Examples: `--sp-color-system-foc
 
 ## Migration and Figma handoff
 
+HAUX-88 adds 12 unbound Component definitions, bringing the current source to 723.
+Checkbox size aliases the existing 20px Selection box, mark-size the 16px primitive,
+gap/font-size/line-height the Base Density roles, radius the Selection Style role,
+and border-width the existing semantic boundary. Focus color uses Selection System,
+width/offset reuse Button, and radius reuses Field capped at Selection radius plus
+offset. Target-size is 44px in both densities. All original 711 definitions, values,
+identities and modes remain unchanged. The Figma box is 24px with a fixed 4px
+primitive radius; this code-first difference is recorded on HAUX-88.
+
 HAUX-101 adopts existing Field roles for Textarea with no token additions or changes;
-the current source remains 711. The native control uses the 72px minimum, existing
+that revision retains 711 definitions. The native control uses the 72px minimum, existing
 Density type/padding and bounded multiline radius. Two Base rows can grow to 74px
 in Helios High Contrast Relaxed Default to preserve the 3px boundary. Shared Field
 CSS and text-entry mechanics also serve Input without changing its public contract.
@@ -134,7 +143,7 @@ Textarea's focus geometry caps the existing Field focus radius at multiline radi
 plus focus offset. No Figma identities, modes or variable definitions change.
 
 
-HAUX-91 adds seven unbound Field aliases, bringing the current source to 711.
+HAUX-91 adds seven unbound Field aliases, bringing that revision to 711.
 `field/{font-size,line-height,icon-size,padding-x}/small` reuses existing Small
 Density roles. `field/focus-color` references Semantic System focus, while
 `field/focus-width` and `field/focus-offset` reuse the existing Button roles.
