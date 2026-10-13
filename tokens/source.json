@@ -734,6 +734,21 @@
     {"key":"component.checkbox.focus-color","name":"checkbox/focus-color","collection":"component","type":"COLOR","values":{"Value":{"alias":"component.selection.focus-color"}}},
     {"key":"component.checkbox.focus-width","name":"checkbox/focus-width","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"component.button.focus-width"}}},
     {"key":"component.checkbox.focus-offset","name":"checkbox/focus-offset","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"component.button.focus-offset"}}},
-    {"key":"component.checkbox.focus-radius","name":"checkbox/focus-radius","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"component.field.focus-radius"}}}
+    {"key":"component.checkbox.focus-radius","name":"checkbox/focus-radius","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"component.field.focus-radius"}}},
+    {"key":"component.radio-group.size","name":"radio-group/size","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.selection.box.default"}},"unit":"px"},
+    {"key":"component.radio-group.target-size","name":"radio-group/target-size","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.checkbox.target-size"}},"unit":"px"},
+    {"key":"component.radio-group.dot-size","name":"radio-group/dot-size","collection":"component","type":"FLOAT","values":{"Value":{"alias":"primitives.space.2"}},"unit":"px"},
+    {"key":"component.radio-group.radius","name":"radio-group/radius","collection":"component","type":"FLOAT","values":{"Value":{"alias":"semantic-foundation.radius.pill"}},"unit":"px"},
+    {"key":"component.radio-group.gap","name":"radio-group/gap","collection":"component","type":"FLOAT","values":{"Value":{"alias":"density.density.control.gap"}},"unit":"px"},
+    {"key":"component.radio-group.group-gap","name":"radio-group/group-gap","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.form.group.gap"}},"unit":"px"},
+    {"key":"component.radio-group.copy-gap","name":"radio-group/copy-gap","collection":"component","type":"FLOAT","values":{"Value":{"alias":"density.density.space.1"}},"unit":"px"},
+    {"key":"component.radio-group.font-size","name":"radio-group/font-size","collection":"component","type":"FLOAT","values":{"Value":{"alias":"density.density.control.font-size.base"}},"unit":"px"},
+    {"key":"component.radio-group.line-height","name":"radio-group/line-height","collection":"component","type":"FLOAT","values":{"Value":{"alias":"density.density.control.line-height.base"}},"unit":"px"},
+    {"key":"component.radio-group.boxed-padding","name":"radio-group/boxed-padding","collection":"component","type":"FLOAT","values":{"Value":{"alias":"density.density.control.padding-x.small"}},"unit":"px"},
+    {"key":"component.radio-group.boxed-radius","name":"radio-group/boxed-radius","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.field.multiline.radius"}},"unit":"px"},
+    {"key":"component.radio-group.border-width","name":"radio-group/border-width","collection":"component","type":"FLOAT","values":{"Value":{"alias":"semantic-foundation.border-width.default"}},"unit":"px"},
+    {"key":"component.radio-group.focus-color","name":"radio-group/focus-color","collection":"component","type":"COLOR","values":{"Value":{"alias":"component.selection.focus-color"}}},
+    {"key":"component.radio-group.focus-width","name":"radio-group/focus-width","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.button.focus-width"}},"unit":"px"},
+    {"key":"component.radio-group.focus-offset","name":"radio-group/focus-offset","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.button.focus-offset"}},"unit":"px"}
   ]
 }

@@ -1,0 +1,53 @@
+import type { Meta, StoryObj } from '@storybook/web-components-vite';
+import { html } from 'lit';
+import { expect, fn, userEvent } from 'storybook/test';
+import './define.js';
+import '../button/define.js';
+import type { SpRadioGroup, RadioGroupOrientation } from './sp-radio-group.js';
+import type { RadioItemAppearance, RadioItemPlacement } from './sp-radio-group-item.js';
+type Args = {
+    label: string;
+    description: string;
+    error: string;
+    value: string;
+    disabled: boolean;
+    invalid: boolean;
+    required: boolean;
+    orientation: RadioGroupOrientation;
+    appearance: RadioItemAppearance;
+    placement: RadioItemPlacement;
+    onInput: (event: Event) => void;
+    onChange: (event: Event) => void;
+};
+const choices = (appearance: RadioItemAppearance = 'plain', placement: RadioItemPlacement = 'start') => html `<sp-radio-group-item value="basic" label="Basic" description="For personal projects" appearance=${appearance} placement=${placement}></sp-radio-group-item><sp-radio-group-item value="pro" label="Pro" description="For growing teams" appearance=${appearance} placement=${placement}></sp-radio-group-item><sp-radio-group-item value="enterprise" label="Enterprise" disabled appearance=${appearance} placement=${placement}></sp-radio-group-item>`;
+const meta: Meta<Args> = { title: 'Components/Radio Group', component: 'sp-radio-group', args: { label: 'Plan', description: 'Choose one plan', error: '', value: 'basic', disabled: false, invalid: false, required: false, orientation: 'vertical', appearance: 'plain', placement: 'start', onInput: fn(), onChange: fn() }, argTypes: { orientation: { control: 'inline-radio', options: ['vertical', 'horizontal'] }, appearance: { control: 'inline-radio', options: ['plain', 'boxed'] }, placement: { control: 'inline-radio', options: ['start', 'end'] }, onInput: { table: { disable: true } }, onChange: { table: { disable: true } } }, render: a => html `<div style="inline-size:360px;max-inline-size:100%"><sp-radio-group label=${a.label} description=${a.description} error=${a.error} .value=${a.value} ?disabled=${a.disabled} ?invalid=${a.invalid} ?required=${a.required} orientation=${a.orientation} @input=${a.onInput} @change=${a.onChange}>${choices(a.appearance, a.placement)}</sp-radio-group></div>`, parameters: { layout: 'padded', design: { type: 'figma', url: 'https://www.figma.com/design/PhcMPmdpkpgxH3N83SvpBY/Spartan-DS?node-id=45-146' }, docs: { description: { component: 'Reusable native radio items coordinated by a form-associated Lit group. One Tab stop; Space, arrows and Home/End select. System owns selection/focus, circles remain circles, Style shapes boxed choices and Density adjusts surrounding text/spacing.' } } } };
+export default meta;
+type Story = StoryObj<Args>;
+const stack = 'display:grid;gap:var(--sp-form-group-gap);inline-size:360px;max-inline-size:100%';
+export const Playground: Story = { play: async ({ canvasElement, args }) => {
+        const group = canvasElement.querySelector<SpRadioGroup>('sp-radio-group')!;
+        await userEvent.click(group.querySelector('sp-radio-group-item[value=pro]')!.shadowRoot!.querySelector('input')!);
+        await expect(group.value).toBe('pro');
+        await expect(args.onInput).toHaveBeenCalledTimes(1);
+        await expect(args.onChange).toHaveBeenCalledTimes(1);
+    } };
+export const Appearances: Story = { render: () => html `<div style=${stack}><sp-radio-group label="Plain" value="basic">${choices()}</sp-radio-group><sp-radio-group label="Boxed" value="pro">${choices('boxed')}</sp-radio-group></div>` };
+export const Placements: Story = { render: () => html `<div style=${stack}><sp-radio-group label="Start" value="basic">${choices('boxed', 'start')}</sp-radio-group><sp-radio-group label="End" value="basic">${choices('boxed', 'end')}</sp-radio-group></div>` };
+export const States: Story = { render: () => html `<div style=${stack}><sp-radio-group label="Empty">${choices()}</sp-radio-group><sp-radio-group label="Selected" value="pro">${choices()}</sp-radio-group><sp-radio-group label="Invalid" value="basic" error="Review your plan">${choices()}</sp-radio-group><sp-radio-group label="Disabled" value="basic" disabled>${choices()}</sp-radio-group></div>` };
+export const Orientation: Story = { render: () => html `<div style="display:grid;gap:var(--sp-form-group-gap);max-inline-size:100%"><sp-radio-group label="Horizontal" orientation="horizontal" value="basic">${choices()}</sp-radio-group><sp-radio-group label="RTL horizontal" orientation="horizontal" value="basic" dir="rtl">${choices()}</sp-radio-group></div>` };
+export const Styles: Story = { render: () => html `<div style=${stack}>${['Atlas', 'Selene', 'Helios', 'Ares'].map(style => html `<sp-radio-group label=${style} data-sp-mode-style=${style} value="basic">${choices('boxed')}</sp-radio-group>`)}</div>` };
+export const Density: Story = { render: () => html `<div style=${stack}>${['Relaxed', 'Compact'].map(density => html `<sp-radio-group label=${density} data-sp-mode-density=${density} value="basic">${choices()}</sp-radio-group>`)}</div>` };
+export const Composition: Story = { render: () => html `<sp-radio-group style=${stack}><span slot="label">Slotted group label</span><span slot="description">Group assistance</span><sp-radio-group-item value="a"><span slot="label">Rich item label</span><span slot="description">Nested native slots</span></sp-radio-group-item><sp-radio-group-item value="b">Default label slot</sp-radio-group-item></sp-radio-group>` };
+export const InForm: Story = { render: () => html `<form style=${stack} @submit=${(event: SubmitEvent) => {
+        event.preventDefault();
+        const form = event.target as HTMLFormElement;
+        form.querySelector('output')!.value = String(new FormData(form).get('plan'));
+    }}><sp-radio-group label="Required plan" name="plan" value="basic" required>${choices()}</sp-radio-group><div style="display:flex;gap:var(--sp-form-group-gap)"><sp-button type="submit">Continue</sp-button><sp-button type="reset" variant="secondary">Reset</sp-button></div><output></output></form>`, play: async ({ canvasElement }) => {
+        const group = canvasElement.querySelector<SpRadioGroup>('sp-radio-group')!;
+        await userEvent.click(group.querySelector('[value=pro]')!.shadowRoot!.querySelector('input')!);
+        await userEvent.click(canvasElement.querySelector('[type=submit]')!.shadowRoot!.querySelector('button')!);
+        await expect(canvasElement.querySelector('output')!.value).toBe('pro');
+        await userEvent.click(canvasElement.querySelector('[type=reset]')!.shadowRoot!.querySelector('button')!);
+        await expect(group.value).toBe('basic');
+    } };
+export const ThemeContract: Story = { render: () => html `<section data-sp-mode-style="Helios" data-sp-mode-primary="Purple" data-sp-mode-color-scheme="Dark" data-sp-mode-contrast="High" data-sp-mode-density="Compact" dir="rtl" style="display:grid;gap:var(--sp-form-group-gap);padding:var(--sp-surface-content-padding);background:var(--sp-color-surface-default);color:var(--sp-color-foreground-default);inline-size:400px;max-inline-size:100%;box-sizing:border-box"><p dir="ltr" style="margin:0">Helios · Compact · Dark · High contrast · RTL</p><sp-radio-group label="System selection, Purple Brand" value="basic" error="Danger and System focus stay independent">${choices('boxed', 'end')}</sp-radio-group><div data-sp-mode-style="Ares" data-sp-mode-density="Relaxed" dir="ltr"><sp-radio-group label="Nested Ares, Relaxed, LTR" value="pro">${choices()}</sp-radio-group></div></section>` };
