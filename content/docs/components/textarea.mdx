@@ -1,0 +1,125 @@
+---
+title: Textarea
+description: Native multiline editing with shared Field styles, density, form validation and optional autogrow.
+---
+
+`sp-textarea` provides a native textarea in Lit. Enter inserts a newline. It shares the Field recipe and text-entry mechanics with [Input](/docs/components/input), while owning multiline sizing and resizing. Default, Outlined and Filled appearances use Spartan Style, Density and semantic roles.
+
+<StorybookEmbed story="components-textarea--playground" title="Textarea playground" height={260} />
+
+Design reference: [Textarea set in Spartan DS](https://www.figma.com/design/PhcMPmdpkpgxH3N83SvpBY/Spartan-DS?node-id=32-173).
+
+## Usage
+
+```ts
+import '@spartan/components/textarea';
+import '@spartan/components/tokens.css';
+```
+
+```html
+<form>
+  <sp-textarea label="Message" name="message" placeholder="Write a message…"
+    description="Explain what you need help with" required minlength="10"></sp-textarea>
+  <sp-button type="submit">Send</sp-button>
+</form>
+```
+
+## Properties
+
+| Property | Attribute | Default | Purpose |
+| --- | --- | --- | --- |
+| `size` | `size` | `'base'` | `'sm'` or `'base'`, selecting Density type and horizontal spacing. |
+| `appearance` | `appearance` | `'default'` | `'default'`, `'outlined'` or `'filled'`. Default follows Style. |
+| `value` | None | `''` | Current string value; never reflected into markup. |
+| `defaultValue` | `value` | `''` | Initial/reset value. Changing it updates current value only before editing or assigning `value`. |
+| `name` | `name` | `''` | FormData field name. |
+| `label` | `label` | `''` | Visible associated label. |
+| `ariaLabel` | `aria-label` | `null` | Accessible name when a visible label is elsewhere. |
+| `labelledBy`, `describedBy` | `aria-labelledby`, `aria-describedby` | `''` | External IDs in the host's document or shadow root. |
+| `placeholder` | `placeholder` | `''` | Entry hint; never a substitute for a label. |
+| `description`, `error` | `description`, `error` | `''` | Supporting text and custom error. Error blocks submission until cleared. |
+| `invalid` | `invalid` | `false` | Visual invalid state only. |
+| `disabled`, `readOnly`, `required` | `disabled`, `readonly`, `required` | `false` | Native textarea behavior. |
+| `minLength`, `maxLength` | `minlength`, `maxlength` | Unset | Native numeric length constraints. |
+| `autocomplete`, `inputMode` | `autocomplete`, `inputmode` | `''` | Browser entry hints. |
+| `rows` | `rows` | `2` | Preferred native row count. Positive values are rounded down with a minimum of one; invalid/nonpositive values fall back to two. |
+| `resize` | `resize` | `'vertical'` | Native vertical resize grip, or `'none'`. Horizontal resizing is not exposed. |
+| `autoGrow` | `autogrow` | `false` | Fits content automatically, overriding the resize grip. |
+| `wrap` | `wrap` | `'soft'` | Native soft wrapping, or `'off'` for horizontal scrolling. Hard wrapping/column-based serialization is not exposed. |
+
+Await `updateComplete` after changing constraints, rows, size or disabled state before using native methods or measuring the result. Current value assignment and reset synchronize FormData immediately once rendered. A native textarea normalizes its current line endings; the reset default remains the supplied string.
+
+## Slots and parts
+
+Slots `label`, `description` and `error` override the corresponding visible fallback. Error-slot text supplies custom validity. Parts: `label`, `field`, `textarea`, `description`, `error`. The Field frame owns visuals; the native textarea owns editing and its resize grip. Place actions next to the component so their state and accessible names remain independently owned.
+
+<StorybookEmbed story="components-textarea--composition" title="Textarea composition" height={400} />
+
+## Style and density
+
+| Density | Small type / horizontal padding | Base type / horizontal padding | Vertical padding |
+| --- | --- | --- | --- |
+| Relaxed | 14px / 20px line, 12px padding | 15px / 22px line, 16px padding | 12px |
+| Compact | 13px / 18px line, 10px padding | 14px / 20px line, 12px padding | 10px |
+
+The Field minimum remains 72px in both sizes and densities. More rows, taller content and thicker boundaries can grow it. With default rows, Helios High Contrast in Relaxed Base Default needs 74px: two 22px lines, 12px top/bottom padding and 3px sides. The text is not clipped to force 72px.
+
+Default follows Atlas outlined, Selene muted fill, Helios raised surface and Ares underline. Multiline corners are 8/12/16/0px, keeping Helios bounded. Outlined/Filled change surface/border treatment while retaining radius and elevation. High contrast restores boundaries. Error remains Danger during hover/focus; a separate System keyboard ring stays independent of Brand. Disabled styles override the error border; read-only remains focusable and selectable.
+
+Textarea reuses existing `--sp-field-*` aliases without new tokens or identities. The multiline radius and minimum use `--sp-field-multiline-radius` and `--sp-field-textarea-min-height-default`. Vertical padding reuses the Small padding role. Focus radius is capped at the multiline radius plus the shared offset, preserving the existing smaller Style focus geometry; Helios uses 20px. Forced-colors focus uses Highlight.
+
+<StorybookEmbed story="components-textarea--styles" title="Textarea styles" height={520} />
+<StorybookEmbed story="components-textarea--density" title="Textarea density" height={520} />
+<StorybookEmbed story="components-textarea--theme-contract" title="Nested Textarea themes and RTL" height={400} />
+
+## Resize and autogrow
+
+By default the browser's vertical grip resizes the native textarea and the Field follows it. Manual size survives value edits. Use `resize="none"` to retain rows with native scrolling.
+
+```html
+<sp-textarea label="Comment" autogrow></sp-textarea>
+```
+
+Autogrow responds to editing, programmatic values, reset, row changes, wrapping/container width, inherited theme settings and font loading. Deleting content shrinks back to the row/minimum size. It observes layout and ancestor attributes and releases observers when disconnected. Hidden fields are measured when revealed. Enabling autogrow replaces a prior manual height; disabling it returns to native rows/minimum sizing.
+
+To cap an autogrowing field, set a product maximum on its native part. Overflow remains scrollable:
+
+```css
+sp-textarea::part(textarea) { max-block-size: 12rem; }
+```
+
+<StorybookEmbed story="components-textarea--auto-grow" title="Autogrow and native resizing" height={440} />
+
+## Forms, events and selection
+
+The form receives current multiline text through ElementInternals. Disabled controls, including disabled fieldsets, are excluded; read-only values remain submitted. Native required/length constraints and explicit custom errors block submission. Programmatically supplied values have native textarea length-validation behavior; do not assume they are treated as user edits.
+
+`input` is the native composed event, synchronized before consumers receive it. `change` is bridged once as bubbling/composed on committed edits. Value assignment, reset and `setRangeText` do not synthesize editing events. Enter stays a newline even when a form has a default submitter; use the submit button for submission.
+
+Methods: `checkValidity`, `reportValidity`, `setCustomValidity`, `select`, `setSelectionRange`, `setRangeText`. Getters: `form`, `validity`, `validationMessage`, `willValidate`. `setRangeText` follows native selection replacement and synchronizes the current value/FormData. Clear explicit errors with `setCustomValidity('')` or remove the error property/slot that owns them. `invalid` alone is visual.
+
+Reset restores `defaultValue` immediately. The string-restoration callback is implemented and tested, while actual browser history, autofill and password-manager integration remain manual verification.
+
+<StorybookEmbed story="components-textarea--in-form" title="Textarea in a form" height={300} />
+
+## Accessibility and direction
+
+Use a visible label or explicit accessible name. Supporting/error content is associated with the native textarea, with a stable polite error region. Native editing preserves caret, selection and keyboard behavior. Logical layout and native `dir` support inherited/nested RTL; text stays editable in narrow containers.
+
+External labels/descriptions use element-reference ARIA where supported, plus a text fallback for external names. External label text edits refresh that fallback. In engines without element-reference support, use local label/description/error properties or slots and an explicit `aria-label`. Chromium behavior is tested; actual screen-reader announcements and Safari/Firefox still require manual QA.
+
+## Figma handoff
+
+The live master `32:173`, page `12:36`, has 28 variants: Outlined/Filled, seven states (Default, Hover, Focus, Error, Error focus, Disabled, Read only) and Empty/Filled content. `Title#32:26` edits the placeholder; `Body#32:27` edits entered text. Code derives content state from its value instead of exposing a separate Content switch. Visible labels and messages compose outside the native field.
+
+The inspected Outlined default is 360×72px, with 12px padding and 14px/21px text. It binds the existing single-line Style radius. Code deliberately follows the adopted multiline contract: Default Appearance, Small/Base Density metrics, bounded Helios corners and corresponding focus geometry. The reference has no Size or Default Appearance variants. These are explicit code-first differences, not a pixel-identical or renewed Figma completion claim.
+
+Figma remains Needs verification. No Figma writes are performed here. Later work should reuse the existing masters, preserve identity/property/instance links, reconcile the differences, and verify all applicable styles/themes/densities/slots/resizing. HAUX-85 separately gates library token imports with preview/IDs/aliases/disposable-file/repeat-import checks.
+
+Storybook includes the exact master link in `parameters.design` with `type: 'figma'`. Controls and Docs were exercised in the browser. The Design panel opened the correct embed URL but returned HTTP 403 in this session; Figma sharing was left unchanged. The embed access check remains separate from component behavior and Figma alignment verification.
+
+## References
+
+- <StorybookLink story="components-textarea--playground">Textarea in Storybook</StorybookLink>
+- [shadcn Textarea](https://ui.shadcn.com/docs/components/base/textarea)
+- [MDN native textarea](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/textarea)

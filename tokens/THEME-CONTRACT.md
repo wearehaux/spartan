@@ -125,6 +125,15 @@ They use the existing `--sp-` naming algorithm. Examples: `--sp-color-system-foc
 
 ## Migration and Figma handoff
 
+HAUX-101 adopts existing Field roles for Textarea with no token additions or changes;
+the current source remains 711. The native control uses the 72px minimum, existing
+Density type/padding and bounded multiline radius. Two Base rows can grow to 74px
+in Helios High Contrast Relaxed Default to preserve the 3px boundary. Shared Field
+CSS and text-entry mechanics also serve Input without changing its public contract.
+Textarea's focus geometry caps the existing Field focus radius at multiline radius
+plus focus offset. No Figma identities, modes or variable definitions change.
+
+
 HAUX-91 adds seven unbound Field aliases, bringing the current source to 711.
 `field/{font-size,line-height,icon-size,padding-x}/small` reuses existing Small
 Density roles. `field/focus-color` references Semantic System focus, while
