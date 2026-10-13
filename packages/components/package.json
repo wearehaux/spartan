@@ -62,6 +62,18 @@
     "./checkbox/class": {
       "types": "./dist/components/checkbox/sp-checkbox.d.ts",
       "default": "./dist/components/checkbox/sp-checkbox.js"
+    },
+    "./radio-group": {
+      "types": "./dist/components/radio-group/define.d.ts",
+      "default": "./dist/components/radio-group/define.js"
+    },
+    "./radio-group/class": {
+      "types": "./dist/components/radio-group/sp-radio-group.d.ts",
+      "default": "./dist/components/radio-group/sp-radio-group.js"
+    },
+    "./radio-group-item/class": {
+      "types": "./dist/components/radio-group/sp-radio-group-item.d.ts",
+      "default": "./dist/components/radio-group/sp-radio-group-item.js"
     }
   },
   "files": [

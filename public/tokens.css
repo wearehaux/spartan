@@ -518,6 +518,13 @@
   --sp-checkbox-mark-size: var(--sp-prim-space-4);
   --sp-checkbox-focus-width: var(--sp-button-focus-width);
   --sp-checkbox-focus-offset: var(--sp-button-focus-offset);
+  --sp-radio-group-size: var(--sp-selection-box-default);
+  --sp-radio-group-target-size: var(--sp-checkbox-target-size);
+  --sp-radio-group-dot-size: var(--sp-prim-space-2);
+  --sp-radio-group-radius: var(--sp-radius-pill);
+  --sp-radio-group-copy-gap: var(--sp-density-space-1);
+  --sp-radio-group-focus-width: var(--sp-button-focus-width);
+  --sp-radio-group-focus-offset: var(--sp-button-focus-offset);
 }
 
 :root,
@@ -685,6 +692,8 @@
   --sp-field-focus-color: var(--sp-color-system-focus);
   --sp-checkbox-border-width: var(--sp-border-width-default);
   --sp-checkbox-focus-color: var(--sp-selection-focus-color);
+  --sp-radio-group-border-width: var(--sp-border-width-default);
+  --sp-radio-group-focus-color: var(--sp-selection-focus-color);
 }
 
 :root,
@@ -805,6 +814,11 @@
   --sp-checkbox-gap: var(--sp-density-control-gap);
   --sp-checkbox-font-size: var(--sp-density-control-font-size-base);
   --sp-checkbox-line-height: var(--sp-density-control-line-height-base);
+  --sp-radio-group-gap: var(--sp-density-control-gap);
+  --sp-radio-group-group-gap: var(--sp-form-group-gap);
+  --sp-radio-group-font-size: var(--sp-density-control-font-size-base);
+  --sp-radio-group-line-height: var(--sp-density-control-line-height-base);
+  --sp-radio-group-boxed-padding: var(--sp-density-control-padding-x-small);
 }
 
 :root,
@@ -837,6 +851,7 @@
   --sp-icon-button-focus-radius: var(--sp-button-focus-radius);
   --sp-checkbox-radius: var(--sp-selection-radius);
   --sp-checkbox-focus-radius: var(--sp-field-focus-radius);
+  --sp-radio-group-boxed-radius: var(--sp-field-multiline-radius);
 }
 
 :root,

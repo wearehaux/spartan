@@ -125,7 +125,15 @@ They use the existing `--sp-` naming algorithm. Examples: `--sp-color-system-foc
 
 ## Migration and Figma handoff
 
-HAUX-88 adds 12 unbound Component definitions, bringing the current source to 723.
+HAUX-93 adds 15 unbound Radio Group aliases, bringing the current source to 738.
+Circle size 20, target 44 and dot 8 remain fixed in both densities. Labels 15/22 and
+14/20, item gap 8/6, group gap 16/12 and boxed padding 12/10 reuse existing roles.
+Radio radius remains pill; boxed radius uses bounded multiline Field geometry.
+System selection/focus is independent of Brand. Every previous definition/value/ID
+and collection/mode is preserved. Figma has 24px controls; code retains the 20px
+Selection contract. No library writes; HAUX-93 records the stable handoff.
+
+HAUX-88 adds 12 unbound Component definitions, bringing that revision to 723.
 Checkbox size aliases the existing 20px Selection box, mark-size the 16px primitive,
 gap/font-size/line-height the Base Density roles, radius the Selection Style role,
 and border-width the existing semantic boundary. Focus color uses Selection System,

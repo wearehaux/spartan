@@ -1,0 +1,124 @@
+---
+title: Radio Group
+description: Single selection with reusable radio items, native forms, keyboard navigation and Spartan themes.
+---
+
+`sp-radio-group` owns single selection and form state. `sp-radio-group-item` provides a native radio input and reusable label/description slots. The group coordinates inputs across item shadow roots, preserving one Tab stop and native Space/pointer activation. No React, Radix or Base UI runtime is required.
+
+<StorybookEmbed story="components-radio-group--playground" title="Radio Group playground" height={420} />
+
+Design reference: [Radio Group in Spartan DS](https://www.figma.com/design/PhcMPmdpkpgxH3N83SvpBY/Spartan-DS?node-id=45-146).
+
+## Usage
+
+```ts
+import '@spartan/components/radio-group';
+import '@spartan/components/tokens.css';
+```
+
+```html
+<form>
+  <sp-radio-group label="Plan" description="Choose one plan" name="plan" value="basic" required>
+    <sp-radio-group-item value="basic" label="Basic"></sp-radio-group-item>
+    <sp-radio-group-item value="pro" label="Pro" description="For growing teams"></sp-radio-group-item>
+  </sp-radio-group>
+  <button type="submit">Continue</button>
+  <button type="reset">Reset</button>
+</form>
+```
+
+Give the group and each item a meaningful accessible name. The group supports a label property/slot, explicit `aria-label`, or external `labelled-by` IDs. Items support label/default slots, a label property, `aria-label` or `labelled-by`. Use unique, nonempty item values. The component supports wrapper elements between the group and its items; nested groups keep separate ownership.
+
+## Group API
+
+| Property | Attribute | Default | Meaning |
+| --- | --- | --- | --- |
+| `value` | Property only | Empty | Current selection; writes do not change the reset default or emit editing events. |
+| `defaultValue` | `value` | Empty | Initial/reset selection, followed until current value becomes dirty. |
+| `name` | `name` | Empty | Group form key; item inputs do not contribute separate entries. |
+| `disabled` | `disabled` | `false` | Disables all items and group validation/submission. Disabled fieldsets apply too. |
+| `required` | `required` | `false` | Requires a configured, enabled selected option. |
+| `orientation` | `orientation` | `vertical` | Vertical or horizontal layout and accessible orientation. |
+| `invalid` | `invalid` | `false` | Visual/ARIA invalid state; use an error or custom validity to block submission. |
+| `label`, `description`, `error` | Same names | Empty | Group name, assistance and custom validation message. |
+| `ariaLabel` | `aria-label` | None | Explicit group name. |
+| `labelledBy`, `describedBy` | `labelled-by`, `described-by` | Empty | External element IDs in the host's document or shadow root. |
+
+`form`, `validity`, `validationMessage`, `willValidate`, `checkValidity()`, `reportValidity()`, `setCustomValidity(message)` and `focus()` expose the group contract. Focus moves to the selected enabled item, otherwise the first enabled item. Await `updateComplete` after reactive changes before using native methods or reading layout.
+
+```ts
+const group = document.querySelector('sp-radio-group')!;
+group.value = 'pro';
+await group.updateComplete;
+```
+
+User selection dispatches one bubbling, composed `input` and `change` from the group. Read the current `value` on the group. Re-selecting the current value and programmatic writes emit no editing events. Item native events are coordinated at the group boundary rather than exposing a React callback contract.
+
+## Item API and composition
+
+| Property | Attribute | Default | Meaning |
+| --- | --- | --- | --- |
+| `value` | `value` | Empty | Required unique nonempty option key. |
+| `checked` | Read-only | Derived | Selected state owned by the group. |
+| `disabled` | `disabled` | `false` | Excluded from keyboard navigation and submission eligibility. |
+| `invalid` | `invalid` | `false` | Local invalid appearance; group validation remains group-owned. |
+| `appearance` | `appearance` | `plain` | Plain or boxed choice. |
+| `placement` | `placement` | `start` | Indicator at start or end in inherited writing direction. |
+| `label`, `description` | Same names | Empty | Option name and detail. |
+| `ariaLabel`, `labelledBy`, `describedBy` | `aria-label`, `labelled-by`, `described-by` | Empty | Explicit name and external element references. |
+
+Group slots: default for items/wrappers, `label`, `description`, `error`. Item slots: default or `label` for its name and `description` for detail. Group parts: `items`, `label`, `description`, `error`. Item parts: `row`, `target`, `input`, `control`, `indicator`, `content`, `label`, `description`.
+
+```html
+<sp-radio-group>
+  <span slot="label">Choose a plan</span>
+  <sp-radio-group-item value="pro" appearance="boxed" placement="end">
+    <span slot="label">Pro</span>
+    <span slot="description">Includes team collaboration.</span>
+  </sp-radio-group-item>
+</sp-radio-group>
+```
+
+Plain/Boxed is a local container treatment. Style continues to own the container geometry and surface; the radio itself stays circular. There is no radio Size or Shape selector. Items belong to a group; standalone items are disabled until configured by a group.
+
+<StorybookEmbed story="components-radio-group--appearances" title="Plain and boxed choices" height={680} />
+
+## Keyboard and form behavior
+
+Tab enters the selected enabled option or the first enabled option when empty; Tab exits the group. Space selects. Arrows select and focus the next/previous available option, wrapping at the ends. Home/End select the first/last available option. Horizontal Left/Right follow RTL visual order; Up/Down follow option order. Hidden, inert and disabled options are skipped, including unavailable ancestor wrappers. Group/item disabled state blocks activation, including imperative item `click()` before a pending render.
+
+The form receives one entry when the group has a configured, enabled selected value and is enabled/named. Missing, removed or disabled selections remain in the current value property but contribute no entry; required then reports missing selection. Duplicate or empty option values produce a configuration validity error; later duplicates and empty options are disabled. Adding/removing/changing options recomputes selection and form eligibility without editing events.
+
+Reset restores `defaultValue`, clears displayed validation feedback and emits no editing events. String state restoration restores the current value. The restoration callback is tested; real history/autofill behavior remains manual QA.
+
+## Theme and accessibility
+
+All five theme settings inherit, including nested overrides. System owns selected default/hover/pressed fills, foreground dots and focus, independently of Brand. Invalid boundaries remain Danger during hover/press/focus; disabled styling takes precedence while retaining the selected dot. Forced colors keeps circular marks, boundaries and a visible focus ring. State changes introduce no animation.
+
+| Metric | Relaxed | Compact |
+| --- | --- | --- |
+| Radio / interaction target / dot | 20px / 44px / 8px | Same |
+| Label type | 15px / 22px | 14px / 20px |
+| Item gap | 8px | 6px |
+| Group gap | 16px | 12px |
+| Boxed padding | 12px | 10px |
+
+The radio remains circular in every Style. Boxed corners use bounded multiline Field geometry: Atlas 8, Selene 12, Helios 16, Ares 0. Supporting content wraps and logical layout inherits RTL. Fifteen unbound Component aliases bring the authored contract from 723 to 738, reusing existing Selection, Checkbox target, Button focus, Field geometry, Density and primitive roles. No existing value, identity or mode changes; the historical HAUX-152 migration JSON remains unchanged.
+
+The native items container carries `radiogroup` semantics; item native inputs carry radio states and names. Local/explicit external names and descriptions are tested in Chromium, including slot changes and external text updates. Group message text is bridged into an item-local referenced span because sibling shadow-root references are outside the native reference scope. Cross-root element-reference ARIA support varies; use local message slots/properties and explicit names where needed. Actual screen-reader announcements and Safari/Firefox remain manual QA.
+
+<StorybookEmbed story="components-radio-group--theme-contract" title="Radio Group theme inheritance" height={700} />
+
+## Figma handoff
+
+Master `45:146` on page `12:32` has two Selected variants and a native Items slot. Radio Item `900:28936` has four Plain/Boxed × Start/End variants and optional description. Radio control `35:121` has 12 Selected/Unselected × Default/Hover/Focus/Error/Disabled/Pressed variants, with an 8px geometric dot. Code preserves circular dot anatomy, but follows the adopted 20px Selection metric rather than the reference 24px radio, and uses Density typography, System roles and a 44px target. The selected-control SVG export includes the older 24px geometry/colors; production circles/dots are native geometric primitives driven by tokens rather than that fixed render.
+
+No Figma writes are performed here; Figma remains Needs verification. Later work should preserve masters, Items slots, nested links and relevant properties, reconcile code/Figma metrics and bindings, then verify themes/states/resizing/content. The exact group master is configured in Storybook `parameters.design` with `type: 'figma'`. HAUX-85 separately gates production v2 imports through preview, identity/alias preservation, disposable-file and repeat-import checks.
+
+The actual Storybook Controls and Docs were exercised. The Design panel opened the correct master embed but returned HTTP 403 in this session; sharing was unchanged. Embed access remains separate from code verification and Figma alignment.
+
+## References
+
+- <StorybookLink story="components-radio-group--playground">Radio Group in Storybook</StorybookLink>
+- [shadcn Radio Group](https://ui.shadcn.com/docs/components/base/radio-group)
+- [WAI-ARIA radio pattern](https://www.w3.org/WAI/ARIA/apg/patterns/radio/)
