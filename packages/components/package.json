@@ -74,6 +74,14 @@
     "./radio-group-item/class": {
       "types": "./dist/components/radio-group/sp-radio-group-item.d.ts",
       "default": "./dist/components/radio-group/sp-radio-group-item.js"
+    },
+    "./switch": {
+      "types": "./dist/components/switch/define.d.ts",
+      "default": "./dist/components/switch/define.js"
+    },
+    "./switch/class": {
+      "types": "./dist/components/switch/sp-switch.d.ts",
+      "default": "./dist/components/switch/sp-switch.js"
     }
   },
   "files": [

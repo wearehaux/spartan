@@ -1,0 +1,88 @@
+---
+title: Switch
+description: Binary settings with native forms, keyboard access and independent System selection.
+---
+
+`sp-switch` turns a setting on or off. Its native checkbox input exposes `role="switch"` and owns Space/pointer activation; the form-associated host owns submission and validity. Checkbox and Switch share native selection, default/current state and label mechanics, while their public state APIs and visual styles remain separate.
+
+<StorybookEmbed story="components-switch--playground" title="Switch playground" height={360} />
+
+## Usage
+
+```ts
+import '@spartan/components/tokens.css';
+import '@spartan/components/switch';
+```
+
+```html
+<sp-switch name="sharing" value="enabled" label="Share across devices"
+  description="Keep your preferences synchronized" checked></sp-switch>
+```
+
+Keep the label stable when the switch changes state. Use a Checkbox for mixed selection. Switch is binary; the older Figma Indeterminate variant is not a valid switch state. Space toggles; Enter retains native checkbox behavior and does not toggle. Tab visits each enabled switch. Programmatic `.checked` changes update form data without input/change events.
+
+## API
+
+| Property | Attribute | Default | Purpose |
+| --- | --- | --- | --- |
+| `checked` | none | `false` | Current boolean state; not reflected |
+| `defaultChecked` | `checked` | `false` | Initial/reset state, reflected |
+| `name`, `value` | same | `''`, `'on'` | Checked-only form entry |
+| `disabled`, `required`, `invalid` | same | `false` | Native availability/constraint and visual state |
+| `label`, `description`, `error` | same | `''` | Fallback field text; error also sets custom validity |
+| `size` | `size` | `base` | `sm`, `base`, `lg` |
+| `shape` | `shape` | `default` | Style-owned `default`, explicit `rounded` or `square` |
+| `appearance` | `appearance` | `plain` | `plain` or `boxed` setting row |
+| `placement` | `placement` | `start` | Control at logical `start` or `end` |
+| `ariaLabel` | `aria-label` | none | Explicit name without a visible label |
+| `labelledBy`, `describedBy` | `labelled-by`, `described-by` | `''` | Space-separated IDs in the host root |
+
+`form`, `validity`, `validationMessage`, `willValidate`, `checkValidity()`, `reportValidity()` and `setCustomValidity(message)` follow the owned native form contract. Wait for `updateComplete` after setting reactive properties before calling constraint methods. `focus()` delegates to the native input, and `click()` activates it unless disabled. Disabled fieldsets exclude the value and validation without clearing state. Reset restores `defaultChecked`. Restore uses the shared serialized `[checked, false]` state; real browser history/autofill remains manual QA.
+
+Native composed `input` and bridged composed `change` each fire once per successful user toggle. Canceling click prevents the state change and editing events. Required means the switch must be on; use this constraint only where an on/off setting requires it.
+
+## Composition
+
+| Slot | Purpose |
+| --- | --- |
+| `label` | Visible accessible label |
+| `description` | Supporting text |
+| `error` | Error text and custom validity |
+| `icon` | Decorative thumb glyph, hidden from accessibility |
+
+```html
+<fieldset>
+  <legend>Notifications</legend>
+  <sp-switch appearance="boxed" placement="end">
+    <span slot="label">Product updates</span>
+    <span slot="description">Only relevant announcements</span>
+    <span slot="icon">✓</span>
+  </sp-switch>
+</fieldset>
+```
+
+Parts: `row`, `target`, `input`, `control`, `thumb`, `icon`, `label`, `description`, `error`. Compose groups with native fieldset/legend. External `<label for="host-id">` association is supported, including reassociation and cancellation. Description/error do not become part of the control name.
+
+<StorybookEmbed story="components-switch--appearances" title="Plain and boxed Switch rows" height={520} />
+
+## Theme ownership
+
+The approved existing track dimensions stay fixed across Density: Small 32×16, Base 40×20, Large 48×24. Rounded/default thumb dimensions are 16×12, 22×16 and 28×20; explicit Square uses square thumbs of 12, 16 and 20. Targets are at least 44×44; Large uses 48×44. Density changes surrounding type (15/22 Relaxed, 14/20 Compact), gaps (8/6) and boxed padding (12/10). Direction and Start/End placement use logical layout; long content wraps.
+
+Default track/thumb corners consume Selection's Style radius (Atlas 4, Selene 8, Helios 12, Ares 0), capped to each visual height. Rounded uses pill; Square reuses existing 4/2 tokens. Boxed corners use bounded Field 8/12/16/0. Default shape is a Style choice; Shape is a deliberate local override and does not change semantic states.
+
+System owns checked/default/hover/pressed and focus, independent of Brand. Neutral track and semantic thumb colors preserve contrast; unchecked thumbs carry a semantic boundary, while checked thumbs use the System control foreground, including High Contrast. Invalid boundaries stay Danger while a separate System ring remains visible; disabled surface/thumb colors take precedence. Forced colors use Canvas/CanvasText, Highlight/HighlightText and GrayText. State changes have no animation, including under reduced motion. Thumb shadow from the old Figma control is intentionally not carried into this token recipe; no shadow alias is invented.
+
+Fourteen additive Component aliases bring 738 to 752 definitions, reusing existing target/type/gap, Selection, Button focus, Field geometry and primitive roles. No prior definition, identity or mode changes. Approved size anatomy uses the existing `switch/control/*` metrics rather than the older infrastructure Selection Switch 40×24 fixture.
+
+<StorybookEmbed story="components-switch--theme-contract" title="Nested Switch themes and RTL" height={600} />
+
+## Figma handoff and verification boundary
+
+[Switch Control master 370:54](https://www.figma.com/design/PhcMPmdpkpgxH3N83SvpBY/Spartan-DS?node-id=370-54) on Switch page 12:35 has 18 Size × Value × Shape variants, optional Show icon and connected Icon swap. Existing control geometry and widths are retained. Code adds Style-driven default shape, independent System focus/selection, state borders, labels/assistance/errors, boxed rows, Start/End and 44px minimum targets. Older Indeterminate and shadow/control bindings require reconciliation. The optional reference icon is dynamic, represented by the decorative icon slot; no fixed icon export is embedded.
+
+The exact master is configured in Storybook's Design panel. The embed returned HTTP 403 in this session; sharing remains unchanged. Library changes remain gated by HAUX-85's v2 import preview, identity/alias preservation, repeat application and disposable-file checks. No Figma writes or protected-page changes are claimed. Screen-reader announcements, Safari/Firefox and real browser history/autofill need manual QA beyond automated Chromium checks.
+
+- <StorybookLink story="components-switch--playground">Switch in Storybook</StorybookLink>
+- [Official shadcn Switch](https://ui.shadcn.com/docs/components/base/switch)
+- [WAI-ARIA APG Switch](https://www.w3.org/WAI/ARIA/apg/patterns/switch/)

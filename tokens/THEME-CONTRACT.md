@@ -199,3 +199,10 @@ create identities only for new definitions, preserve aliases and rerun without
 duplicates. That real-runtime gate remains HAUX-85. Protected green pages require
 scope/consumer checks before shared-token application; there are no library writes
 in this implementation.
+
+
+## Switch adoption (HAUX-100)
+
+Fourteen additive aliases bring 738 to 752 definitions without changing any previous definition, resolved value, identity or mode. Switch reuses approved switch/control/* dimensions (32×16, 40×20, 48×24); the older infrastructure Selection 40×24 fixture is unchanged. Target is at least 44×44, with Large 48×44. Density owns surrounding Base type, gaps and boxed padding. Default corners use Style Selection radii capped by visual height, while local Rounded/Square choices retain approved anatomy; bounded Field radii own boxed corners. System owns checked and focus roles, neutral track and semantic thumb retain contrast. Invalid boundaries and disabled states retain semantic precedence; forced colors retain platform contrast. No motion or invented shadow alias.
+
+Native binary sp-switch and sp-checkbox share form/label/default-current mechanics. Switch has no mixed-state API: APG defines binary switch semantics; Checkbox owns mixed selection. Label/description/error/icon slots and Plain/Boxed, Start/End treatments provide upstream anatomy without React/Base UI dependencies. Optional reference icons remain dynamic slot content. No Figma writes; master 370:54/page 12:35 remains a later reconciliation checkpoint for Style/System/states/labels/targets, binary Value and legacy shadow differences.

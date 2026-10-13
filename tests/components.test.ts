@@ -20,13 +20,16 @@ test('package exports resolve to built JavaScript, types, and the generated toke
 });
 
 test('consumer import registers all elements once and keeps their public properties', async () => {
-  const { SpButton, SpIconButton, SpInput, SpTextarea, SpCheckbox, SpRadioGroup, SpRadioGroupItem } = await import('@spartan/components');
+  const { SpButton, SpIconButton, SpInput, SpTextarea, SpCheckbox, SpRadioGroup, SpRadioGroupItem, SpSwitch } = await import('@spartan/components');
   await import('@spartan/components/button');
   await import('@spartan/components/icon-button');
   await import('@spartan/components/input');
   await import('@spartan/components/textarea');
   await import('@spartan/components/checkbox');
   await import('@spartan/components/radio-group');
+  await import('@spartan/components/switch');
+  assert.equal(customElements.get('sp-switch'), SpSwitch);
+  assert.equal(SpSwitch.formAssociated, true);
   assert.equal(customElements.get('sp-button'), SpButton);
   assert.equal(customElements.get('sp-icon-button'), SpIconButton);
   assert.equal(customElements.get('sp-input'), SpInput);
@@ -46,13 +49,13 @@ test('consumer import registers all elements once and keeps their public propert
 test('component styles only reference variables the token build emits', () => {
   const s = source();
   const emitted = new Set(s.tokens.map(t => tokenCssName(t, s)));
-  for (const file of ['shared/action.styles.ts', 'button/sp-button.styles.ts', 'icon-button/sp-icon-button.styles.ts', 'input/sp-input.styles.ts', 'shared/field.styles.ts', 'textarea/sp-textarea.styles.ts', 'checkbox/sp-checkbox.styles.ts', 'radio-group/sp-radio-group.styles.ts']) {
+  for (const file of ['shared/action.styles.ts', 'button/sp-button.styles.ts', 'icon-button/sp-icon-button.styles.ts', 'input/sp-input.styles.ts', 'shared/field.styles.ts', 'textarea/sp-textarea.styles.ts', 'checkbox/sp-checkbox.styles.ts', 'radio-group/sp-radio-group.styles.ts', 'switch/sp-switch.styles.ts']) {
     for (const name of new Set(read(file).match(/--sp-[a-z0-9-]+/g) ?? [])) assert.ok(emitted.has(name), `${file} uses ${name}, which no token produces`);
   }
 });
 
 test('component styles contain no hard-coded colors, sizes, or radii outside the spinner dimensions and focus ring', () => {
-  for (const file of ['shared/action.styles.ts', 'button/sp-button.styles.ts', 'icon-button/sp-icon-button.styles.ts', 'input/sp-input.styles.ts', 'shared/field.styles.ts', 'textarea/sp-textarea.styles.ts', 'checkbox/sp-checkbox.styles.ts', 'radio-group/sp-radio-group.styles.ts']) {
+  for (const file of ['shared/action.styles.ts', 'button/sp-button.styles.ts', 'icon-button/sp-icon-button.styles.ts', 'input/sp-input.styles.ts', 'shared/field.styles.ts', 'textarea/sp-textarea.styles.ts', 'checkbox/sp-checkbox.styles.ts', 'radio-group/sp-radio-group.styles.ts', 'switch/sp-switch.styles.ts']) {
     const css = read(file).replace(/\/\*[\s\S]*?\*\//g, '');
     assert.doesNotMatch(css, /#[0-9a-f]{3,8}\b|rgba?\(/i, `${file} has a literal color`);
     for (const m of css.matchAll(/(width|height|padding[a-z-]*|border-radius|font-size|line-height|gap|min-width):\s*([^;]+);/g)) {
@@ -68,7 +71,7 @@ test('stories exist for every variant, size, and state in the Figma sets', () =>
   for (const story of ['Variants', 'Sizes', 'Styles', 'Directions', 'WithIcons', 'Disabled', 'Loading', 'Density', 'InForm']) assert.match(button, new RegExp(`export const ${story}\\b`));
   const icon = read('icon-button/sp-icon-button.stories.ts');
   for (const s of ['xs', 'sm', 'base']) assert.match(icon, new RegExp(`'${s}'`));
-  assert.deepEqual(readdirSync(new URL('../packages/components/src/components', import.meta.url)).sort(), ['button', 'checkbox', 'icon-button', 'input', 'radio-group', 'shared', 'textarea']);
+  assert.deepEqual(readdirSync(new URL('../packages/components/src/components', import.meta.url)).sort(), ['button', 'checkbox', 'icon-button', 'input', 'radio-group', 'shared', 'switch', 'textarea']);
 });
 
 test('Button takes its shape, fills, and borders from the Style collection and has no shadow or shape API', () => {
