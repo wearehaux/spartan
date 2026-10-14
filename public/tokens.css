@@ -530,6 +530,11 @@
   --sp-switch-inset: var(--sp-density-space-0-5);
   --sp-switch-focus-width: var(--sp-button-focus-width);
   --sp-switch-focus-offset: var(--sp-button-focus-offset);
+  --sp-select-item-padding-x: var(--sp-density-space-2);
+  --sp-select-popup-padding: var(--sp-density-space-1);
+  --sp-select-popup-gap: var(--sp-density-space-1);
+  --sp-select-icon-size: var(--sp-field-icon-size-small);
+  --sp-select-viewport-max-height: 288px;
 }
 
 :root,
@@ -702,6 +707,8 @@
   --sp-switch-thumb-color: var(--sp-color-switch-thumb);
   --sp-switch-border-width: var(--sp-border-width-default);
   --sp-switch-focus-color: var(--sp-selection-focus-color);
+  --sp-select-item-active-background: var(--sp-selection-background-checked);
+  --sp-select-item-active-foreground: var(--sp-selection-foreground-checked);
 }
 
 :root,
@@ -831,6 +838,11 @@
   --sp-switch-font-size: var(--sp-checkbox-font-size);
   --sp-switch-line-height: var(--sp-checkbox-line-height);
   --sp-switch-boxed-padding: var(--sp-density-control-padding-x-small);
+  --sp-select-item-min-height: var(--sp-menu-item-min-height);
+  --sp-select-item-padding-y: var(--sp-menu-item-padding-y);
+  --sp-select-item-gap: var(--sp-menu-item-gap);
+  --sp-select-font-size: var(--sp-field-font-size-small);
+  --sp-select-line-height: var(--sp-field-line-height-small);
 }
 
 :root,
@@ -866,6 +878,7 @@
   --sp-radio-group-boxed-radius: var(--sp-field-multiline-radius);
   --sp-switch-radius: var(--sp-selection-radius);
   --sp-switch-boxed-radius: var(--sp-field-multiline-radius);
+  --sp-select-item-radius: var(--sp-selection-radius);
 }
 
 :root,
@@ -905,4 +918,5 @@
   --sp-surface-border-width: var(--sp-style-surface-border-width);
   --sp-surface-shadow: var(--sp-style-surface-shadow);
   --sp-field-side-width-error: var(--sp-style-field-side-width-error);
+  --sp-select-border-width: var(--sp-surface-border-width);
 }

@@ -1,0 +1,135 @@
+---
+title: Select
+description: Single selection with a top-layer listbox, grouped options, typeahead and owned form state.
+---
+
+`sp-select` chooses one value from a custom listbox. It owns the trigger, value, popup and native form association. Reusable `sp-select-item`, `sp-select-group`, `sp-select-label` and `sp-select-separator` compose the options through native slots. Native Select and editable Combobox are separate families; this component does not accept free text or multiple values.
+
+<StorybookEmbed story="components-select--playground" title="Select playground" height={440} />
+
+## Usage
+
+```ts
+import '@spartan/components/tokens.css';
+import '@spartan/components/select';
+```
+
+```html
+<sp-select label="Fruit" name="fruit" placeholder="Choose a fruit" required>
+  <sp-select-group label="Fruit">
+    <sp-select-item value="apple">Apple</sp-select-item>
+    <sp-select-item value="banana">Banana</sp-select-item>
+    <sp-select-item value="pear" disabled>Pear</sp-select-item>
+  </sp-select-group>
+</sp-select>
+```
+
+Item values must be unique and non-empty. Empty is reserved for the placeholder. Empty/duplicate values produce a configuration validity error; malformed options cannot be selected. Only the first occurrence of a repeated value is eligible. Missing, removed, hidden, inert or disabled selected options keep the current value but do not submit it. Groups can be hidden/inert to remove all their options from navigation.
+
+## Anatomy and composition
+
+| Upstream anatomy | Lit ownership |
+| --- | --- |
+| Select root | `sp-select`, form state and keyboard coordination |
+| Trigger and Value | Owned button and value span, `trigger` and `value` parts |
+| Content and Viewport | Owned top-layer popover and scrolling container, `content` and `viewport` parts |
+| Group and Label | `sp-select-group label="…"` or a nested `sp-select-label` |
+| Item | `sp-select-item`, default label content plus description/start slots |
+| Separator | `sp-select-separator` |
+| Scroll buttons | Owned `scroll-up` and `scroll-down` parts, shown only when needed |
+
+```html
+<sp-select clearable>
+  <span slot="label">Delivery location</span>
+  <span slot="description">Choose where to receive your package</span>
+  <sp-select-group>
+    <sp-select-label>Saved places</sp-select-label>
+    <sp-select-item value="home" description="Your saved address">Home</sp-select-item>
+    <sp-select-item value="office">
+      Office
+      <span slot="description">Weekdays only</span>
+    </sp-select-item>
+  </sp-select-group>
+  <sp-select-separator></sp-select-separator>
+  <sp-select-group label="Other">
+    <sp-select-item value="collection">Collection point</sp-select-item>
+  </sp-select-group>
+</sp-select>
+```
+
+Keep option content noninteractive. Put actions outside the Select; an option is one selectable choice, not a menu containing nested buttons or links. `label` on an item provides the explicit trigger/typeahead/accessible name; otherwise unslotted default text supplies it. Description and decorative start content stay out of that name. The selected trigger displays this plain text rather than cloning arbitrary markup.
+
+| Owner | Slots | Parts |
+| --- | --- | --- |
+| Select | default options, `label`, `description`, `error`, decorative `start`, decorative `icon`, `empty` | `label`, `field`, `trigger`, `start`, `value`, `icon`, `clear`, `description`, `error`, `content`, `viewport`, `scroll-up`, `scroll-down`, `empty` |
+| Item | default label, `description`, decorative `start` | `start`, `content`, `label`, `description`, `indicator` |
+| Group | default label/items | Label uses the `label` property or nested `sp-select-label` |
+
+<StorybookEmbed story="components-select--groups" title="Grouped Select options" height={440} />
+
+## API
+
+| Property | Attribute | Default | Purpose |
+| --- | --- | --- | --- |
+| `value` | none | `''` | Current value, non-reflected |
+| `defaultValue` | `value` | `''` | Initial/reset value; current edits do not change it |
+| `name` | `name` | `''` | One form entry for an eligible selected value |
+| `size` | `size` | `base` | `sm` or `base` |
+| `appearance` | `appearance` | `default` | `default`, `outlined`, `filled` |
+| `label`, `description`, `error`, `placeholder` | same | empty text, `Choose an option` placeholder | Field text and validity assistance |
+| `disabled`, `readOnly` | `disabled`, `readonly` | `false` | Disabled or focusable readonly behavior |
+| `required`, `invalid` | same | `false` | Selection constraint and visual invalid state |
+| `clearable` | `clearable` | `false` | Separately named Clear selection button |
+| `open` | `open` | `false` | Current popup visibility |
+| `side`, `align` | same | `bottom`, `start` | Preferred popup edge and logical alignment; collision handling may flip |
+| `ariaLabel` | `aria-label` | none | Name without visible label |
+| `labelledBy`, `describedBy` | `labelled-by`, `described-by` | `''` | External IDs in the host root |
+
+`show()`, `hide()`, `focus()` and `click()` expose opening/focus behavior. Readonly and disabled controls do not open. An external `<label for="host-id">` focuses the trigger without opening. The `trigger` getter exposes the owned native button when integration needs it.
+
+`form`, `validity`, `validationMessage`, `willValidate`, `checkValidity()`, `reportValidity()` and `setCustomValidity(message)` follow the form-associated contract. `error` text also sets custom validity; `invalid` alone controls the visual state. Disabled fieldsets omit values and validation without discarding the selection. Reset restores `defaultValue`; string restoration updates current state without editing events. Await `updateComplete` after reactive property changes before reading constraint results. Actual history/autofill restoration remains manual QA.
+
+Programmatic changes are silent. A successful user commit dispatches one bubbling, composed `input` and one `change` when the value changes. Reselecting the same item is silent. Clearing commits empty and emits the same pair. Canceling trigger/item/clear clicks prevents their actions.
+
+## Keyboard and selection
+
+DOM focus stays on the combobox trigger. The active option is referenced with `ariaActiveDescendantElement` across the slot boundary and scrolled into view. Active exploration is separate from the committed form value.
+
+| Key or action | Behavior |
+| --- | --- |
+| Enter, Space, Arrow Up/Down | Open when closed |
+| Arrow Up/Down while open | Move active item, stopping at list boundaries; skip disabled/hidden/inert items |
+| Home, End | Open and activate first/last eligible item |
+| Page Up/Down | Move up/down ten eligible items |
+| Printable characters | Open, prefix search; repeated characters cycle matching options |
+| Enter, Space, Alt+Up while open | Commit active option and close |
+| Tab / focus leaving | Commit active option and retain normal focus navigation |
+| Escape / clicking the open trigger | Close and retain the committed value |
+| Pointer on an option | Commit it and return focus to the trigger |
+| Outside dismissal | Close; focus departure commits the explored option |
+
+No animation is used, including under reduced motion. Actual screen-reader announcements and browser combinations require manual verification beyond Chromium's accessibility tree.
+
+## Theme and positioning
+
+The trigger reuses Field styles directly. Small is 32/28px and Base 40/32px in Relaxed/Compact. Existing type, icon and horizontal padding metrics remain. Default Appearance follows Style; Outlined/Filled change neutral treatment while preserving Style geometry and semantic states. Danger invalid boundaries remain during focus; the independent System ring stays visible. Disabled takes precedence over invalid.
+
+The popup inherits all five theme settings from the component and uses Menu/Surface roles: Style shell radius 12/12/16/0, Surface background/border/elevation, item corners from capped Selection radii, 32/28px item minimum, 6/4px vertical padding and 8/6px gaps. Items grow for wrapped content. System owns active fill/foreground and selected text, independent of Brand. Forced colors retain platform boundaries, Highlight selection and disabled GrayText.
+
+The viewport has a new 288px maximum-height role, constrained to available viewport space. A native `popover` places it in the top layer, preserving inherited tokens and escaping clipping containers. It aligns to the trigger edge, clamps to the visual viewport, flips when necessary, and updates after scroll, resize and option-content changes. This is deliberate edge alignment rather than upstream's optional selected-item overlay positioning. Scroll controls expose long lists without adding tab stops. Content/viewport/scroll elements remain owned to protect the combobox relationships.
+
+Fourteen additive Component definitions bring 752 to 766. Thirteen aliases reuse Field, Menu, Selection, Surface and Density roles; the viewport maximum is the new component-owned geometry value. No previous token definition, variable/collection/mode identity or historical HAUX-152 JSON changes. Generated CSS is committed with the source.
+
+<StorybookEmbed story="components-select--theme-contract" title="Nested Select themes and RTL" height={620} />
+
+## Figma checkpoint
+
+[Select Field master 32:159](https://www.figma.com/design/PhcMPmdpkpgxH3N83SvpBY/Spartan-DS?node-id=32-159), page 12:33 Select, has 32 Small/Base × Single/Multi × eight State variants. The Label property edits the displayed value/placeholder, not a visible field label. Show clear is optional. The single-select composition master 749:813 has eight Single/Multi × Empty/Filled × Closed/Open variants and connects Dropdown Menu 34:54 and its item anatomy. These links were inspected; no library changes are claimed.
+
+Code delivers the canonical single-selection scope. Multi/tag variants remain a future family decision, and Native Select remains a separate component. Code adds field labels, assistance/error slots, Default/Outlined/Filled, System states, grouped reusable options and native popup/keyboard/forms. Base text uses adopted Density 15/22 or 14/20 rather than the inspected 14/21; popup elevation follows the shared Surface recipe rather than the old unconditional floating-panel shadow. Resume later Figma work at these exact masters against the implementation revision.
+
+Chevron and Clear glyphs are downloaded local Central Icons exports from the inspected field. Item checks reuse the existing owned 16px Checkbox check asset as a semantic mask. Decorative glyphs inherit token color and scale with existing Field icon metrics; no temporary Figma URL is used at runtime. The exact field master is configured in Storybook's Design panel. Figma sharing remains unchanged. Production v2 imports remain separately gated by HAUX-85's preview, identity/alias preservation, disposable-file and repeat-apply checks. Protected 🟢 pages remain untouched.
+
+- <StorybookLink story="components-select--playground">Select in Storybook</StorybookLink>
+- [Official shadcn Select](https://ui.shadcn.com/docs/components/base/select)
+- [WAI-ARIA select-only combobox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-select-only/)
