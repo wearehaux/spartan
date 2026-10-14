@@ -749,6 +749,20 @@
     {"key":"component.radio-group.border-width","name":"radio-group/border-width","collection":"component","type":"FLOAT","values":{"Value":{"alias":"semantic-foundation.border-width.default"}},"unit":"px"},
     {"key":"component.radio-group.focus-color","name":"radio-group/focus-color","collection":"component","type":"COLOR","values":{"Value":{"alias":"component.selection.focus-color"}}},
     {"key":"component.radio-group.focus-width","name":"radio-group/focus-width","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.button.focus-width"}},"unit":"px"},
-    {"key":"component.radio-group.focus-offset","name":"radio-group/focus-offset","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.button.focus-offset"}},"unit":"px"}
+    {"key":"component.radio-group.focus-offset","name":"radio-group/focus-offset","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.button.focus-offset"}},"unit":"px"},
+    {"key":"component.switch.target-size","name":"switch/target-size","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.checkbox.target-size"}},"unit":"px"},
+    {"key":"component.switch.gap","name":"switch/gap","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.checkbox.gap"}},"unit":"px"},
+    {"key":"component.switch.font-size","name":"switch/font-size","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.checkbox.font-size"}},"unit":"px"},
+    {"key":"component.switch.line-height","name":"switch/line-height","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.checkbox.line-height"}},"unit":"px"},
+    {"key":"component.switch.radius","name":"switch/radius","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.selection.radius"}},"unit":"px"},
+    {"key":"component.switch.rounded-radius","name":"switch/rounded-radius","collection":"component","type":"FLOAT","values":{"Value":{"alias":"semantic-foundation.radius.pill"}},"unit":"px"},
+    {"key":"component.switch.thumb-color","name":"switch/thumb-color","collection":"component","type":"COLOR","values":{"Value":{"alias":"semantic-color.color.switch.thumb"}}},
+    {"key":"component.switch.inset","name":"switch/inset","collection":"component","type":"FLOAT","values":{"Value":{"alias":"density.density.space.0-5"}},"unit":"px"},
+    {"key":"component.switch.border-width","name":"switch/border-width","collection":"component","type":"FLOAT","values":{"Value":{"alias":"semantic-foundation.border-width.default"}},"unit":"px"},
+    {"key":"component.switch.focus-color","name":"switch/focus-color","collection":"component","type":"COLOR","values":{"Value":{"alias":"component.selection.focus-color"}}},
+    {"key":"component.switch.focus-width","name":"switch/focus-width","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.button.focus-width"}},"unit":"px"},
+    {"key":"component.switch.focus-offset","name":"switch/focus-offset","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.button.focus-offset"}},"unit":"px"},
+    {"key":"component.switch.boxed-radius","name":"switch/boxed-radius","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.field.multiline.radius"}},"unit":"px"},
+    {"key":"component.switch.boxed-padding","name":"switch/boxed-padding","collection":"component","type":"FLOAT","values":{"Value":{"alias":"density.density.control.padding-x.small"}},"unit":"px"}
   ]
 }
