@@ -6,3 +6,4 @@ export * from './components/checkbox/define.js';
 export * from './components/radio-group/define.js';
 export * from './theme.js';
 export * from './components/switch/define.js';
+export * from './components/select/define.js';

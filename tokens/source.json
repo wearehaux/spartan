@@ -763,6 +763,20 @@
     {"key":"component.switch.focus-width","name":"switch/focus-width","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.button.focus-width"}},"unit":"px"},
     {"key":"component.switch.focus-offset","name":"switch/focus-offset","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.button.focus-offset"}},"unit":"px"},
     {"key":"component.switch.boxed-radius","name":"switch/boxed-radius","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.field.multiline.radius"}},"unit":"px"},
-    {"key":"component.switch.boxed-padding","name":"switch/boxed-padding","collection":"component","type":"FLOAT","values":{"Value":{"alias":"density.density.control.padding-x.small"}},"unit":"px"}
+    {"key":"component.switch.boxed-padding","name":"switch/boxed-padding","collection":"component","type":"FLOAT","values":{"Value":{"alias":"density.density.control.padding-x.small"}},"unit":"px"},
+    {"key":"component.select.item-min-height","name":"select/item-min-height","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.menu.item.min-height"}},"unit":"px"},
+    {"key":"component.select.item-padding-y","name":"select/item-padding-y","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.menu.item.padding-y"}},"unit":"px"},
+    {"key":"component.select.item-padding-x","name":"select/item-padding-x","collection":"component","type":"FLOAT","values":{"Value":{"alias":"density.density.space.2"}},"unit":"px"},
+    {"key":"component.select.item-gap","name":"select/item-gap","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.menu.item.gap"}},"unit":"px"},
+    {"key":"component.select.item-radius","name":"select/item-radius","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.selection.radius"}},"unit":"px"},
+    {"key":"component.select.item-active-background","name":"select/item-active-background","collection":"component","type":"COLOR","values":{"Value":{"alias":"component.selection.background.checked"}}},
+    {"key":"component.select.item-active-foreground","name":"select/item-active-foreground","collection":"component","type":"COLOR","values":{"Value":{"alias":"component.selection.foreground.checked"}}},
+    {"key":"component.select.popup-padding","name":"select/popup-padding","collection":"component","type":"FLOAT","values":{"Value":{"alias":"density.density.space.1"}},"unit":"px"},
+    {"key":"component.select.popup-gap","name":"select/popup-gap","collection":"component","type":"FLOAT","values":{"Value":{"alias":"density.density.space.1"}},"unit":"px"},
+    {"key":"component.select.border-width","name":"select/border-width","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.surface.border-width"}},"unit":"px"},
+    {"key":"component.select.font-size","name":"select/font-size","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.field.font-size.small"}},"unit":"px"},
+    {"key":"component.select.line-height","name":"select/line-height","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.field.line-height.small"}},"unit":"px"},
+    {"key":"component.select.icon-size","name":"select/icon-size","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.field.icon-size.small"}},"unit":"px"},
+    {"key":"component.select.viewport-max-height","name":"select/viewport-max-height","collection":"component","type":"FLOAT","unit":"px","values":{"Value":288}}
   ]
 }

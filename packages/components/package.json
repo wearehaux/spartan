@@ -82,13 +82,29 @@
     "./switch/class": {
       "types": "./dist/components/switch/sp-switch.d.ts",
       "default": "./dist/components/switch/sp-switch.js"
+    },
+    "./select": {
+      "types": "./dist/components/select/define.d.ts",
+      "default": "./dist/components/select/define.js"
+    },
+    "./select/class": {
+      "types": "./dist/components/select/sp-select.d.ts",
+      "default": "./dist/components/select/sp-select.js"
+    },
+    "./select-item/class": {
+      "types": "./dist/components/select/sp-select-item.d.ts",
+      "default": "./dist/components/select/sp-select-item.js"
+    },
+    "./select-group/class": {
+      "types": "./dist/components/select/sp-select-group.d.ts",
+      "default": "./dist/components/select/sp-select-group.js"
     }
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "rm -rf dist && tsc -p tsconfig.build.json && cp ../../public/tokens.css dist/tokens.css && mkdir -p dist/components/checkbox/assets && cp src/components/checkbox/assets/*.svg dist/components/checkbox/assets/",
+    "build": "rm -rf dist && tsc -p tsconfig.build.json && cp ../../public/tokens.css dist/tokens.css && mkdir -p dist/components/checkbox/assets && cp src/components/checkbox/assets/*.svg dist/components/checkbox/assets/ && mkdir -p dist/components/select/assets && cp src/components/select/assets/*.svg dist/components/select/assets/",
     "typecheck": "pnpm icons:generate && tsc --noEmit",
     "storybook": "pnpm icons:generate && storybook dev --port ${PORT:-6006} --host 127.0.0.1 --no-open",
     "build-storybook": "pnpm icons:generate && storybook build --output-dir storybook-static",
