@@ -535,6 +535,15 @@
   --sp-select-popup-gap: var(--sp-density-space-1);
   --sp-select-icon-size: var(--sp-field-icon-size-small);
   --sp-select-viewport-max-height: 288px;
+  --sp-dropdown-menu-item-padding-x: var(--sp-density-space-2);
+  --sp-dropdown-menu-popup-padding: var(--sp-density-space-1);
+  --sp-dropdown-menu-popup-gap: var(--sp-density-space-1);
+  --sp-dropdown-menu-icon-size: var(--sp-field-icon-size-small);
+  --sp-dropdown-menu-viewport-max-height: 288px;
+  --sp-dropdown-menu-width-small: 240px;
+  --sp-dropdown-menu-width-base: 280px;
+  --sp-dropdown-menu-width-large: 320px;
+  --sp-dropdown-menu-section-padding: var(--sp-density-space-3);
 }
 
 :root,
@@ -709,6 +718,8 @@
   --sp-switch-focus-color: var(--sp-selection-focus-color);
   --sp-select-item-active-background: var(--sp-selection-background-checked);
   --sp-select-item-active-foreground: var(--sp-selection-foreground-checked);
+  --sp-dropdown-menu-item-active-background: var(--sp-selection-background-checked);
+  --sp-dropdown-menu-item-active-foreground: var(--sp-selection-foreground-checked);
 }
 
 :root,
@@ -843,6 +854,11 @@
   --sp-select-item-gap: var(--sp-menu-item-gap);
   --sp-select-font-size: var(--sp-field-font-size-small);
   --sp-select-line-height: var(--sp-field-line-height-small);
+  --sp-dropdown-menu-item-min-height: var(--sp-menu-item-min-height);
+  --sp-dropdown-menu-item-padding-y: var(--sp-menu-item-padding-y);
+  --sp-dropdown-menu-item-gap: var(--sp-menu-item-gap);
+  --sp-dropdown-menu-font-size: var(--sp-field-font-size-small);
+  --sp-dropdown-menu-line-height: var(--sp-field-line-height-small);
 }
 
 :root,
@@ -879,6 +895,7 @@
   --sp-switch-radius: var(--sp-selection-radius);
   --sp-switch-boxed-radius: var(--sp-field-multiline-radius);
   --sp-select-item-radius: var(--sp-selection-radius);
+  --sp-dropdown-menu-item-radius: var(--sp-selection-radius);
 }
 
 :root,
@@ -919,4 +936,5 @@
   --sp-surface-shadow: var(--sp-style-surface-shadow);
   --sp-field-side-width-error: var(--sp-style-field-side-width-error);
   --sp-select-border-width: var(--sp-surface-border-width);
+  --sp-dropdown-menu-border-width: var(--sp-surface-border-width);
 }

@@ -45,6 +45,7 @@ test('published docs reference only Storybook stories that exist in the stories 
     ['packages/components/src/components/radio-group/sp-radio-group.stories.ts', 'components-radio-group'],
     ['packages/components/src/components/switch/sp-switch.stories.ts', 'components-switch'],
     ['packages/components/src/components/select/sp-select.stories.ts', 'components-select'],
+    ['packages/components/src/components/dropdown-menu/sp-dropdown-menu.stories.ts', 'components-dropdown-menu'],
     ['packages/components/src/foundations/theme-contract/theme-contract.stories.ts', 'foundations-theme-contract'],
   ]) {
     for (const [, name] of (await readFile(path.join(root, file), 'utf8')).matchAll(/^export const (\w+): Story/gm)) {

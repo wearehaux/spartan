@@ -98,13 +98,29 @@
     "./select-group/class": {
       "types": "./dist/components/select/sp-select-group.d.ts",
       "default": "./dist/components/select/sp-select-group.js"
+    },
+    "./dropdown-menu": {
+      "types": "./dist/components/dropdown-menu/define.d.ts",
+      "default": "./dist/components/dropdown-menu/define.js"
+    },
+    "./dropdown-menu/class": {
+      "types": "./dist/components/dropdown-menu/sp-dropdown-menu.d.ts",
+      "default": "./dist/components/dropdown-menu/sp-dropdown-menu.js"
+    },
+    "./dropdown-menu-item/class": {
+      "types": "./dist/components/dropdown-menu/sp-dropdown-menu-item.d.ts",
+      "default": "./dist/components/dropdown-menu/sp-dropdown-menu-item.js"
+    },
+    "./dropdown-menu-content/class": {
+      "types": "./dist/components/dropdown-menu/sp-dropdown-menu-content.d.ts",
+      "default": "./dist/components/dropdown-menu/sp-dropdown-menu-content.js"
     }
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "rm -rf dist && tsc -p tsconfig.build.json && cp ../../public/tokens.css dist/tokens.css && mkdir -p dist/components/checkbox/assets && cp src/components/checkbox/assets/*.svg dist/components/checkbox/assets/ && mkdir -p dist/components/select/assets && cp src/components/select/assets/*.svg dist/components/select/assets/",
+    "build": "rm -rf dist && tsc -p tsconfig.build.json && cp ../../public/tokens.css dist/tokens.css && mkdir -p dist/components/checkbox/assets && cp src/components/checkbox/assets/*.svg dist/components/checkbox/assets/ && mkdir -p dist/components/select/assets && cp src/components/select/assets/*.svg dist/components/select/assets/ && mkdir -p dist/components/dropdown-menu/assets && cp src/components/dropdown-menu/assets/*.svg dist/components/dropdown-menu/assets/",
     "typecheck": "pnpm icons:generate && tsc --noEmit",
     "storybook": "pnpm icons:generate && storybook dev --port ${PORT:-6006} --host 127.0.0.1 --no-open",
     "build-storybook": "pnpm icons:generate && storybook build --output-dir storybook-static",

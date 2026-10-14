@@ -1,0 +1,112 @@
+---
+title: Dropdown Menu
+description: Composable action menus with nested submenus and checkbox or radio choices.
+---
+
+Dropdown Menu presents actions and local preferences. Use Select for a submitted form value. Keyboard focus moves through menu items, including disabled items so their names remain discoverable. Disabled items cannot activate.
+
+<StorybookEmbed story="components-dropdown-menu--playground" title="Dropdown Menu playground" height={400} />
+
+Design reference: [Dropdown Menu master](https://www.figma.com/design/PhcMPmdpkpgxH3N83SvpBY/Spartan-DS?node-id=34-54).
+
+## Import
+
+```ts
+import '@spartan/components/dropdown-menu';
+import '@spartan/components/tokens.css';
+```
+
+## Composition
+
+```html
+<sp-dropdown-menu>
+  <sp-dropdown-menu-trigger>Actions</sp-dropdown-menu-trigger>
+  <sp-dropdown-menu-content size="base">
+    <sp-dropdown-menu-group label="Account">
+      <sp-dropdown-menu-label>Account</sp-dropdown-menu-label>
+      <sp-dropdown-menu-item value="profile">
+        Profile
+        <sp-dropdown-menu-shortcut slot="shortcut">⇧⌘P</sp-dropdown-menu-shortcut>
+      </sp-dropdown-menu-item>
+      <sp-dropdown-menu-item disabled>Billing</sp-dropdown-menu-item>
+    </sp-dropdown-menu-group>
+    <sp-dropdown-menu-separator></sp-dropdown-menu-separator>
+    <sp-dropdown-menu-item value="delete" variant="destructive">Delete account</sp-dropdown-menu-item>
+  </sp-dropdown-menu-content>
+</sp-dropdown-menu>
+```
+
+Root and Sub require direct trigger/content children. Content accepts reusable items, groups, labels, separators and nested Sub compositions in its default slot. Optional `header` and `footer` slots contain noninteractive context. Do not place unrelated inputs, buttons or links inside a menu item or these contextual slots. Use the item’s `sp-select` handler to perform an action. A shortcut is a visual hint and does not install a global keyboard binding.
+
+## Checkbox and radio choices
+
+```html
+<sp-dropdown-menu-checkbox-item checked stay-open value="status">
+  Status bar
+</sp-dropdown-menu-checkbox-item>
+<sp-dropdown-menu-radio-group label="Position" value="bottom">
+  <sp-dropdown-menu-radio-item value="top" stay-open>Top</sp-dropdown-menu-radio-item>
+  <sp-dropdown-menu-radio-item value="bottom" stay-open>Bottom</sp-dropdown-menu-radio-item>
+</sp-dropdown-menu-radio-group>
+```
+
+Checkbox `checked` and `indeterminate` are current state, without form submission/reset semantics. Activating a mixed item sets checked true and clears mixed. Radio Group owns the current `value`; use nonempty unique radio values within a group. Programmatic state changes are silent. `stay-open` keeps the popup open after a successful action; default activation closes the complete menu chain.
+
+## Submenus
+
+```html
+<sp-dropdown-menu-sub>
+  <sp-dropdown-menu-sub-trigger>Invite users</sp-dropdown-menu-sub-trigger>
+  <sp-dropdown-menu-sub-content>
+    <sp-dropdown-menu-item value="email">Email</sp-dropdown-menu-item>
+    <sp-dropdown-menu-item value="message">Message</sp-dropdown-menu-item>
+  </sp-dropdown-menu-sub-content>
+</sp-dropdown-menu-sub>
+```
+
+Submenus open with click, Enter, Space, the forward arrow or a short pointer hover. Backward arrow and Escape close only the current submenu and focus its trigger. Directional keys and chevrons mirror under RTL. Submenu content inherits the theme at its own DOM location; content is not reparented to the document body.
+
+## Properties and methods
+
+| Owner | Properties / methods |
+| --- | --- |
+| Root / Sub | `open`, `disabled`, `show('first' \| 'last')`, `hide(restoreFocus = true)`, `closeAll(restoreFocus = true)` |
+| Trigger | Shared Button `size`, `variant`, `disabled`, `loading`, `start` / `end` slots. Native type is always button, never a submit/reset action. |
+| Content | `label`, `size="small\|base\|large"`, `side="bottom\|top"`, `align="start\|end"`, `.loop` default true |
+| Item / choices / Sub Trigger | `value`, `label`, `description`, `disabled`, `variant="default\|destructive"`, `inset`, `stay-open` |
+| Checkbox Item | `checked`, `indeterminate` |
+| Radio Group | `value`, `label` |
+| Group | `label`, or a nested visible Label |
+
+Item slots: default label, `description`, decorative `start` icon and `shortcut`. Item parts: `content`, `label`, `description`, `indicator`. Content parts: `header`, `footer`. Trigger exposes the shared Button part `button`. Content host is the popup surface; consumer width overrides may use its public token locally.
+
+## Events
+
+| Event | Behavior |
+| --- | --- |
+| `sp-select` | Bubbles/composes from an item before activation; cancelable. Detail `{ value, originalEvent }`. Canceling keeps state and popup unchanged. |
+| `sp-change` | Bubbles/composes after a user checkbox or radio change. Checkbox detail `{ checked }`; Radio Group detail `{ value }`. No event when an already selected radio is activated. |
+
+The original click can also be canceled. Keyboard activation uses the same item click path. Programmatic `open`, `value` and `checked` updates do not emit user selection/change events.
+
+## Keyboard and focus
+
+- Native trigger: Enter/Space opens first item; Arrow Down opens first and Arrow Up opens last.
+- Menu: Arrow Down/Up move with wrapping by default, Home/End move to edges, printable prefix and repeated-character typeahead search labels.
+- Enter/Space activates. Escape closes the current popup and returns focus to its trigger.
+- Tab/Shift+Tab closes the complete chain and continues from the root trigger’s place in page order.
+- Outside pointer/focus closes without taking focus away from the destination. No modal focus trap or scroll lock.
+
+Native Popover manual mode puts content in the top layer, preserving CSS inheritance and escaping clipping. Content flips/clamps within the visual viewport, scrolls long lists natively and observes content/anchor resizing. Keyboard navigation reveals the focused item; manual scrolling does not snap back on rerenders. Hidden/inert items are excluded and removed active items repair focus. No motion is introduced.
+
+## Theme contract
+
+All five settings inherit: Style, scheme, contrast, density and Brand hue. Trigger uses Button. Popup uses Surface and Menu geometry. Rows preserve 32/28px minimum height, 6/4px vertical padding and 8/6px gaps in Relaxed/Compact, growing with text. Small typography is 14/20 or 13/18. Style owns surface radius 12/12/16/0 and item radius 4/8/12/0. System owns focused rows and checked text independently of Brand. Danger remains semantic; disabled wins. Forced colors use platform colors.
+
+`size` is popup width 240/280/320, independent of trigger size and density. Eighteen additive `dropdown-menu/*` definitions bring 766 to 784. They reuse shared family aliases plus explicit width and viewport anatomy. No previous token values, aliases, IDs or collection modes change. Source: `tokens/source.json`; rebuild with `pnpm tokens:build`.
+
+## References and verification boundaries
+
+Adapted from the [official shadcn Dropdown Menu anatomy](https://ui.shadcn.com/docs/components/base/dropdown-menu) and [APG menu keyboard pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/). This is owned Lit code with no React/Base UI/Radix runtime. Native parts replace `asChild`/portal primitives. Submenus share the same owned menu navigation/positioning implementation; Context Menu and Menubar remain separate families.
+
+[Figma master 34:54](https://www.figma.com/design/PhcMPmdpkpgxH3N83SvpBY/Spartan-DS?node-id=34-54) was inspected. Header/items/footer, widths and connected artwork inform the anatomy. The adopted Style elevation, Density typography and System states supersede older fixed shadows and row styling. Figma sync remains separate; HAUX-85 gates real production v2 token import. Browser automation does not replace real screen-reader, Safari/Firefox or touch/assistive-technology QA.
