@@ -777,6 +777,24 @@
     {"key":"component.select.font-size","name":"select/font-size","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.field.font-size.small"}},"unit":"px"},
     {"key":"component.select.line-height","name":"select/line-height","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.field.line-height.small"}},"unit":"px"},
     {"key":"component.select.icon-size","name":"select/icon-size","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.field.icon-size.small"}},"unit":"px"},
-    {"key":"component.select.viewport-max-height","name":"select/viewport-max-height","collection":"component","type":"FLOAT","unit":"px","values":{"Value":288}}
+    {"key":"component.select.viewport-max-height","name":"select/viewport-max-height","collection":"component","type":"FLOAT","unit":"px","values":{"Value":288}},
+    {"key":"component.dropdown-menu.item-min-height","name":"dropdown-menu/item-min-height","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.menu.item.min-height"}},"unit":"px"},
+    {"key":"component.dropdown-menu.item-padding-y","name":"dropdown-menu/item-padding-y","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.menu.item.padding-y"}},"unit":"px"},
+    {"key":"component.dropdown-menu.item-padding-x","name":"dropdown-menu/item-padding-x","collection":"component","type":"FLOAT","values":{"Value":{"alias":"density.density.space.2"}},"unit":"px"},
+    {"key":"component.dropdown-menu.item-gap","name":"dropdown-menu/item-gap","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.menu.item.gap"}},"unit":"px"},
+    {"key":"component.dropdown-menu.item-radius","name":"dropdown-menu/item-radius","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.selection.radius"}},"unit":"px"},
+    {"key":"component.dropdown-menu.item-active-background","name":"dropdown-menu/item-active-background","collection":"component","type":"COLOR","values":{"Value":{"alias":"component.selection.background.checked"}}},
+    {"key":"component.dropdown-menu.item-active-foreground","name":"dropdown-menu/item-active-foreground","collection":"component","type":"COLOR","values":{"Value":{"alias":"component.selection.foreground.checked"}}},
+    {"key":"component.dropdown-menu.popup-padding","name":"dropdown-menu/popup-padding","collection":"component","type":"FLOAT","values":{"Value":{"alias":"density.density.space.1"}},"unit":"px"},
+    {"key":"component.dropdown-menu.popup-gap","name":"dropdown-menu/popup-gap","collection":"component","type":"FLOAT","values":{"Value":{"alias":"density.density.space.1"}},"unit":"px"},
+    {"key":"component.dropdown-menu.border-width","name":"dropdown-menu/border-width","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.surface.border-width"}},"unit":"px"},
+    {"key":"component.dropdown-menu.font-size","name":"dropdown-menu/font-size","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.field.font-size.small"}},"unit":"px"},
+    {"key":"component.dropdown-menu.line-height","name":"dropdown-menu/line-height","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.field.line-height.small"}},"unit":"px"},
+    {"key":"component.dropdown-menu.icon-size","name":"dropdown-menu/icon-size","collection":"component","type":"FLOAT","values":{"Value":{"alias":"component.field.icon-size.small"}},"unit":"px"},
+    {"key":"component.dropdown-menu.viewport-max-height","name":"dropdown-menu/viewport-max-height","collection":"component","type":"FLOAT","unit":"px","values":{"Value":288}},
+    {"key":"component.dropdown-menu.width.small","name":"dropdown-menu/width/small","collection":"component","type":"FLOAT","unit":"px","values":{"Value":240}},
+    {"key":"component.dropdown-menu.width.base","name":"dropdown-menu/width/base","collection":"component","type":"FLOAT","unit":"px","values":{"Value":280}},
+    {"key":"component.dropdown-menu.width.large","name":"dropdown-menu/width/large","collection":"component","type":"FLOAT","unit":"px","values":{"Value":320}},
+    {"key":"component.dropdown-menu.section-padding","name":"dropdown-menu/section-padding","collection":"component","type":"FLOAT","unit":"px","values":{"Value":{"alias":"density.density.space.3"}}}
   ]
 }
